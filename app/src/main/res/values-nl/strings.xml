@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Raise To Answer</string>
+    <string name="hold_to_ear_test">Hou de telefoon tegen je oor...</string>
+    <string name="test">Test</string>
+    <string name="disable_app">Schakel app uit</string>
+    <string name="enable_app">Schakel app in</string>
+    <string name="permissions_needed">De app kan niet werken zonder deze rechten, sorry...</string>
+    <string name="hold_to_ear_to_answer">Hou de telefoon tegen je oor om op te nemen</string>
+</resources>
