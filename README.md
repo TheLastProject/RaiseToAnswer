@@ -1,5 +1,9 @@
 # Raise To Answer (Android)
 
+![Raise To Answer logo](app/src/main/res/mipmap-hdpi/ic_launcher.png)
+
+*Logo by [Rose (TangentFoxy)](http://github.com/TangentFoxy)*
+
 Simply hold your phone to your ear to answer an incoming call. When the app detects the phone is near your ear during an incoming call, it will beep 5 times and then answer the call.
 
 No ads, no unnecessary permissions and no unnecessary battery drain. Easy to enable and disable. Doesn't replace your incoming call screen, so you don't need to learn anything new.
