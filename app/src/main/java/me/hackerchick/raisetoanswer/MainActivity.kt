@@ -7,9 +7,12 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+
 
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
@@ -34,24 +37,22 @@ class MainActivity : AppCompatActivity() {
             mSensorEventListener!!.waitUntilEarPickup {}
         }
 
-        val toggleActiveButton: Button = findViewById(R.id.toggle_active)
+        val activeSwitch: Switch = findViewById(R.id.raise_to_answer_switch)
         val appEnabled = getSharedPreferences(getString(R.string.app_enabled_key), Context.MODE_PRIVATE)
-        if (appEnabled.getInt(getString(R.string.app_enabled_key), 1) != 1) {
-            toggleActiveButton.text = getString(R.string.enable_app)
-        }
-        toggleActiveButton.setOnClickListener {
-            if (appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1) {
-                with (appEnabled.edit()) {
-                    putInt(getString(R.string.app_enabled_key), 0)
-                    commit()
-                }
-                toggleActiveButton.text = getString(R.string.enable_app)
-            } else {
+
+        activeSwitch.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
+
+        activeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 with (appEnabled.edit()) {
                     putInt(getString(R.string.app_enabled_key), 1)
                     commit()
                 }
-                toggleActiveButton.text = getString(R.string.disable_app)
+            } else {
+                with (appEnabled.edit()) {
+                    putInt(getString(R.string.app_enabled_key), 0)
+                    commit()
+                }
             }
         }
     }

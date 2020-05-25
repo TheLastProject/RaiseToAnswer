@@ -19,7 +19,9 @@ class RaiseToAnswerSensorEventListener(sensorManager: SensorManager, proximitySe
 
     private val mToneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
 
-    // 5 beeps in a row = pick up
+    // First 2 beeps: Good start state found (proximity not near)
+    // 3 more beeps: Pickup
+    private var resetBeepsDone = 0
     private var pickupBeepsDone = 0
     private var mTimer: Timer? = null
 
@@ -43,11 +45,22 @@ class RaiseToAnswerSensorEventListener(sensorManager: SensorManager, proximitySe
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
 
+                    if (resetBeepsDone < 2) {
+                        if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {
+                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            resetBeepsDone += 1
+                        } else {
+                            resetBeepsDone = 0
+                        }
+
+                        return
+                    }
+
                     if (inclinationValue != null && inclinationValue <= 60 && inclinationValue >= 0 &&
                         proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
                         mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                         pickupBeepsDone += 1
-                        if (pickupBeepsDone == 5) {
+                        if (pickupBeepsDone == 3) {
                             callback.invoke()
                             stop()
                         }
@@ -64,6 +77,8 @@ class RaiseToAnswerSensorEventListener(sensorManager: SensorManager, proximitySe
             mTimer?.cancel()
         } catch (_: IllegalStateException) {}
         mSensorManager!!.unregisterListener(this)
+        resetBeepsDone = 0
+        pickupBeepsDone = 0
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
