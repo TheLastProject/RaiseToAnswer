@@ -6,5 +6,5 @@
     <string name="permissions_needed">App can\'t work without these permission, sorry…</string>
     <string name="hold_to_ear_to_answer">Hold your phone to your ear to answer</string>
     <string name="raise_to_answer_header">Raise to Answer</string>
-    <string name="raise_to_answer_explanation">You will hear 2 beeps when the app is ready to take the call. Then, simply hold the phone to your ear in an upright position to answer the call. The app will beep 3 more time to signify it detecting proximity to your ear.</string>
+    <string name="raise_to_answer_explanation">You will hear 2 beeps when the app is ready to take the call. Then, simply hold the phone to your ear in an upright position to answer the call. The app will beep 3 more times to signify it detecting proximity to your ear.</string>
 </resources>
