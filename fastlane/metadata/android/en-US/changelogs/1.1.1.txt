@@ -1,0 +1,1 @@
+Fix answering not working if app is not in foreground

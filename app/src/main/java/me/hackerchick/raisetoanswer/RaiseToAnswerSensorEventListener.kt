@@ -1,19 +1,30 @@
 package me.hackerchick.raisetoanswer
 
+import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
+import android.os.IBinder
 import android.util.Log
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-class RaiseToAnswerSensorEventListener(sensorManager: SensorManager, proximitySensor: Sensor, accelerometer: Sensor) : SensorEventListener {
+
+class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
+    companion object {
+        var instance: RaiseToAnswerSensorEventListener? = null
+    }
+
+    private val ONGOING_NOTIFICATION_ID = 1
     private val SENSOR_SENSITIVITY = 4
+
     private var mProximityValue: Float? = null
     private var mInclinationValue: Int? = null
 
@@ -25,14 +36,45 @@ class RaiseToAnswerSensorEventListener(sensorManager: SensorManager, proximitySe
     private var pickupBeepsDone = 0
     private var mTimer: Timer? = null
 
+    private var mContext: Context? = null
     private var mSensorManager: SensorManager? = null
     private var mProximitySensor: Sensor? = null
     private var mAccelerometer: Sensor? = null
 
-    init {
+    override fun onCreate() {
+        Log.d("TEST", "Creating")
+        instance = this
+        Log.d("TEST", "Created")
+    }
+
+    override fun onBind(p0: Intent?): IBinder? { return null }
+
+    fun bind(context: Context, sensorManager: SensorManager, proximitySensor: Sensor, accelerometer: Sensor) {
+        mContext = context
         mSensorManager = sensorManager
         mProximitySensor = proximitySensor
         mAccelerometer = accelerometer
+
+        val pendingIntent: PendingIntent =
+            Intent(this, RaiseToAnswerSensorEventListener::class.java).let { notificationIntent ->
+                PendingIntent.getActivity(mContext, 0, notificationIntent, 0)
+            }
+
+        val channel = NotificationChannel("incoming_call", getString(R.string.incoming_call_service), NotificationManager.IMPORTANCE_LOW)
+        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        service.createNotificationChannel(channel)
+
+        val notification: Notification = Notification.Builder(mContext, "incoming_call")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentText(getText(R.string.raise_to_answer_is_enabled))
+            .setContentIntent(pendingIntent)
+            .build()
+
+        startForeground(ONGOING_NOTIFICATION_ID, notification)
+    }
+
+    fun disable() {
+        stopForeground(true)
     }
 
     fun waitUntilEarPickup(callback: () -> Unit) {
@@ -44,6 +86,8 @@ class RaiseToAnswerSensorEventListener(sensorManager: SensorManager, proximitySe
                 override fun run() {
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
+
+                    Log.d("TESTTEST", inclinationValue.toString())
 
                     if (resetBeepsDone < 2) {
                         if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {

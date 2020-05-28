@@ -2,26 +2,32 @@ package me.hackerchick.raisetoanswer
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import java.util.*
+import java.util.concurrent.ScheduledThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
-    private var mSensorEventListener: RaiseToAnswerSensorEventListener? = null
+    private val setListenerState: Stack<Boolean> = Stack()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val intent = Intent(this, RaiseToAnswerSensorEventListener::class.java)
+        this.startService(intent)
 
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS), PERMISSION_REQUEST_READ_PHONE_STATE)
 
@@ -29,18 +35,14 @@ class MainActivity : AppCompatActivity() {
         var proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
         var accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-        mSensorEventListener = RaiseToAnswerSensorEventListener(sensorManager, proximitySensor, accelerometer)
-
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.hold_to_ear_test), Toast.LENGTH_SHORT).show()
-            mSensorEventListener!!.waitUntilEarPickup {}
+            RaiseToAnswerSensorEventListener.instance!!.waitUntilEarPickup { }
         }
 
         val activeSwitch: Switch = findViewById(R.id.raise_to_answer_switch)
         val appEnabled = getSharedPreferences(getString(R.string.app_enabled_key), Context.MODE_PRIVATE)
-
-        activeSwitch.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
 
         activeSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -54,7 +56,32 @@ class MainActivity : AppCompatActivity() {
                     commit()
                 }
             }
+            setListenerState.push(isChecked)
         }
+
+        activeSwitch.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
+
+        val executor = ScheduledThreadPoolExecutor(1)
+        executor.scheduleWithFixedDelay({
+            var listener: RaiseToAnswerSensorEventListener? = RaiseToAnswerSensorEventListener.instance
+
+            if (listener == null)
+                return@scheduleWithFixedDelay
+
+            while (!setListenerState.empty()) {
+                var value = setListenerState.pop()
+                if (value) {
+                    listener.bind(
+                        this,
+                        sensorManager,
+                        proximitySensor,
+                        accelerometer
+                    )
+                } else {
+                    listener.disable()
+                }
+            }
+        }, 0L, 1000, TimeUnit.MILLISECONDS)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
