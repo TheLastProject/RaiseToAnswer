@@ -10,7 +10,6 @@ import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.IBinder
-import android.util.Log
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.roundToInt
@@ -42,9 +41,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var mAccelerometer: Sensor? = null
 
     override fun onCreate() {
-        Log.d("TEST", "Creating")
         instance = this
-        Log.d("TEST", "Created")
     }
 
     override fun onBind(p0: Intent?): IBinder? { return null }
@@ -86,8 +83,6 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                 override fun run() {
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
-
-                    Log.d("TESTTEST", inclinationValue.toString())
 
                     if (resetBeepsDone < 2) {
                         if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {
