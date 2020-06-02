@@ -9,4 +9,5 @@
     <string name="raise_to_answer_explanation">Je zal 2 piepjes horen wanneer de app klaar is om een gesprek op te nemen. Hou dan de telefoon dan rechtop en tegen je oor aan om op te nemen. De app zal nog 3 maal piepen om de detectie te bevestigen.</string>
     <string name="incoming_call_service">Dienst voor inkomende gesprekken</string>
     <string name="raise_to_answer_is_enabled">Raise To Answer is ingeschakeld</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>

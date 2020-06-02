@@ -9,4 +9,5 @@
     <string name="raise_to_answer_explanation">You will hear 2 beeps when the app is ready to take the call. Then, simply hold the phone to your ear in an upright position to answer the call. The app will beep 3 more times to signify it detecting proximity to your ear.</string>
     <string name="incoming_call_service">Incoming call service</string>
     <string name="raise_to_answer_is_enabled">Raise To Answer is enabled</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>
