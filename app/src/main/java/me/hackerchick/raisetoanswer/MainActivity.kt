@@ -19,12 +19,13 @@ import androidx.core.app.ActivityCompat
 import java.util.*
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
+import kotlin.NoSuchElementException
 
 
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
-    private val setListenerState: Stack<Boolean> = Stack()
+    private val setListenerState: Queue<Boolean> = LinkedList<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     commit()
                 }
             }
-            setListenerState.push(isChecked)
+            setListenerState.add(isChecked)
         }
 
         activeSwitch.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
@@ -72,16 +73,21 @@ class MainActivity : AppCompatActivity() {
             if (listener == null)
                 return@scheduleWithFixedDelay
 
-            while (!setListenerState.empty()) {
-                var value = setListenerState.pop()
-                if (value) {
-                    listener.bind(
-                        this,
-                        sensorManager,
-                        proximitySensor,
-                        accelerometer
-                    )
-                } else {
+            var value: Boolean? = null
+
+            while (true) {
+                try {
+                    value = setListenerState.remove()
+                } catch (_: NoSuchElementException) {
+                    break
+                }
+            }
+
+            when (value) {
+                true -> {
+                    listener.bind(this, sensorManager, proximitySensor, accelerometer)
+                }
+                false -> {
                     listener.disable()
                 }
             }
