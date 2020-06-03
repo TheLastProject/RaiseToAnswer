@@ -53,7 +53,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         mAccelerometer = accelerometer
 
         val pendingIntent: PendingIntent =
-            Intent(this, RaiseToAnswerSensorEventListener::class.java).let { notificationIntent ->
+            Intent(this, MainActivity::class.java).let { notificationIntent ->
                 PendingIntent.getActivity(mContext, 0, notificationIntent, 0)
             }
 
