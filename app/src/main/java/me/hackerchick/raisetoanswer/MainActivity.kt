@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             RaiseToAnswerSensorEventListener.instance!!.waitUntilEarPickup { }
         }
 
-        val activeSwitch: Switch = findViewById(R.id.raise_to_answer_switch)
+        val activeSwitch: Switch = findViewById<Switch>(R.id.raise_to_answer_switch)
         val appEnabled = getSharedPreferences(getString(R.string.app_enabled_key), Context.MODE_PRIVATE)
 
         activeSwitch.setOnCheckedChangeListener { _, isChecked ->
