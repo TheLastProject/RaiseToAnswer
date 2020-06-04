@@ -24,9 +24,6 @@ class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
     @SuppressLint("MissingPermission")
     override fun onCallStateChanged(state: Int, incomingNumber: String) {
         when (state) {
-            TelephonyManager.CALL_STATE_IDLE -> {
-                RaiseToAnswerSensorEventListener.instance!!.stop()
-            }
             TelephonyManager.CALL_STATE_RINGING -> {
                 RaiseToAnswerSensorEventListener.instance!!.waitUntilEarPickup{ ->
                     // Pickup triggered
@@ -34,6 +31,9 @@ class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
                     tm.acceptRingingCall()
                 }
                 Toast.makeText(mContext, mContext!!.getString(R.string.hold_to_ear_to_answer), Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                RaiseToAnswerSensorEventListener.instance!!.stop()
             }
         }
     }
