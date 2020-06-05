@@ -10,6 +10,7 @@ import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.IBinder
+import android.util.Log
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.roundToInt
@@ -95,8 +96,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         return
                     }
 
-                    if (inclinationValue != null && inclinationValue <= 60 && inclinationValue >= 0 &&
-                        proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
+                    // -90 to 0 = Right ear, 0 to 90 = Left ear
+                    if (inclinationValue != null && inclinationValue in -90..90
+                        && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
                         mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                         pickupBeepsDone += 1
                         if (pickupBeepsDone == 3) {
