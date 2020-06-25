@@ -33,7 +33,9 @@ class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
                 Toast.makeText(mContext, mContext!!.getString(R.string.hold_to_ear_to_answer), Toast.LENGTH_LONG).show()
             }
             else -> {
-                RaiseToAnswerSensorEventListener.instance!!.stop()
+                // Reported possible NullPointerException in Google Play
+                // While I'm not sure why, if the event listener doesn't exist we don't need to stop it anyway
+                RaiseToAnswerSensorEventListener.instance?.stop()
             }
         }
     }
