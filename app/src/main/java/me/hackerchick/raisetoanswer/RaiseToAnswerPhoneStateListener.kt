@@ -25,7 +25,7 @@ class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
     override fun onCallStateChanged(state: Int, incomingNumber: String) {
         when (state) {
             TelephonyManager.CALL_STATE_RINGING -> {
-                RaiseToAnswerSensorEventListener.instance!!.waitUntilEarPickup{ ->
+                RaiseToAnswerSensorEventListener.instance?.waitUntilEarPickup{ ->
                     // Pickup triggered
                     val tm = mContext!!.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
                     tm.acceptRingingCall()
