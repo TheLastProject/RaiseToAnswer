@@ -10,4 +10,5 @@
     <string name="incoming_call_service">Incoming call service</string>
     <string name="raise_to_answer_is_enabled">Raise To Answer is enabled</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="could_not_bind_sensor">Failed registering sensors, your device may lack a proximity sensor or accelerometer. Raise To Answer cannot continue.</string>
 </resources>

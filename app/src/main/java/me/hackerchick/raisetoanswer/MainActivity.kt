@@ -40,6 +40,12 @@ class MainActivity : AppCompatActivity() {
         var proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
         var accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
+        if (proximitySensor == null || accelerometer == null) {
+            Toast.makeText(applicationContext, getString(R.string.could_not_bind_sensor), Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.hold_to_ear_test), Toast.LENGTH_SHORT).show()
