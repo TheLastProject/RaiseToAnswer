@@ -26,7 +26,7 @@ class RaiseToAnswerCallReceiver : BroadcastReceiver() {
     }
 
     fun onDestroy() {
-        mTelephony!!.listen(mPhoneListener, PhoneStateListener.LISTEN_NONE)
+        mTelephony?.listen(mPhoneListener, PhoneStateListener.LISTEN_NONE)
     }
 
 }

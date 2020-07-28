@@ -41,6 +41,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var mProximitySensor: Sensor? = null
     private var mAccelerometer: Sensor? = null
 
+    private var bound: Boolean = false
+
     override fun onCreate() {
         instance = this
     }
@@ -69,13 +71,17 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
             .build()
 
         startForeground(ONGOING_NOTIFICATION_ID, notification)
+        bound = true
     }
 
     fun disable() {
+        bound = false
         stopForeground(true)
     }
 
     fun waitUntilEarPickup(callback: () -> Unit) {
+        if (!bound) return;
+
         mSensorManager!!.registerListener(this, mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         mTimer = Timer()
@@ -114,10 +120,11 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     }
 
     fun stop() {
+        bound = false
         try {
             mTimer?.cancel()
         } catch (_: IllegalStateException) {}
-        mSensorManager!!.unregisterListener(this)
+        mSensorManager?.unregisterListener(this)
         resetBeepsDone = 0
         pickupBeepsDone = 0
     }

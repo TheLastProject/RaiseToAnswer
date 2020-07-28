@@ -68,9 +68,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             setListenerState.add(isChecked)
+            testButton.isEnabled = isChecked
         }
 
         activeSwitch.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
+        testButton.isEnabled = activeSwitch.isChecked
 
         val executor = ScheduledThreadPoolExecutor(1)
         executor.scheduleWithFixedDelay({
