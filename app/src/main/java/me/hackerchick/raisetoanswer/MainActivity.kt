@@ -12,7 +12,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.Switch
+import android.widget.CheckedTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -46,16 +46,18 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val testButton: Button = findViewById(R.id.test_button)
+        val testButton: Button = findViewById(R.id.raise_to_answer_test_button)
         testButton.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.hold_to_ear_test), Toast.LENGTH_SHORT).show()
             RaiseToAnswerSensorEventListener.instance!!.waitUntilEarPickup { }
         }
 
-        val activeSwitch: Switch = findViewById<Switch>(R.id.raise_to_answer_switch)
+        val raiseOption: CheckedTextView = findViewById<CheckedTextView>(R.id.raise_to_answer_option)
         val appEnabled = getSharedPreferences(getString(R.string.app_enabled_key), Context.MODE_PRIVATE)
 
-        activeSwitch.setOnCheckedChangeListener { _, isChecked ->
+        raiseOption.setOnClickListener { _->
+            raiseOption.toggle()
+            var isChecked = raiseOption.isChecked
             if (isChecked) {
                 with (appEnabled.edit()) {
                     putInt(getString(R.string.app_enabled_key), 1)
@@ -67,12 +69,13 @@ class MainActivity : AppCompatActivity() {
                     commit()
                 }
             }
+
             setListenerState.add(isChecked)
             testButton.isEnabled = isChecked
         }
 
-        activeSwitch.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
-        testButton.isEnabled = activeSwitch.isChecked
+        raiseOption.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
+        testButton.isEnabled = raiseOption.isChecked
 
         val executor = ScheduledThreadPoolExecutor(1)
         executor.scheduleWithFixedDelay({

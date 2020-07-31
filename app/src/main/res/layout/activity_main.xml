@@ -21,30 +21,34 @@
         android:id="@+id/raise_to_answer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/raise_to_answer_explanation"
+        android:text="@string/select_features"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/raise_to_answer_switch"
+        app:layout_constraintBottom_toBottomOf="@id/raise_to_answer_option"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/raise_to_answer_header" />
 
-    <Switch
-        android:id="@+id/raise_to_answer_switch"
-        android:layout_width="wrap_content"
+    <CheckedTextView
+        android:id="@+id/raise_to_answer_option"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/test_button"
+        android:checkMark="@drawable/checkbox"
+        android:text="@string/raise_to_answer_option"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/raise_to_answer_test_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/raise_to_answer_text" />
+        app:layout_constraintTop_toTopOf="@id/raise_to_answer_header" />
 
     <Button
-        android:id="@+id/test_button"
+        android:id="@+id/raise_to_answer_test_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/test"
+        android:text="@string/test_answering"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/raise_to_answer_switch" />
+        app:layout_constraintTop_toTopOf="@id/raise_to_answer_option" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
