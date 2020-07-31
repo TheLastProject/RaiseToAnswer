@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Raise To Answer</string>
+    <string name="app_enabled_key" translatable="false">app_enabled</string>
+    <string name="hold_to_ear_test">Portez le téléphone à votre oreille…</string>
+    <string name="test">Test</string>
+    <string name="permissions_needed">L\'application ne peut pas fonctionner sans ces autorisations, désolé…</string>
+    <string name="hold_to_ear_to_answer">Portez le téléphone à votre oreille pour répondre</string>
+    <string name="raise_to_answer_header">Soulever pour répondre</string>
+    <string name="raise_to_answer_explanation">Vous entendrez deux bips lorsque l\'application est prête à prendre l\'appel. Ensuite, il vous suffit de porter le téléphone à votre oreille en position verticale pour répondre à l\'appel. L\'application émettra trois bips supplémentaires pour indiquer qu\'elle détecte la proximité de votre oreille.</string>
+    <string name="incoming_call_service">Service d\'appel entrant</string>
+    <string name="raise_to_answer_is_enabled">La fonction "Soulever pour répondre" est activée</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="could_not_bind_sensor">Échec de détection des capteurs, votre appareil peut ne pas être équipé d\'un capteur de proximité ou d\'un accéléromètre. La fonction "Soulever pour répondre" ne peut pas être activée.</string>
+</resources>
