@@ -8,12 +8,14 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckedTextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import java.util.*
@@ -25,7 +27,8 @@ import kotlin.NoSuchElementException
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
-    private val setListenerState: Queue<Boolean> = LinkedList<Boolean>()
+    private val setListenerRaiseToAnswerState: Queue<Boolean> = LinkedList<Boolean>()
+    private val setListenerFlipOverToDeclineState: Queue<Boolean> = LinkedList<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,36 +49,45 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val testButton: Button = findViewById(R.id.raise_to_answer_test_button)
+        val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.hold_to_ear_test), Toast.LENGTH_SHORT).show()
-            RaiseToAnswerSensorEventListener.instance!!.waitUntilEarPickup { }
+            RaiseToAnswerSensorEventListener.instance!!.waitUntilDesiredState(
+                pickupCallback = {
+                    Looper.prepare()
+                    AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.test_result))
+                        .setMessage(getString(R.string.detected_raise_to_answer))
+                        .show();
+                    Looper.loop()
+                },
+                declineCallback = {
+                    Looper.prepare()
+                    AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.test_result))
+                        .setMessage(getString(R.string.detected_flip_over))
+                        .show()
+                    Looper.loop()
+                }
+            )
         }
 
         val raiseOption: CheckedTextView = findViewById<CheckedTextView>(R.id.raise_to_answer_option)
-        val appEnabled = getSharedPreferences(getString(R.string.app_enabled_key), Context.MODE_PRIVATE)
+        val flipOverOption: CheckedTextView = findViewById<CheckedTextView>(R.id.flip_over_to_decline_option)
 
         raiseOption.setOnClickListener { _->
-            raiseOption.toggle()
-            var isChecked = raiseOption.isChecked
-            if (isChecked) {
-                with (appEnabled.edit()) {
-                    putInt(getString(R.string.app_enabled_key), 1)
-                    commit()
-                }
-            } else {
-                with (appEnabled.edit()) {
-                    putInt(getString(R.string.app_enabled_key), 0)
-                    commit()
-                }
-            }
-
-            setListenerState.add(isChecked)
-            testButton.isEnabled = isChecked
+            setRaiseOption(!raiseOption.isChecked)
         }
 
-        raiseOption.isChecked = appEnabled.getInt(getString(R.string.app_enabled_key), 1) == 1
-        testButton.isEnabled = raiseOption.isChecked
+        flipOverOption.setOnClickListener { _->
+            setFlipOverOption(!flipOverOption.isChecked)
+        }
+
+        val raiseEnabled = getSharedPreferences(getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
+        val flipOverEnabled = getSharedPreferences(getString(R.string.flip_over_enabled_key), Context.MODE_PRIVATE)
+
+        setRaiseOption(raiseEnabled.getInt(getString(R.string.raise_enabled_key), 1) == 1)
+        setFlipOverOption(flipOverEnabled.getInt(getString(R.string.flip_over_enabled_key), 0) == 1)
 
         val executor = ScheduledThreadPoolExecutor(1)
         executor.scheduleWithFixedDelay({
@@ -84,25 +96,46 @@ class MainActivity : AppCompatActivity() {
             if (listener == null)
                 return@scheduleWithFixedDelay
 
-            var value: Boolean? = null
+            var raiseStateEnabled: Boolean? = null
+            var flipOverStateEnabled: Boolean? = null
 
+            // Get RaiseEnabled state
             while (true) {
                 try {
-                    value = setListenerState.remove()
+                    raiseStateEnabled = setListenerRaiseToAnswerState.remove()
                 } catch (_: NoSuchElementException) {
                     break
                 }
             }
 
-            when (value) {
-                true -> {
-                    listener.bind(this, sensorManager, proximitySensor, accelerometer)
-                }
-                false -> {
-                    listener.disable()
+            System.out.println("R :$raiseStateEnabled")
+
+            // Get FlipOverEnabled state
+            while (true) {
+                try {
+                    flipOverStateEnabled = setListenerFlipOverToDeclineState.remove()
+                } catch (_: NoSuchElementException) {
+                    break
                 }
             }
-        }, 0L, 1000, TimeUnit.MILLISECONDS)
+
+            System.out.println("F :$flipOverStateEnabled")
+
+            if (raiseStateEnabled != null) {
+                listener.watchPickupState(raiseStateEnabled)
+            }
+            if (flipOverStateEnabled != null) {
+                listener.watchDeclineState(flipOverStateEnabled)
+            }
+
+            if (listener.pickupState() || listener.declineState()) {
+                listener.bind(this, sensorManager, proximitySensor, accelerometer)
+                testButton.isEnabled = true
+            } else {
+                listener.disable()
+                testButton.isEnabled = false
+            }
+        }, 0L, 200, TimeUnit.MILLISECONDS)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -134,5 +167,29 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setRaiseOption(value: Boolean) {
+        val raiseOption: CheckedTextView = findViewById<CheckedTextView>(R.id.raise_to_answer_option)
+        raiseOption.isChecked = value
+
+        val raiseEnabled = getSharedPreferences(getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
+        with (raiseEnabled.edit()) {
+            putInt(getString(R.string.raise_enabled_key), if (value) 1 else 0)
+            commit()
+        }
+        setListenerRaiseToAnswerState.add(value)
+    }
+
+    private fun setFlipOverOption(value: Boolean) {
+        val flipOverOption: CheckedTextView = findViewById<CheckedTextView>(R.id.flip_over_to_decline_option)
+        flipOverOption.isChecked = value
+
+        val flipOverEnabled = getSharedPreferences(getString(R.string.flip_over_enabled_key), Context.MODE_PRIVATE)
+        with (flipOverEnabled.edit()) {
+            putInt(getString(R.string.flip_over_enabled_key), if (value) 1 else 0)
+            commit()
+        }
+        setListenerFlipOverToDeclineState.add(value)
     }
 }

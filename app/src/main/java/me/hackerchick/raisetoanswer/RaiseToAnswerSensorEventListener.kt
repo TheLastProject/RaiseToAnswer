@@ -22,6 +22,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         var instance: RaiseToAnswerSensorEventListener? = null
     }
 
+    private var pickupEnabled = false
+    private var declineEnabled = false
+
     private val ONGOING_NOTIFICATION_ID = 1
     private val SENSOR_SENSITIVITY = 4
 
@@ -31,9 +34,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private val mToneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
 
     // First 2 beeps: Good start state found (proximity not near)
-    // 3 more beeps: Pickup
+    // 3 more beeps: Pickup / Decline
     private var resetBeepsDone = 0
     private var pickupBeepsDone = 0
+    private var declineBeepsDone = 0
     private var mTimer: Timer? = null
 
     private var mContext: Context? = null
@@ -74,12 +78,28 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         bound = true
     }
 
+    fun watchPickupState(state: Boolean) {
+        pickupEnabled = state
+    }
+
+    fun watchDeclineState(state: Boolean) {
+        declineEnabled = state
+    }
+
+    fun pickupState(): Boolean {
+        return pickupEnabled
+    }
+
+    fun declineState(): Boolean {
+        return declineEnabled
+    }
+
     fun disable() {
         bound = false
         stopForeground(true)
     }
 
-    fun waitUntilEarPickup(callback: () -> Unit) {
+    fun waitUntilDesiredState(pickupCallback: () -> Unit, declineCallback: () -> Unit) {
         if (!bound) return;
 
         mSensorManager!!.registerListener(this, mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
@@ -102,17 +122,38 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         return
                     }
 
-                    // -90 to 0 = Right ear, 0 to 90 = Left ear
-                    if (inclinationValue != null && inclinationValue in -90..90
-                        && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
-                        mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
-                        pickupBeepsDone += 1
-                        if (pickupBeepsDone == 3) {
-                            callback.invoke()
-                            stop()
+                    var hasRegistered = false
+
+                    if (pickupEnabled) {
+                        // -90 to 0 = Right ear, 0 to 90 = Left ear
+                        if (inclinationValue != null && inclinationValue in -90..90
+                            && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY
+                        ) {
+                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            hasRegistered = true
+                            pickupBeepsDone += 1
+                            if (pickupBeepsDone == 3) {
+                                pickupCallback.invoke()
+                                stop()
+                            }
+                        } else {
+                            pickupBeepsDone = 0
                         }
-                    } else {
-                        pickupBeepsDone = 0
+                    }
+
+                    if (declineEnabled && !hasRegistered) {
+                        // Proximity = 0 means phone is face-down
+                        if ( proximityValue == 0.0f )
+                        {
+                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            declineBeepsDone += 1
+                            if (declineBeepsDone == 3) {
+                                declineCallback.invoke()
+                                stop()
+                            }
+                        } else {
+                            declineBeepsDone = 0
+                        }
                     }
                 }
             }, 400, 400

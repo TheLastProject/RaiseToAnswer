@@ -1,13 +1,8 @@
 package me.hackerchick.raisetoanswer
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.hardware.Sensor
-import android.hardware.SensorManager
+import android.provider.Settings.Global.getString
 import android.telecom.TelecomManager
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
@@ -25,12 +20,18 @@ class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
     override fun onCallStateChanged(state: Int, incomingNumber: String) {
         when (state) {
             TelephonyManager.CALL_STATE_RINGING -> {
-                RaiseToAnswerSensorEventListener.instance?.waitUntilEarPickup{ ->
-                    // Pickup triggered
-                    val tm = mContext!!.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-                    tm.acceptRingingCall()
-                }
-                Toast.makeText(mContext, mContext!!.getString(R.string.hold_to_ear_to_answer), Toast.LENGTH_LONG).show()
+                RaiseToAnswerSensorEventListener.instance?.waitUntilDesiredState(
+                    pickupCallback = {
+                        // Pickup triggered
+                        val tm = mContext!!.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+                        tm.acceptRingingCall()
+                    },
+                    declineCallback = {
+                        // Decline triggered
+                        val tm = mContext!!.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+                        tm.silenceRinger()
+                    }
+                )
             }
             else -> {
                 // Reported possible NullPointerException in Google Play
