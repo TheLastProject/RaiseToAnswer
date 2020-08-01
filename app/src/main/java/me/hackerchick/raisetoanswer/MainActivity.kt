@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         var sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         var proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
         var accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        var magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         if (proximitySensor == null || accelerometer == null) {
             Toast.makeText(applicationContext, getString(R.string.could_not_bind_sensor), Toast.LENGTH_SHORT).show()
@@ -51,8 +52,16 @@ class MainActivity : AppCompatActivity() {
 
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
-            Toast.makeText(applicationContext, getString(R.string.hold_to_ear_test), Toast.LENGTH_SHORT).show()
-            RaiseToAnswerSensorEventListener.instance!!.waitUntilDesiredState(
+            var listener = RaiseToAnswerSensorEventListener.instance!!
+            System.out.println(listener.pickupState())
+            System.out.println(listener.declineState())
+            if (!listener.pickupState() && !listener.declineState()) {
+                Toast.makeText(applicationContext, getString(R.string.enable_at_least_one_option), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            Toast.makeText(applicationContext, getString(R.string.test_started), Toast.LENGTH_SHORT).show()
+            listener.waitUntilDesiredState(
                 pickupCallback = {
                     Looper.prepare()
                     AlertDialog.Builder(this)
@@ -87,7 +96,17 @@ class MainActivity : AppCompatActivity() {
         val flipOverEnabled = getSharedPreferences(getString(R.string.flip_over_enabled_key), Context.MODE_PRIVATE)
 
         setRaiseOption(raiseEnabled.getInt(getString(R.string.raise_enabled_key), 1) == 1)
-        setFlipOverOption(flipOverEnabled.getInt(getString(R.string.flip_over_enabled_key), 0) == 1)
+        if (android.os.Build.VERSION.SDK_INT >= 28) {
+            setFlipOverOption(
+                flipOverEnabled.getInt(
+                    getString(R.string.flip_over_enabled_key),
+                    0
+                ) == 1
+            )
+        } else {
+            setFlipOverOption(false)
+            flipOverOption.isEnabled = false
+        }
 
         val executor = ScheduledThreadPoolExecutor(1)
         executor.scheduleWithFixedDelay({
@@ -108,8 +127,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            System.out.println("R :$raiseStateEnabled")
-
             // Get FlipOverEnabled state
             while (true) {
                 try {
@@ -119,8 +136,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            System.out.println("F :$flipOverStateEnabled")
-
             if (raiseStateEnabled != null) {
                 listener.watchPickupState(raiseStateEnabled)
             }
@@ -129,11 +144,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (listener.pickupState() || listener.declineState()) {
-                listener.bind(this, sensorManager, proximitySensor, accelerometer)
-                testButton.isEnabled = true
+                listener.bind(this, sensorManager, proximitySensor, accelerometer, magnetometer)
             } else {
                 listener.disable()
-                testButton.isEnabled = false
             }
         }, 0L, 200, TimeUnit.MILLISECONDS)
     }

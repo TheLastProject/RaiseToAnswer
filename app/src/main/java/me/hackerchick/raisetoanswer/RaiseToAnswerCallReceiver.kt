@@ -13,11 +13,6 @@ class RaiseToAnswerCallReceiver : BroadcastReceiver() {
     private var mPhoneListener: RaiseToAnswerPhoneStateListener? = null
 
     override fun onReceive(context: Context, intent: Intent?) {
-        if (context.getSharedPreferences(context.getString(R.string.app_enabled_key), Context.MODE_PRIVATE).getInt(context.getString(R.string.app_enabled_key), 1) != 1) {
-            // Don't do anything if app is set to "disabled"
-            return
-        }
-
         mPhoneListener = RaiseToAnswerPhoneStateListener(context)
 
         mTelephony = context

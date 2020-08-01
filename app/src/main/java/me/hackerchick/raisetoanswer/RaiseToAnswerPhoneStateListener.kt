@@ -2,11 +2,9 @@ package me.hackerchick.raisetoanswer
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.provider.Settings.Global.getString
 import android.telecom.TelecomManager
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
-import android.widget.Toast
 
 
 class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
@@ -29,7 +27,7 @@ class RaiseToAnswerPhoneStateListener(context: Context) : PhoneStateListener() {
                     declineCallback = {
                         // Decline triggered
                         val tm = mContext!!.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-                        tm.silenceRinger()
+                        tm.endCall()
                     }
                 )
             }

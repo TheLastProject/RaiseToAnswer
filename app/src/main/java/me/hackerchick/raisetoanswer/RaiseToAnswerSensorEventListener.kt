@@ -28,6 +28,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private val ONGOING_NOTIFICATION_ID = 1
     private val SENSOR_SENSITIVITY = 4
 
+    private var mAccelerometerValues: FloatArray = FloatArray(3)
+    private var mMagnetometerValues: FloatArray = FloatArray(3)
     private var mProximityValue: Float? = null
     private var mInclinationValue: Int? = null
 
@@ -44,6 +46,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var mSensorManager: SensorManager? = null
     private var mProximitySensor: Sensor? = null
     private var mAccelerometer: Sensor? = null
+    private var mMagnetometer: Sensor? = null
 
     private var bound: Boolean = false
 
@@ -53,11 +56,12 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
     override fun onBind(p0: Intent?): IBinder? { return null }
 
-    fun bind(context: Context, sensorManager: SensorManager, proximitySensor: Sensor, accelerometer: Sensor) {
+    fun bind(context: Context, sensorManager: SensorManager, proximitySensor: Sensor, accelerometer: Sensor, magnetometer: Sensor) {
         mContext = context
         mSensorManager = sensorManager
         mProximitySensor = proximitySensor
         mAccelerometer = accelerometer
+        mMagnetometer = magnetometer
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
@@ -95,7 +99,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     }
 
     fun disable() {
-        bound = false
+        stop()
         stopForeground(true)
     }
 
@@ -104,6 +108,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
         mSensorManager!!.registerListener(this, mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        mSensorManager!!.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL)
         mTimer = Timer()
         mTimer!!.scheduleAtFixedRate(
             object : TimerTask() {
@@ -111,9 +116,28 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
 
+                    var orientation = FloatArray(3)
+                    if (mAccelerometerValues.isNotEmpty() && mMagnetometerValues.isNotEmpty()) {
+                        var rotationMatrix = FloatArray(9)
+                        if (!SensorManager.getRotationMatrix(
+                                rotationMatrix,
+                                null,
+                                mAccelerometerValues,
+                                mMagnetometerValues
+                            )
+                        ) {
+                            return
+                        }
+                        SensorManager.getOrientation(rotationMatrix, orientation)
+                    }
+
+                    if (orientation.isEmpty()) {
+                        return
+                    }
+
                     if (resetBeepsDone < 2) {
                         if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {
-                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
                             resetBeepsDone += 1
                         } else {
                             resetBeepsDone = 0
@@ -124,17 +148,28 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
                     var hasRegistered = false
 
+                    var azimuth = Math.toDegrees(orientation[0].toDouble()) + 180.0
+                    var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
+                    var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
+
+                    System.out.println("Az: $azimuth")
+                    System.out.println("Pi: $pitch")
+                    System.out.println("Ro: $roll")
+
                     if (pickupEnabled) {
-                        // -90 to 0 = Right ear, 0 to 90 = Left ear
-                        if (inclinationValue != null && inclinationValue in -90..90
-                            && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY
+                        if (inclinationValue != null
+                            && inclinationValue in -90..90
+                            && proximityValue != null
+                            && proximityValue >= -SENSOR_SENSITIVITY
+                            && proximityValue <= SENSOR_SENSITIVITY
+                            && roll in 45.0..315.0
                         ) {
                             mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                             hasRegistered = true
                             pickupBeepsDone += 1
                             if (pickupBeepsDone == 3) {
-                                pickupCallback.invoke()
                                 stop()
+                                pickupCallback.invoke()
                             }
                         } else {
                             pickupBeepsDone = 0
@@ -142,14 +177,15 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     }
 
                     if (declineEnabled && !hasRegistered) {
-                        // Proximity = 0 means phone is face-down
-                        if ( proximityValue == 0.0f )
+                        if (pitch in 150.0..210.0
+                            && (roll >= 315.0 || roll <= 45.0)
+                            && proximityValue == 0.0f)
                         {
-                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            mToneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 100)
                             declineBeepsDone += 1
                             if (declineBeepsDone == 3) {
-                                declineCallback.invoke()
                                 stop()
+                                declineCallback.invoke()
                             }
                         } else {
                             declineBeepsDone = 0
@@ -168,6 +204,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         mSensorManager?.unregisterListener(this)
         resetBeepsDone = 0
         pickupBeepsDone = 0
+        declineBeepsDone = 0
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
@@ -176,6 +213,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
             mProximityValue = event.values[0]
         } else if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            mAccelerometerValues = event.values
+
             // https://stackoverflow.com/a/15149421
             val normOfG = sqrt(event.values[0] * event.values[0] + event.values[1] * event.values[1] + event.values[2] * event.values[2]);
 
@@ -190,6 +229,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     event.values[1]
                 ).toDouble()
             ).roundToInt()
+        } else if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            mMagnetometerValues = event.values
         }
     }
 }
