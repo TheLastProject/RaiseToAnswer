@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="app_enabled_key" translatable="false">app_enabled</string>
     <string name="test">Test</string>
     <string name="permissions_needed">L\'application ne peut pas fonctionner sans ces autorisations, désolé…</string>
     <string name="raise_to_answer_header">Soulever pour répondre</string>
