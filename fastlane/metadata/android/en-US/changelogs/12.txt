@@ -1,0 +1,2 @@
+Updated French translation (thanks Larnicone!)
+Increase size of feature checkboxes per Google Play accessibility guidelines
