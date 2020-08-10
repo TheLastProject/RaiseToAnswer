@@ -2,7 +2,7 @@
     <string name="app_name">Raise To Answer</string>
     <string name="test">Test</string>
     <string name="permissions_needed">App can\'t work without these permission, sorry…</string>
-    <string name="raise_to_answer_header">Raise to Answer</string>
+    <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="incoming_call_service">Incoming call service</string>
     <string name="raise_to_answer_is_enabled">Raise To Answer is enabled</string>
     <string name="privacy_policy">Privacy Policy</string>

@@ -10,6 +10,9 @@ import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.IBinder
+import android.telecom.TelecomManager
+import android.telephony.PhoneStateListener
+import android.telephony.TelephonyManager
 import android.util.Log
 import java.util.*
 import kotlin.math.atan2
@@ -43,25 +46,26 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var mTimer: Timer? = null
 
     private var mContext: Context? = null
-    private var mSensorManager: SensorManager? = null
-    private var mProximitySensor: Sensor? = null
-    private var mAccelerometer: Sensor? = null
-    private var mMagnetometer: Sensor? = null
+    private var sensorManager: SensorManager? = null
+    private var proximitySensor: Sensor? = null
+    private var accelerometer: Sensor? = null
+    private var magnetometer: Sensor? = null
 
     private var bound: Boolean = false
 
     override fun onCreate() {
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        proximitySensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        accelerometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        magnetometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+
         instance = this
     }
 
     override fun onBind(p0: Intent?): IBinder? { return null }
 
-    fun bind(context: Context, sensorManager: SensorManager, proximitySensor: Sensor, accelerometer: Sensor, magnetometer: Sensor) {
+    fun bind(context: Context) {
         mContext = context
-        mSensorManager = sensorManager
-        mProximitySensor = proximitySensor
-        mAccelerometer = accelerometer
-        mMagnetometer = magnetometer
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
@@ -80,6 +84,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
         startForeground(ONGOING_NOTIFICATION_ID, notification)
         bound = true
+    }
+
+    fun hasWorkingSensors(): Boolean {
+        return proximitySensor != null && accelerometer != null && magnetometer != null
     }
 
     fun watchPickupState(state: Boolean) {
@@ -106,9 +114,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     fun waitUntilDesiredState(pickupCallback: () -> Unit, declineCallback: () -> Unit) {
         if (!bound) return;
 
-        mSensorManager!!.registerListener(this, mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
-        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-        mSensorManager!!.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager!!.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager!!.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager!!.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL)
         mTimer = Timer()
         mTimer!!.scheduleAtFixedRate(
             object : TimerTask() {
@@ -152,10 +160,6 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
                     var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
 
-                    System.out.println("Az: $azimuth")
-                    System.out.println("Pi: $pitch")
-                    System.out.println("Ro: $roll")
-
                     if (pickupEnabled) {
                         if (inclinationValue != null
                             && inclinationValue in -90..90
@@ -197,11 +201,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     }
 
     fun stop() {
-        bound = false
         try {
             mTimer?.cancel()
         } catch (_: IllegalStateException) {}
-        mSensorManager?.unregisterListener(this)
+        sensorManager?.unregisterListener(this)
         resetBeepsDone = 0
         pickupBeepsDone = 0
         declineBeepsDone = 0

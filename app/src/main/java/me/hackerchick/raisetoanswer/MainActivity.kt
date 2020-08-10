@@ -39,22 +39,9 @@ class MainActivity : AppCompatActivity() {
 
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS), PERMISSION_REQUEST_READ_PHONE_STATE)
 
-        var sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        var proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
-        var accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        var magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-
-        if (proximitySensor == null || accelerometer == null) {
-            Toast.makeText(applicationContext, getString(R.string.could_not_bind_sensor), Toast.LENGTH_SHORT).show()
-            finish()
-            return
-        }
-
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
             var listener = RaiseToAnswerSensorEventListener.instance!!
-            System.out.println(listener.pickupState())
-            System.out.println(listener.declineState())
             if (!listener.pickupState() && !listener.declineState()) {
                 Toast.makeText(applicationContext, getString(R.string.enable_at_least_one_option), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -115,6 +102,12 @@ class MainActivity : AppCompatActivity() {
             if (listener == null)
                 return@scheduleWithFixedDelay
 
+            if (!listener.hasWorkingSensors()) {
+                Toast.makeText(applicationContext, getString(R.string.could_not_bind_sensor), Toast.LENGTH_SHORT).show()
+                finish()
+                return@scheduleWithFixedDelay
+            }
+
             var raiseStateEnabled: Boolean? = null
             var flipOverStateEnabled: Boolean? = null
 
@@ -144,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (listener.pickupState() || listener.declineState()) {
-                listener.bind(this, sensorManager, proximitySensor, accelerometer, magnetometer)
+                listener.bind(this)
             } else {
                 listener.disable()
             }
