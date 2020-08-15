@@ -24,9 +24,6 @@ import kotlin.NoSuchElementException
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
-    private val setListenerRaiseToAnswerState: Queue<Boolean> = LinkedList<Boolean>()
-    private val setListenerFlipOverToDeclineState: Queue<Boolean> = LinkedList<Boolean>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -116,7 +113,6 @@ class MainActivity : AppCompatActivity() {
         raiseFeature.isChecked = value
 
         Util.setRaiseFeatureEnabled(applicationContext, value)
-        setListenerRaiseToAnswerState.add(value)
     }
 
     private fun setFlipOverFeature(value: Boolean) {
@@ -124,7 +120,6 @@ class MainActivity : AppCompatActivity() {
         flipOverFeature.isChecked = value
 
         Util.setFlipOverFeatureEnabled(applicationContext, value)
-        setListenerFlipOverToDeclineState.add(value)
     }
 
     private fun setBeepBehaviour(value: Boolean) {
