@@ -12,49 +12,80 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/raise_to_answer_header"
-        app:layout_constraintBottom_toBottomOf="@id/raise_to_answer_text"
+        app:layout_constraintBottom_toBottomOf="@id/feature_holder"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/raise_to_answer_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_features"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/option_holder"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/raise_to_answer_header" />
-
     <LinearLayout
-        android:id="@+id/option_holder"
+        android:id="@+id/feature_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/test_button"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/behaviour_holder"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/raise_to_answer_text" >
+        app:layout_constraintTop_toTopOf="@id/raise_to_answer_header" >
+
+        <TextView
+            android:id="@+id/feature_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_features"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
 
         <CheckedTextView
-            android:id="@+id/raise_to_answer_option"
+            android:id="@+id/feature_raise_to_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checkMark="@drawable/checkbox"
             android:gravity="center_vertical"
-            android:text="@string/raise_to_answer_option"
+            android:text="@string/feature_raise_to_answer"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:minHeight="48dp"/>
 
         <CheckedTextView
-            android:id="@+id/flip_over_to_decline_option"
+            android:id="@+id/feature_flip_over_to_decline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checkMark="@drawable/checkbox"
-            android:text="@string/flip_over_to_decline_option"
+            android:text="@string/feature_flip_over_to_decline"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/behaviour_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/test_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/feature_holder" >
+
+        <TextView
+            android:id="@+id/behaviour_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_behaviour"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+
+        <CheckedTextView
+            android:id="@+id/behaviour_beep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkMark="@drawable/checkbox"
+            android:gravity="center_vertical"
+            android:text="@string/behaviour_beep"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:minHeight="48dp"/>
@@ -68,6 +99,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/option_holder" />
+        app:layout_constraintTop_toTopOf="@id/behaviour_holder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

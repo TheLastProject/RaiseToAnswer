@@ -1,5 +1,6 @@
 package me.hackerchick.raisetoanswer
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -9,11 +10,12 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.telecom.TelecomManager
-import android.telephony.PhoneStateListener
-import android.telephony.TelephonyManager
 import android.util.Log
+import android.widget.Toast
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.roundToInt
@@ -21,12 +23,11 @@ import kotlin.math.sqrt
 
 
 class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
-    companion object {
-        var instance: RaiseToAnswerSensorEventListener? = null
-    }
+    private var testMode = false
 
-    private var pickupEnabled = false
-    private var declineEnabled = false
+    private var featurePickupEnabled = false
+    private var featureDeclineEnabled = false
+    private var behaviourBeepEnabled = false
 
     private val ONGOING_NOTIFICATION_ID = 1
     private val SENSOR_SENSITIVITY = 4
@@ -45,74 +46,71 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var declineBeepsDone = 0
     private var mTimer: Timer? = null
 
-    private var mContext: Context? = null
     private var sensorManager: SensorManager? = null
     private var proximitySensor: Sensor? = null
     private var accelerometer: Sensor? = null
     private var magnetometer: Sensor? = null
 
-    private var bound: Boolean = false
+    override fun onDestroy() {
+        try {
+            mTimer?.cancel()
+        } catch (_: IllegalStateException) {}
+        sensorManager?.unregisterListener(this)
+        resetBeepsDone = 0
+        pickupBeepsDone = 0
+        declineBeepsDone = 0
 
-    override fun onCreate() {
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        proximitySensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
-        accelerometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        magnetometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        stopForeground(true)
 
-        instance = this
+        super.onDestroy()
     }
 
     override fun onBind(p0: Intent?): IBinder? { return null }
 
-    fun bind(context: Context) {
-        mContext = context
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.w("RAISETOANSWER", "GOT START COMMAND")
+        testMode = intent!!.extras!!.getBoolean("testMode")
+
+        featurePickupEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.raise_enabled_key))
+        featureDeclineEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.flip_over_enabled_key))
+        behaviourBeepEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.beep_behaviour_enabled_key))
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
-                PendingIntent.getActivity(mContext, 0, notificationIntent, 0)
+                PendingIntent.getActivity(this, 0, notificationIntent, 0)
             }
 
         val channel = NotificationChannel("incoming_call", getString(R.string.incoming_call_service), NotificationManager.IMPORTANCE_LOW)
-        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val service = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         service.createNotificationChannel(channel)
 
-        val notification: Notification = Notification.Builder(mContext, "incoming_call")
+        val notification: Notification = Notification.Builder(this, "incoming_call")
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentText(getText(R.string.raise_to_answer_is_enabled))
+            .setContentText(getText(R.string.raise_to_answer_is_listening_to_sensor_data))
             .setContentIntent(pendingIntent)
             .build()
 
         startForeground(ONGOING_NOTIFICATION_ID, notification)
-        bound = true
+        Log.w("RAISETOANSWER", "STARTED ONSTART FOREGROUND")
+
+        sensorManager = Util.getSensorManager(this)
+        val (proximitySensor, accelerometer, magnetometer) = Util.getSensors(sensorManager!!)
+        this.sensorManager = sensorManager
+        this.proximitySensor = proximitySensor
+        this.accelerometer = accelerometer
+        this.magnetometer = magnetometer
+
+        Log.w("RAISETOANSWER", "GOT SENSORS")
+
+        waitUntilDesiredState()
+
+        Log.w("RAISETOANSWER", "STARTED LOOP")
+
+        return START_NOT_STICKY
     }
 
-    fun hasWorkingSensors(): Boolean {
-        return proximitySensor != null && accelerometer != null && magnetometer != null
-    }
-
-    fun watchPickupState(state: Boolean) {
-        pickupEnabled = state
-    }
-
-    fun watchDeclineState(state: Boolean) {
-        declineEnabled = state
-    }
-
-    fun pickupState(): Boolean {
-        return pickupEnabled
-    }
-
-    fun declineState(): Boolean {
-        return declineEnabled
-    }
-
-    fun disable() {
-        stop()
-        stopForeground(true)
-    }
-
-    fun waitUntilDesiredState(pickupCallback: () -> Unit, declineCallback: () -> Unit) {
-        if (!bound) return;
+    private fun waitUntilDesiredState() {
+        val tm = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 
         sensorManager!!.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
@@ -120,6 +118,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         mTimer = Timer()
         mTimer!!.scheduleAtFixedRate(
             object : TimerTask() {
+                @SuppressLint("MissingPermission", "NewApi")
                 override fun run() {
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
@@ -145,7 +144,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
                     if (resetBeepsDone < 2) {
                         if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {
-                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
+                            if (behaviourBeepEnabled) {
+                                mToneGenerator.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
+                            }
                             resetBeepsDone += 1
                         } else {
                             resetBeepsDone = 0
@@ -160,7 +161,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
                     var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
 
-                    if (pickupEnabled) {
+                    if (featurePickupEnabled) {
                         if (inclinationValue != null
                             && inclinationValue in -90..90
                             && proximityValue != null
@@ -168,28 +169,56 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             && proximityValue <= SENSOR_SENSITIVITY
                             && roll in 45.0..315.0
                         ) {
-                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            if (behaviourBeepEnabled) {
+                                mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            }
+
                             hasRegistered = true
                             pickupBeepsDone += 1
                             if (pickupBeepsDone == 3) {
-                                stop()
-                                pickupCallback.invoke()
+                                if (!testMode) {
+                                    tm.acceptRingingCall()
+                                } else {
+                                    val handler = Handler(Looper.getMainLooper())
+                                    handler.post(Runnable {
+                                        Toast.makeText(
+                                            applicationContext,
+                                            getString(R.string.detected_raise_to_answer),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    })
+                                }
+                                stopSelf()
                             }
                         } else {
                             pickupBeepsDone = 0
                         }
                     }
 
-                    if (declineEnabled && !hasRegistered) {
+                    if (featureDeclineEnabled && !hasRegistered) {
                         if (pitch in 150.0..210.0
                             && (roll >= 315.0 || roll <= 45.0)
                             && proximityValue == 0.0f)
                         {
-                            mToneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 100)
+                            if (behaviourBeepEnabled) {
+                                mToneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 100)
+                            }
+
                             declineBeepsDone += 1
                             if (declineBeepsDone == 3) {
-                                stop()
-                                declineCallback.invoke()
+                                if (!testMode) {
+                                    tm.endCall()
+                                } else {
+                                    val handler = Handler(Looper.getMainLooper())
+                                    handler.post(Runnable {
+                                        Toast.makeText(
+                                            applicationContext,
+                                            getString(R.string.detected_flip_over),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    })
+                                }
+                                stopSelf()
                             }
                         } else {
                             declineBeepsDone = 0
@@ -198,16 +227,6 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                 }
             }, 400, 400
         )
-    }
-
-    fun stop() {
-        try {
-            mTimer?.cancel()
-        } catch (_: IllegalStateException) {}
-        sensorManager?.unregisterListener(this)
-        resetBeepsDone = 0
-        pickupBeepsDone = 0
-        declineBeepsDone = 0
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}

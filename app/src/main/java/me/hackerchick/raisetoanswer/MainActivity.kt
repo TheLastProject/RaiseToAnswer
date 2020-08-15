@@ -1,11 +1,8 @@
 package me.hackerchick.raisetoanswer
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.hardware.Sensor
-import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
@@ -34,114 +31,53 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this, RaiseToAnswerSensorEventListener::class.java)
-        this.startService(intent)
+        if (!Util.hasWorkingSensors(applicationContext)) {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.could_not_bind_sensor),
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
+        }
 
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS), PERMISSION_REQUEST_READ_PHONE_STATE)
 
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
-            var listener = RaiseToAnswerSensorEventListener.instance!!
-            if (!listener.pickupState() && !listener.declineState()) {
-                Toast.makeText(applicationContext, getString(R.string.enable_at_least_one_option), Toast.LENGTH_SHORT).show()
+            if (!Util.raiseFeatureEnabled(applicationContext) && !Util.flipOverFeatureEnabled(applicationContext)) {
+                Toast.makeText(applicationContext, getString(R.string.enable_at_least_one_feature), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            Util.startSensorListener(applicationContext, true)
             Toast.makeText(applicationContext, getString(R.string.test_started), Toast.LENGTH_SHORT).show()
-            listener.waitUntilDesiredState(
-                pickupCallback = {
-                    Looper.prepare()
-                    AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.test_result))
-                        .setMessage(getString(R.string.detected_raise_to_answer))
-                        .show();
-                    Looper.loop()
-                },
-                declineCallback = {
-                    Looper.prepare()
-                    AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.test_result))
-                        .setMessage(getString(R.string.detected_flip_over))
-                        .show()
-                    Looper.loop()
-                }
-            )
         }
 
-        val raiseOption: CheckedTextView = findViewById<CheckedTextView>(R.id.raise_to_answer_option)
-        val flipOverOption: CheckedTextView = findViewById<CheckedTextView>(R.id.flip_over_to_decline_option)
+        val raiseFeature: CheckedTextView = findViewById(R.id.feature_raise_to_answer)
+        val flipOverFeature: CheckedTextView = findViewById(R.id.feature_flip_over_to_decline)
+        val beepBehaviour: CheckedTextView = findViewById(R.id.behaviour_beep)
 
-        raiseOption.setOnClickListener { _->
-            setRaiseOption(!raiseOption.isChecked)
+        raiseFeature.setOnClickListener { _->
+            setRaiseFeature(!raiseFeature.isChecked)
         }
 
-        flipOverOption.setOnClickListener { _->
-            setFlipOverOption(!flipOverOption.isChecked)
+        flipOverFeature.setOnClickListener { _->
+            setFlipOverFeature(!flipOverFeature.isChecked)
         }
 
-        val raiseEnabled = getSharedPreferences(getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
-        val flipOverEnabled = getSharedPreferences(getString(R.string.flip_over_enabled_key), Context.MODE_PRIVATE)
+        beepBehaviour.setOnClickListener {
+            setBeepBehaviour(!beepBehaviour.isChecked)
+        }
 
-        setRaiseOption(raiseEnabled.getInt(getString(R.string.raise_enabled_key), 1) == 1)
+        setRaiseFeature(Util.raiseFeatureEnabled(applicationContext))
+
         if (android.os.Build.VERSION.SDK_INT >= 28) {
-            setFlipOverOption(
-                flipOverEnabled.getInt(
-                    getString(R.string.flip_over_enabled_key),
-                    0
-                ) == 1
-            )
+            setFlipOverFeature(Util.flipOverFeatureEnabled(applicationContext))
         } else {
-            setFlipOverOption(false)
-            flipOverOption.isEnabled = false
+            setFlipOverFeature(false)
+            flipOverFeature.isEnabled = false
         }
-
-        val executor = ScheduledThreadPoolExecutor(1)
-        executor.scheduleWithFixedDelay({
-            var listener: RaiseToAnswerSensorEventListener? = RaiseToAnswerSensorEventListener.instance
-
-            if (listener == null)
-                return@scheduleWithFixedDelay
-
-            if (!listener.hasWorkingSensors()) {
-                Toast.makeText(applicationContext, getString(R.string.could_not_bind_sensor), Toast.LENGTH_SHORT).show()
-                finish()
-                return@scheduleWithFixedDelay
-            }
-
-            var raiseStateEnabled: Boolean? = null
-            var flipOverStateEnabled: Boolean? = null
-
-            // Get RaiseEnabled state
-            while (true) {
-                try {
-                    raiseStateEnabled = setListenerRaiseToAnswerState.remove()
-                } catch (_: NoSuchElementException) {
-                    break
-                }
-            }
-
-            // Get FlipOverEnabled state
-            while (true) {
-                try {
-                    flipOverStateEnabled = setListenerFlipOverToDeclineState.remove()
-                } catch (_: NoSuchElementException) {
-                    break
-                }
-            }
-
-            if (raiseStateEnabled != null) {
-                listener.watchPickupState(raiseStateEnabled)
-            }
-            if (flipOverStateEnabled != null) {
-                listener.watchDeclineState(flipOverStateEnabled)
-            }
-
-            if (listener.pickupState() || listener.declineState()) {
-                listener.bind(this)
-            } else {
-                listener.disable()
-            }
-        }, 0L, 200, TimeUnit.MILLISECONDS)
+        setBeepBehaviour(Util.beepBehaviourEnabled(applicationContext))
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -175,27 +111,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setRaiseOption(value: Boolean) {
-        val raiseOption: CheckedTextView = findViewById<CheckedTextView>(R.id.raise_to_answer_option)
-        raiseOption.isChecked = value
+    private fun setRaiseFeature(value: Boolean) {
+        val raiseFeature: CheckedTextView = findViewById(R.id.feature_raise_to_answer)
+        raiseFeature.isChecked = value
 
-        val raiseEnabled = getSharedPreferences(getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
-        with (raiseEnabled.edit()) {
-            putInt(getString(R.string.raise_enabled_key), if (value) 1 else 0)
-            commit()
-        }
+        Util.setRaiseFeatureEnabled(applicationContext, value)
         setListenerRaiseToAnswerState.add(value)
     }
 
-    private fun setFlipOverOption(value: Boolean) {
-        val flipOverOption: CheckedTextView = findViewById<CheckedTextView>(R.id.flip_over_to_decline_option)
-        flipOverOption.isChecked = value
+    private fun setFlipOverFeature(value: Boolean) {
+        val flipOverFeature: CheckedTextView = findViewById(R.id.feature_flip_over_to_decline)
+        flipOverFeature.isChecked = value
 
-        val flipOverEnabled = getSharedPreferences(getString(R.string.flip_over_enabled_key), Context.MODE_PRIVATE)
-        with (flipOverEnabled.edit()) {
-            putInt(getString(R.string.flip_over_enabled_key), if (value) 1 else 0)
-            commit()
-        }
+        Util.setFlipOverFeatureEnabled(applicationContext, value)
         setListenerFlipOverToDeclineState.add(value)
+    }
+
+    private fun setBeepBehaviour(value: Boolean) {
+        val beepBehaviour: CheckedTextView = findViewById(R.id.behaviour_beep)
+        beepBehaviour.isChecked = value
+
+        Util.setBeepBehaviourEnabled(applicationContext, value)
     }
 }
