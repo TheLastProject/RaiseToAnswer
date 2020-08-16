@@ -35,12 +35,11 @@ class MainActivity : AppCompatActivity() {
 
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
-            if (!Util.raiseFeatureEnabled(applicationContext) && !Util.flipOverFeatureEnabled(applicationContext)) {
+            if (!Util.startSensorListener(applicationContext, true)) {
                 Toast.makeText(applicationContext, getString(R.string.enable_at_least_one_feature), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            Util.startSensorListener(applicationContext, true)
             Toast.makeText(applicationContext, getString(R.string.test_started), Toast.LENGTH_SHORT).show()
         }
 

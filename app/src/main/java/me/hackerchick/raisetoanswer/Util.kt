@@ -73,20 +73,31 @@ class Util {
             return proximitySensor != null && accelerometer != null && magnetometer != null
         }
 
-        fun startSensorListener(context: Context, testMode: Boolean) {
+        fun startSensorListener(context: Context, testMode: Boolean): Boolean {
             // Stop service if running
             stopSensorListener(context)
+
+            // Get enabled features
+            val raiseEnabled = raiseFeatureEnabled(context)
+            val flipOverEnabled = flipOverFeatureEnabled(context)
+
+            // If no features are enabled, listening makes no sense
+            if (!raiseEnabled && !flipOverEnabled) {
+                return false
+            }
 
             // Prepare the intent for the sensor event listener
             serviceIntent = Intent(context, RaiseToAnswerSensorEventListener::class.java)
             serviceIntent!!.putExtra("testMode", testMode)
 
             // Set the features and behaviours
-            serviceIntent!!.putExtra(context.getString(R.string.raise_enabled_key), raiseFeatureEnabled(context))
-            serviceIntent!!.putExtra(context.getString(R.string.flip_over_enabled_key), flipOverFeatureEnabled(context))
+            serviceIntent!!.putExtra(context.getString(R.string.raise_enabled_key), raiseEnabled)
+            serviceIntent!!.putExtra(context.getString(R.string.flip_over_enabled_key), flipOverEnabled)
             serviceIntent!!.putExtra(context.getString(R.string.beep_behaviour_enabled_key), beepBehaviourEnabled(context))
 
             context.startForegroundService(serviceIntent)
+
+            return true
         }
 
         fun stopSensorListener(context: Context) {
