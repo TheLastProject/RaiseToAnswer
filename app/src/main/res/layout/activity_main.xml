@@ -1,104 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/raise_to_answer_header"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/raise_to_answer_header"
-        app:layout_constraintBottom_toBottomOf="@id/feature_holder"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
-        android:id="@+id/feature_holder"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/behaviour_holder"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/raise_to_answer_header" >
+        android:paddingTop="10dp" >
 
         <TextView
-            android:id="@+id/feature_header_text"
+            android:id="@+id/raise_to_answer_header"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/select_features"
             android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:text="@string/raise_to_answer_header" />
 
-        <CheckedTextView
-            android:id="@+id/feature_raise_to_answer"
+        <LinearLayout
+            android:id="@+id/feature_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkMark="@drawable/checkbox"
-            android:gravity="center_vertical"
-            android:text="@string/feature_raise_to_answer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:minHeight="48dp"/>
+            android:orientation="vertical"
+            android:padding="10dp" >
 
-        <CheckedTextView
-            android:id="@+id/feature_flip_over_to_decline"
+            <TextView
+                android:id="@+id/feature_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_features"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+
+            <CheckedTextView
+                android:id="@+id/feature_raise_to_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/checkbox"
+                android:gravity="center_vertical"
+                android:text="@string/feature_raise_to_answer"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:minHeight="48dp"/>
+
+            <CheckedTextView
+                android:id="@+id/feature_flip_over_to_decline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/checkbox"
+                android:text="@string/feature_flip_over_to_decline"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/behaviour_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkMark="@drawable/checkbox"
-            android:text="@string/feature_flip_over_to_decline"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:minHeight="48dp"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="10dp" >
 
-    <LinearLayout
-        android:id="@+id/behaviour_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/test_button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/feature_holder" >
+            <TextView
+                android:id="@+id/behaviour_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_behaviour"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
 
-        <TextView
-            android:id="@+id/behaviour_header_text"
+            <CheckedTextView
+                android:id="@+id/behaviour_beep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/checkbox"
+                android:gravity="center_vertical"
+                android:text="@string/behaviour_beep"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/test_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/select_behaviour"
             android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
-
-        <CheckedTextView
-            android:id="@+id/behaviour_beep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checkMark="@drawable/checkbox"
-            android:gravity="center_vertical"
-            android:text="@string/behaviour_beep"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:minHeight="48dp"/>
+            android:text="@string/test" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/behaviour_holder" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
