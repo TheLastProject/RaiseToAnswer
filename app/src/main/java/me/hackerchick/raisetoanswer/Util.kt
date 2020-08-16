@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorManager
-import android.util.Log
 
 
 class Util {
@@ -75,7 +74,6 @@ class Util {
         }
 
         fun startSensorListener(context: Context, testMode: Boolean) {
-            Log.w("RAISETOANSWER", "GOT TO LISTENER STARTER")
             // Stop service if running
             stopSensorListener(context)
 
@@ -88,9 +86,7 @@ class Util {
             serviceIntent!!.putExtra(context.getString(R.string.flip_over_enabled_key), flipOverFeatureEnabled(context))
             serviceIntent!!.putExtra(context.getString(R.string.beep_behaviour_enabled_key), beepBehaviourEnabled(context))
 
-            Log.w("RAISETOANSWER", "PREPARED, STARTING FOREGROUND SERVICE")
             context.startForegroundService(serviceIntent)
-            Log.w("RAISETOANSWER", "STARTED FOREGROUND SERVICE")
         }
 
         fun stopSensorListener(context: Context) {

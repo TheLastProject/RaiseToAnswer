@@ -14,7 +14,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.telecom.TelecomManager
-import android.util.Log
 import android.widget.Toast
 import java.util.*
 import kotlin.math.atan2
@@ -68,7 +67,6 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     override fun onBind(p0: Intent?): IBinder? { return null }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.w("RAISETOANSWER", "GOT START COMMAND")
         testMode = intent!!.extras!!.getBoolean("testMode")
 
         featurePickupEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.raise_enabled_key))
@@ -91,7 +89,6 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
             .build()
 
         startForeground(ONGOING_NOTIFICATION_ID, notification)
-        Log.w("RAISETOANSWER", "STARTED ONSTART FOREGROUND")
 
         sensorManager = Util.getSensorManager(this)
         val (proximitySensor, accelerometer, magnetometer) = Util.getSensors(sensorManager!!)
@@ -100,11 +97,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         this.accelerometer = accelerometer
         this.magnetometer = magnetometer
 
-        Log.w("RAISETOANSWER", "GOT SENSORS")
-
         waitUntilDesiredState()
-
-        Log.w("RAISETOANSWER", "STARTED LOOP")
 
         return START_NOT_STICKY
     }
