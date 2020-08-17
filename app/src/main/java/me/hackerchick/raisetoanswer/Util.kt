@@ -68,9 +68,16 @@ class Util {
             )
         }
 
-        fun hasWorkingSensors(context: Context): Boolean {
+        fun hasRequiredSensors(context: Context): Boolean {
             val (proximitySensor, accelerometer, magnetometer) = getSensors(getSensorManager(context))
-            return proximitySensor != null && accelerometer != null && magnetometer != null
+
+            return proximitySensor != null && accelerometer != null
+        }
+
+        fun hasMagnetometer(context: Context): Boolean {
+            val (_, _, magnetometer) = getSensors(getSensorManager(context))
+
+            return magnetometer != null
         }
 
         fun startSensorListener(context: Context, testMode: Boolean): Boolean {

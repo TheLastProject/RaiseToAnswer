@@ -97,17 +97,20 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         this.accelerometer = accelerometer
         this.magnetometer = magnetometer
 
-        waitUntilDesiredState()
+        waitUntilDesiredState(magnetometer != null)
 
         return START_NOT_STICKY
     }
 
-    private fun waitUntilDesiredState() {
+    private fun waitUntilDesiredState(hasMagnetoMeter: Boolean) {
         val tm = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 
         sensorManager!!.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-        sensorManager!!.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL)
+        if (hasMagnetoMeter) {
+            sensorManager!!.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+
         mTimer = Timer()
         mTimer!!.scheduleAtFixedRate(
             object : TimerTask() {
@@ -117,22 +120,25 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     var inclinationValue = mInclinationValue
 
                     var orientation = FloatArray(3)
-                    if (mAccelerometerValues.isNotEmpty() && mMagnetometerValues.isNotEmpty()) {
-                        var rotationMatrix = FloatArray(9)
-                        if (!SensorManager.getRotationMatrix(
-                                rotationMatrix,
-                                null,
-                                mAccelerometerValues,
-                                mMagnetometerValues
-                            )
-                        ) {
+
+                    if (hasMagnetoMeter) {
+                        if (mAccelerometerValues.isNotEmpty() && mMagnetometerValues.isNotEmpty()) {
+                            var rotationMatrix = FloatArray(9)
+                            if (!SensorManager.getRotationMatrix(
+                                    rotationMatrix,
+                                    null,
+                                    mAccelerometerValues,
+                                    mMagnetometerValues
+                                )
+                            ) {
+                                return
+                            }
+                            SensorManager.getOrientation(rotationMatrix, orientation)
+                        }
+
+                        if (orientation.isEmpty()) {
                             return
                         }
-                        SensorManager.getOrientation(rotationMatrix, orientation)
-                    }
-
-                    if (orientation.isEmpty()) {
-                        return
                     }
 
                     if (resetBeepsDone < 2) {
@@ -148,78 +154,103 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         return
                     }
 
-                    var hasRegistered = false
+                    if (hasMagnetoMeter) {
+                        var hasRegistered = false
 
-                    var azimuth = Math.toDegrees(orientation[0].toDouble()) + 180.0
-                    var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
-                    var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
+                        var azimuth = Math.toDegrees(orientation[0].toDouble()) + 180.0
+                        var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
+                        var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
 
-                    if (featurePickupEnabled) {
-                        if (inclinationValue != null
-                            && inclinationValue in -90..90
-                            && proximityValue != null
-                            && proximityValue >= -SENSOR_SENSITIVITY
-                            && proximityValue <= SENSOR_SENSITIVITY
-                            && roll in 45.0..315.0
-                        ) {
-                            if (behaviourBeepEnabled) {
-                                mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                        if (featurePickupEnabled) {
+                            if (inclinationValue != null
+                                && inclinationValue in -90..90
+                                && proximityValue != null
+                                && proximityValue >= -SENSOR_SENSITIVITY
+                                && proximityValue <= SENSOR_SENSITIVITY
+                                && roll in 45.0..315.0
+                            ) {
+                                if (behaviourBeepEnabled) {
+                                    mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                                }
+
+                                hasRegistered = true
+                                pickupBeepsDone += 1
+                                if (pickupBeepsDone == 3) {
+                                    pickUpDetected(tm)
+                                }
+                            } else {
+                                pickupBeepsDone = 0
                             }
+                        }
 
-                            hasRegistered = true
+                        if (featureDeclineEnabled && !hasRegistered) {
+                            if (pitch in 150.0..210.0
+                                && (roll >= 315.0 || roll <= 45.0)
+                                && proximityValue == 0.0f
+                            ) {
+                                if (behaviourBeepEnabled) {
+                                    mToneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 100)
+                                }
+
+                                declineBeepsDone += 1
+                                if (declineBeepsDone == 3) {
+                                    declineDetected(tm)
+                                }
+                            } else {
+                                declineBeepsDone = 0
+                            }
+                        }
+                    } else {
+                        // Use a simpler algorithm if we have no magnetometer
+                        // -90 to 0 = Right ear, 0 to 90 = Left ear
+                        if (inclinationValue != null && inclinationValue in -90..90
+                            && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
+                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                             pickupBeepsDone += 1
                             if (pickupBeepsDone == 3) {
-                                if (!testMode) {
-                                    tm.acceptRingingCall()
-                                } else {
-                                    val handler = Handler(Looper.getMainLooper())
-                                    handler.post(Runnable {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            getString(R.string.detected_raise_to_answer),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    })
-                                }
-                                stopSelf()
+                                pickUpDetected(tm)
                             }
                         } else {
                             pickupBeepsDone = 0
                         }
                     }
-
-                    if (featureDeclineEnabled && !hasRegistered) {
-                        if (pitch in 150.0..210.0
-                            && (roll >= 315.0 || roll <= 45.0)
-                            && proximityValue == 0.0f)
-                        {
-                            if (behaviourBeepEnabled) {
-                                mToneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 100)
-                            }
-
-                            declineBeepsDone += 1
-                            if (declineBeepsDone == 3) {
-                                if (!testMode) {
-                                    tm.endCall()
-                                } else {
-                                    val handler = Handler(Looper.getMainLooper())
-                                    handler.post(Runnable {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            getString(R.string.detected_flip_over),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    })
-                                }
-                                stopSelf()
-                            }
-                        } else {
-                            declineBeepsDone = 0
-                        }
-                    }
                 }
             }, 400, 400
         )
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun pickUpDetected(tm: TelecomManager) {
+        if (!testMode) {
+            tm.acceptRingingCall()
+        } else {
+            val handler = Handler(Looper.getMainLooper())
+            handler.post(Runnable {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.detected_raise_to_answer),
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
+        }
+        stopSelf()
+    }
+
+    @SuppressLint("NewApi")
+    private fun declineDetected(tm: TelecomManager) {
+        if (!testMode) {
+            tm.endCall()
+        } else {
+            val handler = Handler(Looper.getMainLooper())
+            handler.post(Runnable {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.detected_flip_over),
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
+        }
+        stopSelf()
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}

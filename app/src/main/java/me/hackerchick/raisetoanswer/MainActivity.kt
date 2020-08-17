@@ -22,13 +22,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (!Util.hasWorkingSensors(applicationContext)) {
+        if (!Util.hasRequiredSensors(applicationContext)) {
             Toast.makeText(
                 applicationContext,
                 getString(R.string.could_not_bind_sensor),
-                Toast.LENGTH_SHORT
+                Toast.LENGTH_LONG
             ).show()
             finish()
+        }
+
+        if (!Util.hasMagnetometer(applicationContext)) {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.could_not_bind_magnetometer),
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS), PERMISSION_REQUEST_READ_PHONE_STATE)
