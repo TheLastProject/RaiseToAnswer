@@ -60,7 +60,7 @@ class Util {
             return context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         }
 
-        fun getSensors(sensorManager: SensorManager): List<Sensor> {
+        fun getSensors(sensorManager: SensorManager): List<Sensor?> {
             return listOf(
                 sensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY),
                 sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),

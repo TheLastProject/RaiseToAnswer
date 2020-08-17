@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         setRaiseFeature(Util.raiseFeatureEnabled(applicationContext))
 
-        if (android.os.Build.VERSION.SDK_INT >= 28) {
+        if (android.os.Build.VERSION.SDK_INT >= 28 && Util.hasMagnetometer(applicationContext)) {
             setFlipOverFeature(Util.flipOverFeatureEnabled(applicationContext))
         } else {
             setFlipOverFeature(false)
