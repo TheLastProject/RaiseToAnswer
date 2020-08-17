@@ -5,10 +5,10 @@
     <string name="raise_to_answer_header">Soulever pour répondre</string>
     <string name="incoming_call_service">Service d\'appel entrant</string>
     <string name="privacy_policy">Politique de confidentialité</string>
-    <string name="could_not_bind_sensor">Échec de détection des capteurs, votre appareil peut ne pas être équipé d\'un capteur de proximité ou d\'un accéléromètre. La fonction "Soulever pour répondre" ne peut pas être activée.</string>
+    <string name="could_not_bind_sensor">Échec de détection des capteurs, votre appareil peut ne pas être équipé d\'un capteur de proximité ou d\'un accéléromètre. Raise To Answer ne peut pas fonctionner.</string>
     <string name="feature_raise_to_answer">Répondre en portant votre téléphone à l\'oreille</string>
     <string name="select_features">Veuillez sélectionner les fonctionnalités que vous souhaitez activer</string>
-    <string name="feature_flip_over_to_decline">Refuser l\'appel en tournant l\'écran de votre téléphone vers le bas (nécessite Android 9 ou plus récent)</string>
+    <string name="feature_flip_over_to_decline">Rejeter l\'appel en tournant l\'écran de votre téléphone vers le bas (nécessite Android 9 ou plus récent et un magnétomètre).</string>
     <string name="test_result">Résultat du test</string>
     <string name="detected_raise_to_answer">Prise d\'appel détectée</string>
     <string name="detected_flip_over">Refus d\'appel détecté</string>
@@ -17,4 +17,5 @@
     <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer est à l\'écoute des données des capteurs</string>
     <string name="select_behaviour">Veuillez déterminer le comportement de l\'application</string>
     <string name="behaviour_beep">Émettre un signal lors des appels entrants</string>
+    <string name="could_not_bind_magnetometer">Votre téléphone semble être dépourvu de magnétomètre. Raise To Answer ne pourra pas détecter fiablement l\'orientation.</string>
 </resources>
