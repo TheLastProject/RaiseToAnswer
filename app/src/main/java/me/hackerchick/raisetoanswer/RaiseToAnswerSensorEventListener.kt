@@ -36,7 +36,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var mProximityValue: Float? = null
     private var mInclinationValue: Int? = null
 
-    private val mToneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
+    private var mToneGenerator: ToneGenerator? = null
 
     // First 2 beeps: Good start state found (proximity not near)
     // 3 more beeps: Pickup / Decline
@@ -58,6 +58,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         resetBeepsDone = 0
         pickupBeepsDone = 0
         declineBeepsDone = 0
+
+        mToneGenerator?.release()
+        mToneGenerator = null
 
         stopForeground(true)
 
@@ -96,6 +99,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         this.proximitySensor = proximitySensor
         this.accelerometer = accelerometer
         this.magnetometer = magnetometer
+
+        mToneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
 
         waitUntilDesiredState(magnetometer != null)
 
@@ -144,7 +149,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     if (resetBeepsDone < 2) {
                         if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {
                             if (behaviourBeepEnabled) {
-                                mToneGenerator.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
+                                mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
                             }
                             resetBeepsDone += 1
                         } else {
@@ -170,7 +175,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 && roll in 45.0..315.0
                             ) {
                                 if (behaviourBeepEnabled) {
-                                    mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                                    mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                                 }
 
                                 hasRegistered = true
@@ -189,7 +194,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 && proximityValue == 0.0f
                             ) {
                                 if (behaviourBeepEnabled) {
-                                    mToneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 100)
+                                    mToneGenerator!!.startTone(ToneGenerator.TONE_PROP_NACK, 100)
                                 }
 
                                 declineBeepsDone += 1
@@ -205,7 +210,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         // -90 to 0 = Right ear, 0 to 90 = Left ear
                         if (inclinationValue != null && inclinationValue in -90..90
                             && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
-                            mToneGenerator.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                             pickupBeepsDone += 1
                             if (pickupBeepsDone == 3) {
                                 pickUpDetected(tm)
