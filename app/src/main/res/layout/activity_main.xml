@@ -23,24 +23,38 @@
             android:layout_gravity="center"
             android:text="@string/raise_to_answer_header" />
 
+        <TextView
+            android:id="@+id/missing_support_magnetometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/missing_support_magnetometer"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/missing_support_android_9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/missing_support_android_9"
+            android:layout_gravity="center" />
+
         <LinearLayout
-            android:id="@+id/feature_holder"
+            android:id="@+id/answer_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/feature_header_text"
+                android:id="@+id/answer_holder_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_features"
+                android:text="@string/answer_holder"
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
             <CheckedTextView
-                android:id="@+id/feature_raise_to_answer"
+                android:id="@+id/feature_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkMark="@drawable/checkbox"
@@ -51,7 +65,35 @@
                 android:minHeight="48dp"/>
 
             <CheckedTextView
-                android:id="@+id/feature_flip_over_to_decline"
+                android:id="@+id/feature_answer_all_angles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/checkbox"
+                android:layout_gravity="center_vertical"
+                android:text="@string/feature_answer_all_angles"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/decline_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/decline_holder_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/decline_holder"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+
+            <CheckedTextView
+                android:id="@+id/feature_decline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkMark="@drawable/checkbox"

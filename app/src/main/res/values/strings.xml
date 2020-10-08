@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="test">Test</string>
     <string name="permissions_needed">App can\'t work without these permission, sorry…</string>
     <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="incoming_call_service">Incoming call service</string>
@@ -8,17 +7,22 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="could_not_bind_sensor">Failed registering sensors, your device may lack a proximity sensor or accelerometer. Raise To Answer cannot continue.</string>
     <string name="feature_raise_to_answer">Answer by holding your phone to your ear</string>
-    <string name="select_features">Please select the features you want to enable</string>
-    <string name="feature_flip_over_to_decline">Decline by putting your phone down screen-first (Requires Android 9 or newer and a magnetometer)</string>
+    <string name="feature_flip_over_to_decline">Decline by putting your phone down screen-first</string>
     <string name="test_result">Test result</string>
     <string name="detected_raise_to_answer">Call pickup detected</string>
     <string name="detected_flip_over">Call decline detected</string>
     <string name="test_started">Test started</string>
     <string name="enable_at_least_one_feature">Please enable at least one feature</string>
-    <string name="select_behaviour">Please select how you want the app to behave</string>
+    <string name="select_behaviour">Other settings</string>
     <string name="behaviour_beep">Beep on incoming calls</string>
     <string name="raise_enabled_key" translatable="false">raise_enabled_key</string>
     <string name="flip_over_enabled_key" translatable="false">flip_over_enabled_key</string>
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
-    <string name="could_not_bind_magnetometer">Your phone seems to lack a magnetometer. Raise To Answer will not be able to reliably detect orientation.</string>
+    <string name="feature_answer_all_angles">Answer at any angle</string>
+    <string name="decline_holder">Declining calls</string>
+    <string name="answer_holder">Answering calls</string>
+    <string name="test">Test</string>
+    <string name="answer_all_angles_enabled_key" translatable="false">answer_all_angles_enabled_key</string>
+    <string name="missing_support_magnetometer">Your device lacks a magnetometer, declining or limiting answering to an up-right angle is not supported.</string>
+    <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
 </resources>

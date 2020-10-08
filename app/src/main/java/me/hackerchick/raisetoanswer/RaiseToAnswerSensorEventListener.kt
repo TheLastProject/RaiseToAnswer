@@ -24,7 +24,8 @@ import kotlin.math.sqrt
 class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var testMode = false
 
-    private var featurePickupEnabled = false
+    private var featureAnswerEnabled = false
+    private var featureAnswerAllAnglesEnabled = false
     private var featureDeclineEnabled = false
     private var behaviourBeepEnabled = false
 
@@ -41,7 +42,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     // First 2 beeps: Good start state found (proximity not near)
     // 3 more beeps: Pickup / Decline
     private var resetBeepsDone = 0
-    private var pickupBeepsDone = 0
+    private var answerBeepsDone = 0
     private var declineBeepsDone = 0
     private var mTimer: Timer? = null
 
@@ -56,7 +57,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         } catch (_: IllegalStateException) {}
         sensorManager?.unregisterListener(this)
         resetBeepsDone = 0
-        pickupBeepsDone = 0
+        answerBeepsDone = 0
         declineBeepsDone = 0
 
         mToneGenerator?.release()
@@ -72,7 +73,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         testMode = intent!!.extras!!.getBoolean("testMode")
 
-        featurePickupEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.raise_enabled_key))
+        featureAnswerEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.raise_enabled_key))
+        featureAnswerAllAnglesEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.answer_all_angles_enabled_key))
         featureDeclineEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.flip_over_enabled_key))
         behaviourBeepEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.beep_behaviour_enabled_key))
 
@@ -126,7 +128,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
                     var orientation = FloatArray(3)
 
-                    if (hasMagnetoMeter) {
+                    if (hasMagnetoMeter && !featureAnswerAllAnglesEnabled) {
                         if (mAccelerometerValues.isNotEmpty() && mMagnetometerValues.isNotEmpty()) {
                             var rotationMatrix = FloatArray(9)
                             if (!SensorManager.getRotationMatrix(
@@ -159,14 +161,14 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         return
                     }
 
-                    if (hasMagnetoMeter) {
+                    if (hasMagnetoMeter && !featureAnswerAllAnglesEnabled) {
                         var hasRegistered = false
 
                         var azimuth = Math.toDegrees(orientation[0].toDouble()) + 180.0
                         var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
                         var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
 
-                        if (featurePickupEnabled) {
+                        if (featureAnswerEnabled) {
                             if (inclinationValue != null
                                 && inclinationValue in -90..90
                                 && proximityValue != null
@@ -179,12 +181,12 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 }
 
                                 hasRegistered = true
-                                pickupBeepsDone += 1
-                                if (pickupBeepsDone == 3) {
+                                answerBeepsDone += 1
+                                if (answerBeepsDone == 3) {
                                     pickUpDetected(tm)
                                 }
                             } else {
-                                pickupBeepsDone = 0
+                                answerBeepsDone = 0
                             }
                         }
 
@@ -211,12 +213,12 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         if (inclinationValue != null && inclinationValue in -90..90
                             && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
                             mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
-                            pickupBeepsDone += 1
-                            if (pickupBeepsDone == 3) {
+                            answerBeepsDone += 1
+                            if (answerBeepsDone == 3) {
                                 pickUpDetected(tm)
                             }
                         } else {
-                            pickupBeepsDone = 0
+                            answerBeepsDone = 0
                         }
                     }
                 }

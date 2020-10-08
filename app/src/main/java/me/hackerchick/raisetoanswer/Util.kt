@@ -11,31 +11,46 @@ class Util {
     companion object {
         var serviceIntent: Intent? = null
 
-        private fun getRaiseFeatureSharedPreference(context: Context): SharedPreferences {
+        private fun getAnswerFeatureSharedPreference(context: Context): SharedPreferences {
             return context.getSharedPreferences(context.getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
         }
 
-        fun raiseFeatureEnabled(context: Context): Boolean {
-            return getRaiseFeatureSharedPreference(context).getInt(context.getString(R.string.raise_enabled_key), 1) == 1
+        fun answerFeatureEnabled(context: Context): Boolean {
+            return getAnswerFeatureSharedPreference(context).getInt(context.getString(R.string.raise_enabled_key), 1) == 1
         }
 
-        fun setRaiseFeatureEnabled(context: Context, enabled: Boolean) {
-            with (getRaiseFeatureSharedPreference(context).edit()) {
+        fun setAnswerFeatureEnabled(context: Context, enabled: Boolean) {
+            with (getAnswerFeatureSharedPreference(context).edit()) {
                 putInt(context.getString(me.hackerchick.raisetoanswer.R.string.raise_enabled_key), if (enabled) 1 else 0)
                 commit()
             }
         }
 
-        private fun getFlipOverFeatureSharedPreference(context: Context): SharedPreferences {
+        private fun getAnswerAllAnglesFeatureSharedPreference(context: Context): SharedPreferences {
+            return context.getSharedPreferences(context.getString(R.string.answer_all_angles_enabled_key), Context.MODE_PRIVATE)
+        }
+
+        fun answerAllAnglesFeatureEnabled(context: Context): Boolean {
+            return getAnswerAllAnglesFeatureSharedPreference(context).getInt(context.getString(R.string.answer_all_angles_enabled_key), 0) == 1
+        }
+
+        fun setAnswerAllAnglesFeatureEnabled(context: Context, enabled: Boolean) {
+            with (getAnswerAllAnglesFeatureSharedPreference(context).edit()) {
+                putInt(context.getString(me.hackerchick.raisetoanswer.R.string.answer_all_angles_enabled_key), if (enabled) 1 else 0)
+                commit()
+            }
+        }
+
+        private fun getDeclineFeatureSharedPreference(context: Context): SharedPreferences {
             return context.getSharedPreferences(context.getString(R.string.flip_over_enabled_key), Context.MODE_PRIVATE)
         }
 
-        fun flipOverFeatureEnabled(context: Context): Boolean {
-            return getFlipOverFeatureSharedPreference(context).getInt(context.getString(R.string.flip_over_enabled_key), 0) == 1
+        fun declineFeatureEnabled(context: Context): Boolean {
+            return getDeclineFeatureSharedPreference(context).getInt(context.getString(R.string.flip_over_enabled_key), 0) == 1
         }
 
-        fun setFlipOverFeatureEnabled(context: Context, enabled: Boolean) {
-            with (getFlipOverFeatureSharedPreference(context).edit()) {
+        fun setDeclineFeatureEnabled(context: Context, enabled: Boolean) {
+            with (getDeclineFeatureSharedPreference(context).edit()) {
                 putInt(context.getString(me.hackerchick.raisetoanswer.R.string.flip_over_enabled_key), if (enabled) 1 else 0)
                 commit()
             }
@@ -85,11 +100,12 @@ class Util {
             stopSensorListener(context)
 
             // Get enabled features
-            val raiseEnabled = raiseFeatureEnabled(context)
-            val flipOverEnabled = flipOverFeatureEnabled(context)
+            val answerEnabled = answerFeatureEnabled(context)
+            val answerAllAnglesEnabled = answerAllAnglesFeatureEnabled(context)
+            val declineEnabled = declineFeatureEnabled(context)
 
             // If no features are enabled, listening makes no sense
-            if (!raiseEnabled && !flipOverEnabled) {
+            if (!answerEnabled && !declineEnabled) {
                 return false
             }
 
@@ -98,8 +114,9 @@ class Util {
             serviceIntent!!.putExtra("testMode", testMode)
 
             // Set the features and behaviours
-            serviceIntent!!.putExtra(context.getString(R.string.raise_enabled_key), raiseEnabled)
-            serviceIntent!!.putExtra(context.getString(R.string.flip_over_enabled_key), flipOverEnabled)
+            serviceIntent!!.putExtra(context.getString(R.string.raise_enabled_key), answerEnabled)
+            serviceIntent!!.putExtra(context.getString(R.string.answer_all_angles_enabled_key), answerAllAnglesEnabled)
+            serviceIntent!!.putExtra(context.getString(R.string.flip_over_enabled_key), declineEnabled)
             serviceIntent!!.putExtra(context.getString(R.string.beep_behaviour_enabled_key), beepBehaviourEnabled(context))
 
             context.startForegroundService(serviceIntent)

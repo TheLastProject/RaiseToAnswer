@@ -9,7 +9,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="could_not_bind_sensor">Kon sensors niet registreren, mist je apparaat een proximity sensor of accelerometer?</string>
     <string name="feature_raise_to_answer">Neem op door de telefoon tegen je oor te houden</string>
-    <string name="select_features">Kies de functies die je in wilt schakelen</string>
     <string name="feature_flip_over_to_decline">Leg op door de telefoon ondersteboven neer te leggen (Android 9 of nieuwer en magnetometer nodig)</string>
     <string name="test_result">Testresultaat</string>
     <string name="detected_raise_to_answer">Opname gesprek gedetecteerd</string>
@@ -18,5 +17,9 @@
     <string name="enable_at_least_one_feature">Schakel tenminste één functie in</string>
     <string name="select_behaviour">Kies hoe de app zich moet gedragen</string>
     <string name="behaviour_beep">Piep bij inkomende gesprekken</string>
-    <string name="could_not_bind_magnetometer">Er kon geen magnetometer gevonden worden. Raise To Answer zal de orientatie van jouw telefoon niet goed kunnen bepalen.</string>
+    <string name="feature_answer_all_angles">Elke hoek neemt op</string>
+    <string name="decline_holder">Oproepen weigeren</string>
+    <string name="answer_holder">Oproepen beantwoorden</string>
+    <string name="missing_support_magnetometer">Je apparaat heeft geen magnetometer. Oproepen weigeren of enkel recht-op opnemen is niet ondersteund.</string>
+    <string name="missing_support_android_9">Je apparaat draait een oudere versie van Android dan 9, oproepen weigeren is niet ondersteund</string>
 </resources>
