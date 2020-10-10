@@ -90,7 +90,8 @@
                 android:text="@string/decline_holder"
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:paddingRight="10dp"
+                android:minHeight="48dp"/>
 
             <CheckedTextView
                 android:id="@+id/feature_decline"
