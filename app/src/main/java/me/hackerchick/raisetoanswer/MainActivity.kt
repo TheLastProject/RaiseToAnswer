@@ -118,6 +118,8 @@ class MainActivity : AppCompatActivity() {
         answerFeature.isChecked = value
 
         Util.setAnswerFeatureEnabled(applicationContext, value)
+        
+        setAnswerAllAnglesFeatureIfSupported(false)
     }
 
     private fun setAnswerAllAnglesFeatureIfSupported(value: Boolean) {
@@ -137,6 +139,11 @@ class MainActivity : AppCompatActivity() {
         // Exclusive with decline
         if (value) {
             setDeclineFeatureIfSupported(false)
+        }
+
+        // Makes no sense to have this turned on if answering is turned off
+        if (!Util.answerFeatureEnabled(applicationContext)) {
+            answerAllAnglesFeature.isEnabled = false
         }
 
         Util.setAnswerAllAnglesFeatureEnabled(applicationContext, value)
