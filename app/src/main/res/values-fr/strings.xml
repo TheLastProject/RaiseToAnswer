@@ -19,7 +19,7 @@
     <string name="feature_answer_all_angles">Répondre quel que soit l\'angle d\'inclinaison</string>
     <string name="decline_holder">Rejet des appels</string>
     <string name="answer_holder">Réception des appels</string>
-    <string name="missing_support_magnetometer">Votre appareil ne dispose pas de magnétomètre, la restriction du rejet d\'appel à un angle droit n'est pas prise en charge.</string>
-    <string name="missing_support_android_9">Votre appareil fonctionne avec une version antérieure à Android 9, le rejet d\'appel n'est pas pris en charge.</string>
+    <string name="missing_support_magnetometer">Votre appareil ne dispose pas de magnétomètre, la restriction du rejet d\'appel à un angle droit n\'est pas prise en charge.</string>
+    <string name="missing_support_android_9">Votre appareil fonctionne avec une version antérieure à Android 9, le rejet d\'appel n\'est pas pris en charge.</string>
 </resources>
 
