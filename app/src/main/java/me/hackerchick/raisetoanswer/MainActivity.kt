@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val beepBehaviour: CheckedTextView = findViewById(R.id.behaviour_beep)
 
         answerFeature.setOnClickListener { _->
-            setAnswerFeature(!answerFeature.isChecked)
+            setAnswerFeature(!answerFeature.isChecked, true)
         }
 
         answerAllAnglesFeature.setOnClickListener {
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             setBeepBehaviour(!beepBehaviour.isChecked)
         }
 
-        setAnswerFeature(Util.answerFeatureEnabled(applicationContext))
+        setAnswerFeature(Util.answerFeatureEnabled(applicationContext), false)
         setAnswerAllAnglesFeatureIfSupported(Util.answerAllAnglesFeatureEnabled(applicationContext))
         setDeclineFeatureIfSupported(Util.declineFeatureEnabled(applicationContext))
 
@@ -113,13 +113,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAnswerFeature(value: Boolean) {
+    private fun setAnswerFeature(value: Boolean, propagate: Boolean) {
         val answerFeature: CheckedTextView = findViewById(R.id.feature_answer)
         answerFeature.isChecked = value
 
         Util.setAnswerFeatureEnabled(applicationContext, value)
-        
-        setAnswerAllAnglesFeatureIfSupported(false)
+
+        if (propagate) {
+            setAnswerAllAnglesFeatureIfSupported(false)
+        }
     }
 
     private fun setAnswerAllAnglesFeatureIfSupported(value: Boolean) {
