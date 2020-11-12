@@ -22,17 +22,10 @@
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
     <string name="could_not_bind_magnetometer">Din telefon ser ut til å mangle et magnetometer. Løft opp for å svare vil ikke kunne detektere nøyaktigt orientering av telefonen.</string>
     <string name="feature_answer_all_angles">Ta telefonen i alle vinkler </string>
-
-
     <string name="decline_holder">Legg på  </string>
-    <string name="decline_holder">Declining calls</string>
-
-    <string name="answer_holder">Answering calls</string>
-
+    <string name="decline_holder">Avbryt Samtaler</string>
+    <string name="answer_holder">Godta Samtaler</string>
     <string name="answer_all_angles_enabled_key" translatable="false">answer_all_angles_enabled_key</string>
-
-    <string name="missing_support_magnetometer">Your device lacks a magnetometer, declining or limiting answering to an up-right angle is not supported.</string>
-
-    <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
-</resources>
+    <string name="missing_support_magnetometer">Din enhet mangler støtte for et manetometer,Ta og leggepå samtaler i en rett vinkel er ikke støttet</string>
+    <string name="missing_support_android_9">Din enhet kjører ikke Android 9, så legge på samtaler er ikke støttet</string>
 </resources>
