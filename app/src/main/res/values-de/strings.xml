@@ -9,7 +9,7 @@
     <string name="permissions_needed">Die Anwendung kann ohne diese Erlaubnis nicht funktionieren, Entschuldigung …</string>
     <string name="test">Test</string>
     <string name="decline_holder">Anrufe ablehnen</string>
-    <string name="feature_answer_all_angles">Antworte in jedem Winkel</string>
+    <string name="feature_answer_all_angles">Antworten Sie in jedem Winkel</string>
     <string name="behaviour_beep">Signalton bei eingehenden Anrufen</string>
     <string name="select_behaviour">Andere Einstellungen</string>
     <string name="enable_at_least_one_feature">Bitte aktiviere mindestens eine Funktion</string>
@@ -18,6 +18,8 @@
     <string name="test_result">Testergebnis</string>
     <string name="privacy_policy">Datenschutzbestimmung</string>
     <string name="incoming_call_service">Service für eingehende Anrufe</string>
-    <string name="raise_to_answer_header">Raise To Answer</string>
+    <string name="raise_to_answer_header">Zu antwortern erheben</string>
     <string name="app_name">Raise To Answer</string>
+    <string name="missing_support_android_9">Auf Ihrem Gerät wird vor 9 eine Android-Version ausgeführt. Ablehnen von Anrufen wird nicht unterstützt.</string>
+    <string name="missing_support_magnetometer">Ihrem Gerät fehlt ein Magnetometer. Eine abnehmende oder begrenzte Antwort auf einen rechten Winkel wird nicht unterstützt.</string>
 </resources>
