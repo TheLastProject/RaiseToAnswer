@@ -1,0 +1,5 @@
+Halte einfach dein Telefon an dein Ohr, um einen eingehenden Anruf anzunehmen. Wenn die App erkennt, dass sich das Telefon während eines eingehenden Anrufs in der Nähe deines Ohrs befindet, piept es fünfmal und nimmt dann den Anruf an.
+
+Keine Werbung, keine unnötigen Berechtigungen und kein unnötiger Batterieverbrauch. Einfach zu aktivieren und zu deaktivieren. Ersetzt nicht deinen Bildschirm für eingehende Anrufe, sodass du nichts Neues lernen musst.
+
+Diese App ist Open Source. Der Quellcode ist unter https://github.com/TheLastProject/RaiseToAnswer verfügbar.
