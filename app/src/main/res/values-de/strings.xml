@@ -20,4 +20,6 @@
     <string name="incoming_call_service">Service für eingehende Anrufe</string>
     <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="app_name">Raise To Answer</string>
+    <string name="missing_support_android_9">Auf Ihrem Gerät wird vor 9 eine Android-Version ausgeführt. Ablehnen von Anrufen wird nicht unterstützt.</string>
+    <string name="missing_support_magnetometer">Ihrem Gerät fehlt ein Magnetometer. Eine abnehmende oder begrenzte Antwort auf einen rechten Winkel wird nicht unterstützt.</string>
 </resources>
