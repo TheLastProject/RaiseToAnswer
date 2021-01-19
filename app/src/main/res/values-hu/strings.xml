@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="raise_to_answer_header">Vedd fel a Válaszhoz</string>
+    <string name="missing_support_magnetometer">Az eszközben hiányzik a magnetométer, a hívások visszautasítása nem támogatott.</string>
+    <string name="enable_at_least_one_feature">Kérlek kapcsolj be legalább egy opciót</string>
+    <string name="missing_support_android_9">Az eszközöd Android 9 előtti, a hívások visszautasítása nem támogatott.</string>
+    <string name="test">Teszt</string>
+    <string name="answer_holder">Hívások fogadása</string>
+    <string name="decline_holder">Hívások visszautasítása</string>
+    <string name="feature_answer_all_angles">Vedd fel bármilyen szögből</string>
+    <string name="behaviour_beep">Beérkező hívásnál sípoljon</string>
+    <string name="select_behaviour">Más beállítások</string>
+    <string name="test_started">A teszt elkezdődött</string>
+    <string name="detected_flip_over">Hívás visszautasítása működik</string>
+    <string name="detected_raise_to_answer">Hívás fogadása működik</string>
+    <string name="test_result">Teszt eredménye</string>
+    <string name="feature_flip_over_to_decline">Utasítsd vissza a hívást a telefont képernyővel lefele helyezve az asztalra</string>
+    <string name="feature_raise_to_answer">Válaszolj azzal, hogy a füledhez tartod a telefont</string>
+    <string name="could_not_bind_sensor">Az érzékelők észlelése sikertelen, az eszközben hiányozhat a közelség érzékelő és a gyorsulásmérő. Az app nem működik így.</string>
+    <string name="privacy_policy">Adatvédelmi szabályzat</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer figyeli az érzékelő adatot</string>
+    <string name="incoming_call_service">Beérkező hívás</string>
+    <string name="permissions_needed">Az alkalmazás nem tud működni az engedélyek megadása nélkül…</string>
+    <string name="app_name">Raise To Answer</string>
+</resources>
