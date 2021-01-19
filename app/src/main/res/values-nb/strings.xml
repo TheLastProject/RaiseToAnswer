@@ -23,7 +23,6 @@
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
     <string name="could_not_bind_magnetometer">Din telefon ser ut til å mangle et magnetometer. Løft opp for å svare vil ikke kunne detektere nøyaktigt orientering av telefonen.</string>
     <string name="feature_answer_all_angles">Ta telefonen i alle vinkler </string>
-    <string name="decline_holder">Legg på  </string>
     <string name="decline_holder">Avslå anrop</string>
     <string name="answer_holder">Besvar anrop</string>
     <string name="answer_all_angles_enabled_key" translatable="false">answer_all_angles_enabled_key</string>

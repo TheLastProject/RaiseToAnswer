@@ -25,4 +25,6 @@
     <string name="answer_all_angles_enabled_key" translatable="false">answer_all_angles_enabled_key</string>
     <string name="missing_support_magnetometer">Your device lacks a magnetometer, declining or limiting answering to an up-right angle is not supported.</string>
     <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
+    <string name="debug_mode_activated">You are now a developer</string>
+    <string name="debug_log_copied_to_clipboard">Debug log copied to clipboard</string>
 </resources>

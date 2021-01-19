@@ -24,6 +24,15 @@ git clone https://github.com/TheLastProject/RaiseToAnswer
 
 Then, open Android Studio and hit build.
 
+## Debugging
+Sensors are complicated. If the app isn't working as you expect it to, please help me by giving some debug logging.
+
+First, tap the "Raise To Answer" text at the top of the screen 7 times. A Test button will appear.
+
+Press this and try to answer as normally.
+
+A lot of text will have appeared below the Test button. Tap it to have it copied to your clipboard and then post it in a GitHub issue.
+
 ## License
 
 MIT

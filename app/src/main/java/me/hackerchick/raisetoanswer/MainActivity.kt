@@ -1,6 +1,10 @@
 package me.hackerchick.raisetoanswer
 
 import android.Manifest
+import android.R.attr.label
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -15,6 +19,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+
 
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
@@ -42,17 +48,12 @@ class MainActivity : AppCompatActivity() {
             magnetometerWarning.visibility = View.GONE
         }
 
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS), PERMISSION_REQUEST_READ_PHONE_STATE)
-
-        val testButton: Button = findViewById(R.id.test_button)
-        testButton.setOnClickListener {
-            if (!Util.startSensorListener(applicationContext, true)) {
-                Toast.makeText(applicationContext, getString(R.string.enable_at_least_one_feature), Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            Toast.makeText(applicationContext, getString(R.string.test_started), Toast.LENGTH_SHORT).show()
-        }
+        ActivityCompat.requestPermissions(
+            this, arrayOf(
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.ANSWER_PHONE_CALLS
+            ), PERMISSION_REQUEST_READ_PHONE_STATE
+        )
 
         val answerFeature: CheckedTextView = findViewById(R.id.feature_answer)
         val answerAllAnglesFeature: CheckedTextView = findViewById(R.id.feature_answer_all_angles)
@@ -80,13 +81,71 @@ class MainActivity : AppCompatActivity() {
         setDeclineFeatureIfSupported(Util.declineFeatureEnabled(applicationContext))
 
         setBeepBehaviour(Util.beepBehaviourEnabled(applicationContext))
+
+        // Debugging
+        val debugLog: TextView = findViewById(R.id.debug_log)
+        debugLog.setOnClickListener {
+            val clipboard: ClipboardManager =
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("RaiseToAnswer Debug Log", Util.getLog().value!!.joinToString(separator = "\n"))
+            clipboard.setPrimaryClip(clip)
+
+            Toast.makeText(this, getString(R.string.debug_log_copied_to_clipboard), Toast.LENGTH_LONG).show()
+        }
+
+        val testButton: Button = findViewById(R.id.test_button)
+        testButton.setOnClickListener {
+            if (!Util.startSensorListener(applicationContext, true)) {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.enable_at_least_one_feature),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            Toast.makeText(applicationContext, getString(R.string.test_started), Toast.LENGTH_SHORT).show()
+            Util.clearLog()
+            Util.log("TEST STARTED")
+        }
+
+        val header: TextView = findViewById(R.id.raise_to_answer_header)
+        var debugCounter = 0
+        header.setOnClickListener {
+            debugCounter += 1
+
+            if (debugCounter == 7) {
+                Toast.makeText(this, getString(R.string.debug_mode_activated), Toast.LENGTH_LONG)
+                    .show()
+                testButton.visibility = View.VISIBLE
+                debugLog.visibility = View.VISIBLE
+
+                Util.getLog().observe(this, Observer {
+                    try {
+                        debugLog.text = it.reversed().joinToString(separator = "\n")
+                    } catch (ConcurrentModificationException: Exception) {
+                        // We don't care, just skip this update then...
+                    }
+                })
+            }
+
+            return@setOnClickListener
+        }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             PERMISSION_REQUEST_READ_PHONE_STATE -> {
                 if (!grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    Toast.makeText(applicationContext, getString(R.string.permissions_needed), Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.permissions_needed),
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     finish()
                 }
@@ -105,7 +164,10 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.privacy_policy -> {
                 val browserIntent =
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://thelastproject.github.io/RaiseToAnswer/PRIVACY_POLICY"))
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://thelastproject.github.io/RaiseToAnswer/PRIVACY_POLICY")
+                    )
                 startActivity(browserIntent)
                 true
             }

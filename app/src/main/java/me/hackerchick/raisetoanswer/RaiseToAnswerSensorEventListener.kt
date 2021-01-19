@@ -73,10 +73,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         testMode = intent!!.extras!!.getBoolean("testMode")
 
-        featureAnswerEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.raise_enabled_key))
-        featureAnswerAllAnglesEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.answer_all_angles_enabled_key))
-        featureDeclineEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.flip_over_enabled_key))
-        behaviourBeepEnabled = intent!!.extras!!.getBoolean(this.getString(R.string.beep_behaviour_enabled_key))
+        featureAnswerEnabled = intent.extras!!.getBoolean(this.getString(R.string.raise_enabled_key))
+        featureAnswerAllAnglesEnabled = intent.extras!!.getBoolean(this.getString(R.string.answer_all_angles_enabled_key))
+        featureDeclineEnabled = intent.extras!!.getBoolean(this.getString(R.string.flip_over_enabled_key))
+        behaviourBeepEnabled = intent.extras!!.getBoolean(this.getString(R.string.beep_behaviour_enabled_key))
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
@@ -123,6 +123,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
             object : TimerTask() {
                 @SuppressLint("MissingPermission", "NewApi")
                 override fun run() {
+                    if (testMode) {
+                        Util.log("TIMER RUN START")
+                    }
+
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
 
@@ -158,13 +162,17 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             resetBeepsDone = 0
                         }
 
+                        if (testMode) {
+                            Util.log("RESET BEEP $resetBeepsDone")
+                        }
+
                         return
                     }
 
                     if (hasMagnetoMeter && !featureAnswerAllAnglesEnabled) {
                         var hasRegistered = false
 
-                        var azimuth = Math.toDegrees(orientation[0].toDouble()) + 180.0
+                        //var azimuth = Math.toDegrees(orientation[0].toDouble()) + 180.0
                         var pitch = Math.toDegrees(orientation[1].toDouble()) + 180.0
                         var roll = Math.toDegrees(orientation[2].toDouble()) + 180.0
 
@@ -188,6 +196,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             } else {
                                 answerBeepsDone = 0
                             }
+
+                            if (testMode) {
+                                Util.log("ANSWER BEEP $answerBeepsDone")
+                            }
                         }
 
                         if (featureDeclineEnabled && !hasRegistered) {
@@ -206,6 +218,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             } else {
                                 declineBeepsDone = 0
                             }
+
+                            if (testMode) {
+                                Util.log("DECLINE BEEP $declineBeepsDone")
+                            }
                         }
                     } else {
                         // Use a simpler algorithm if we have no magnetometer
@@ -214,11 +230,16 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
                             mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                             answerBeepsDone += 1
+
                             if (answerBeepsDone == 3) {
                                 pickUpDetected(tm)
                             }
                         } else {
                             answerBeepsDone = 0
+                        }
+
+                        if (testMode) {
+                            Util.log("ANSWER BEEP $answerBeepsDone")
                         }
                     }
                 }
@@ -239,6 +260,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     Toast.LENGTH_SHORT
                 ).show()
             })
+
+            Util.log("PICKUP DETECTED")
         }
         stopSelf()
     }
@@ -256,6 +279,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     Toast.LENGTH_SHORT
                 ).show()
             })
+
+            Util.log("DECLINE DETECTED")
         }
         stopSelf()
     }
@@ -265,6 +290,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
             mProximityValue = event.values[0]
+
+            if (testMode) {
+                Util.log("PROXIMITY $mProximityValue")
+            }
         } else if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
             mAccelerometerValues = event.values
 
@@ -282,8 +311,16 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     event.values[1]
                 ).toDouble()
             ).roundToInt()
+
+            if (testMode) {
+                Util.log("INCLINATION $mInclinationValue")
+            }
         } else if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
             mMagnetometerValues = event.values
+
+            if (testMode) {
+                Util.log("MAGNETOMETER ${mMagnetometerValues[0]} ${mMagnetometerValues[1]} ${mMagnetometerValues[2]}")
+            }
         }
     }
 }

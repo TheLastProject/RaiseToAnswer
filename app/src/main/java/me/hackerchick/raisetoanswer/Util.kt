@@ -5,11 +5,30 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 
 
 class Util {
     companion object {
         var serviceIntent: Intent? = null
+
+        private val debugLog = ArrayList<String>()
+        private val debugLogLiveData = MutableLiveData<List<String>>()
+
+        fun log(message: String) {
+            debugLog.add(message)
+            debugLogLiveData.postValue(debugLog)
+        }
+
+        fun clearLog() {
+            debugLog.clear()
+            debugLogLiveData.value = debugLog
+        }
+
+        fun getLog(): MutableLiveData<List<String>> {
+            return debugLogLiveData
+        }
 
         private fun getAnswerFeatureSharedPreference(context: Context): SharedPreferences {
             return context.getSharedPreferences(context.getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
@@ -77,14 +96,14 @@ class Util {
 
         fun getSensors(sensorManager: SensorManager): List<Sensor?> {
             return listOf(
-                sensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY),
-                sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                sensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+                sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
             )
         }
 
         fun hasRequiredSensors(context: Context): Boolean {
-            val (proximitySensor, accelerometer, magnetometer) = getSensors(getSensorManager(context))
+            val (proximitySensor, accelerometer, _) = getSensors(getSensorManager(context))
 
             return proximitySensor != null && accelerometer != null
         }
