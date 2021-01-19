@@ -130,6 +130,17 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:minHeight="48dp"/>
+
+            <CheckedTextView
+                android:id="@+id/behaviour_vibrate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/checkbox"
+                android:gravity="center_vertical"
+                android:text="@string/behaviour_vibrate"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:minHeight="48dp"/>
         </LinearLayout>
 
         <Button

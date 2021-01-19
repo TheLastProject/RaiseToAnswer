@@ -90,6 +90,21 @@ class Util {
             }
         }
 
+        private fun getVibrateBehaviourSharedPreference(context: Context): SharedPreferences {
+            return context.getSharedPreferences(context.getString(R.string.vibrate_behaviour_enabled_key), Context.MODE_PRIVATE)
+        }
+
+        fun vibrateBehaviourEnabled(context: Context): Boolean {
+            return getVibrateBehaviourSharedPreference(context).getInt(context.getString(R.string.vibrate_behaviour_enabled_key), 0) == 1
+        }
+
+        fun setVibrateBehaviourEnabled(context: Context, enabled: Boolean) {
+            with (getVibrateBehaviourSharedPreference(context).edit()) {
+                putInt(context.getString(me.hackerchick.raisetoanswer.R.string.vibrate_behaviour_enabled_key), if (enabled) 1 else 0)
+                commit()
+            }
+        }
+
         fun getSensorManager(context: Context): SensorManager {
             return context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         }
@@ -137,6 +152,7 @@ class Util {
             serviceIntent!!.putExtra(context.getString(R.string.answer_all_angles_enabled_key), answerAllAnglesEnabled)
             serviceIntent!!.putExtra(context.getString(R.string.flip_over_enabled_key), declineEnabled)
             serviceIntent!!.putExtra(context.getString(R.string.beep_behaviour_enabled_key), beepBehaviourEnabled(context))
+            serviceIntent!!.putExtra(context.getString(R.string.vibrate_behaviour_enabled_key), vibrateBehaviourEnabled(context))
 
             context.startForegroundService(serviceIntent)
 

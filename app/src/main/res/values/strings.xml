@@ -18,6 +18,7 @@
     <string name="raise_enabled_key" translatable="false">raise_enabled_key</string>
     <string name="flip_over_enabled_key" translatable="false">flip_over_enabled_key</string>
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
+    <string name="vibrate_behaviour_enabled_key" translatable="false">vibrate_behaviour_enabled_key</string>
     <string name="feature_answer_all_angles">Answer at any angle</string>
     <string name="decline_holder">Declining calls</string>
     <string name="answer_holder">Answering calls</string>
@@ -27,4 +28,5 @@
     <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
     <string name="debug_mode_activated">You are now a developer</string>
     <string name="debug_log_copied_to_clipboard">Debug log copied to clipboard</string>
+    <string name="behaviour_vibrate">Vibrate on incoming calls</string>
 </resources>

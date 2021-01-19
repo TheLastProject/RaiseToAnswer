@@ -10,9 +10,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
-import android.os.Handler
-import android.os.IBinder
-import android.os.Looper
+import android.os.*
 import android.telecom.TelecomManager
 import android.widget.Toast
 import java.util.*
@@ -28,6 +26,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var featureAnswerAllAnglesEnabled = false
     private var featureDeclineEnabled = false
     private var behaviourBeepEnabled = false
+    private var behaviourVibrateEnabled = false
 
     private val ONGOING_NOTIFICATION_ID = 1
     private val SENSOR_SENSITIVITY = 4
@@ -38,6 +37,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var mInclinationValue: Int? = null
 
     private var mToneGenerator: ToneGenerator? = null
+    private var mVibrator: Vibrator? = null
 
     // First 2 beeps: Good start state found (proximity not near)
     // 3 more beeps: Pickup / Decline
@@ -77,6 +77,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         featureAnswerAllAnglesEnabled = intent.extras!!.getBoolean(this.getString(R.string.answer_all_angles_enabled_key))
         featureDeclineEnabled = intent.extras!!.getBoolean(this.getString(R.string.flip_over_enabled_key))
         behaviourBeepEnabled = intent.extras!!.getBoolean(this.getString(R.string.beep_behaviour_enabled_key))
+        behaviourVibrateEnabled = intent.extras!!.getBoolean(this.getString(R.string.vibrate_behaviour_enabled_key))
+
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
@@ -103,6 +105,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         this.magnetometer = magnetometer
 
         mToneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
+        mVibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         waitUntilDesiredState(magnetometer != null)
 
@@ -157,6 +160,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             if (behaviourBeepEnabled) {
                                 mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
                             }
+                            if (behaviourVibrateEnabled) {
+                                mVibrator!!.vibrate(200)
+                            }
                             resetBeepsDone += 1
                         } else {
                             resetBeepsDone = 0
@@ -187,6 +193,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 if (behaviourBeepEnabled) {
                                     mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                                 }
+                                if (behaviourVibrateEnabled) {
+                                    mVibrator!!.vibrate(100)
+                                }
 
                                 hasRegistered = true
                                 answerBeepsDone += 1
@@ -209,6 +218,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             ) {
                                 if (behaviourBeepEnabled) {
                                     mToneGenerator!!.startTone(ToneGenerator.TONE_PROP_NACK, 100)
+                                }
+                                if (behaviourVibrateEnabled) {
+                                    mVibrator!!.vibrate(500)
                                 }
 
                                 declineBeepsDone += 1

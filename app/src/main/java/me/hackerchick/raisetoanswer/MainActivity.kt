@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         val answerAllAnglesFeature: CheckedTextView = findViewById(R.id.feature_answer_all_angles)
         val declineFeature: CheckedTextView = findViewById(R.id.feature_decline)
         val beepBehaviour: CheckedTextView = findViewById(R.id.behaviour_beep)
+        val vibrateBehaviour: CheckedTextView = findViewById(R.id.behaviour_vibrate)
 
         answerFeature.setOnClickListener { _->
             setAnswerFeature(!answerFeature.isChecked, true)
@@ -76,11 +77,16 @@ class MainActivity : AppCompatActivity() {
             setBeepBehaviour(!beepBehaviour.isChecked)
         }
 
+        vibrateBehaviour.setOnClickListener {
+            setVibrateBehaviour(!vibrateBehaviour.isChecked)
+        }
+
         setAnswerFeature(Util.answerFeatureEnabled(applicationContext), false)
         setAnswerAllAnglesFeatureIfSupported(Util.answerAllAnglesFeatureEnabled(applicationContext))
         setDeclineFeatureIfSupported(Util.declineFeatureEnabled(applicationContext))
 
         setBeepBehaviour(Util.beepBehaviourEnabled(applicationContext))
+        setVibrateBehaviour(Util.vibrateBehaviourEnabled(applicationContext))
 
         // Debugging
         val debugLog: TextView = findViewById(R.id.debug_log)
@@ -240,5 +246,12 @@ class MainActivity : AppCompatActivity() {
         beepBehaviour.isChecked = value
 
         Util.setBeepBehaviourEnabled(applicationContext, value)
+    }
+
+    private fun setVibrateBehaviour(value: Boolean) {
+        val vibrateBehaviour: CheckedTextView = findViewById(R.id.behaviour_vibrate)
+        vibrateBehaviour.isChecked = value
+
+        Util.setVibrateBehaviourEnabled(applicationContext, value)
     }
 }
