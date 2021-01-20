@@ -28,8 +28,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var behaviourBeepEnabled = false
     private var behaviourVibrateEnabled = false
 
+    private var proximitySensorRange = 0f
+    private var proximitySensorThreshold = 0f
+
     private val ONGOING_NOTIFICATION_ID = 1
-    private val SENSOR_SENSITIVITY = 4
 
     private var mAccelerometerValues: FloatArray = FloatArray(3)
     private var mMagnetometerValues: FloatArray = FloatArray(3)
@@ -107,6 +109,13 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         mToneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
         mVibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+        proximitySensorRange = proximitySensor!!.maximumRange
+        proximitySensorThreshold = proximitySensorRange / 2
+        if (testMode) {
+            Util.log("PROXIMITY SENSOR RANGE DETECTED AS ${proximitySensorRange}")
+            Util.log("SETTING PROXIMITY SENSOR THRESHOLD TO ${proximitySensorThreshold}")
+        }
+
         waitUntilDesiredState(magnetometer != null)
 
         return START_NOT_STICKY
@@ -156,7 +165,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     }
 
                     if (resetBeepsDone < 2) {
-                        if (proximityValue == null || (proximityValue >= SENSOR_SENSITIVITY || proximityValue <= -SENSOR_SENSITIVITY)) {
+                        if (proximityValue == null || (proximityValue >= proximitySensorThreshold)) {
                             if (behaviourBeepEnabled) {
                                 mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
                             }
@@ -186,8 +195,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             if (inclinationValue != null
                                 && inclinationValue in -90..90
                                 && proximityValue != null
-                                && proximityValue >= -SENSOR_SENSITIVITY
-                                && proximityValue <= SENSOR_SENSITIVITY
+                                && proximityValue <= proximitySensorThreshold
                                 && roll in 45.0..315.0
                             ) {
                                 if (behaviourBeepEnabled) {
@@ -239,7 +247,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         // Use a simpler algorithm if we have no magnetometer
                         // -90 to 0 = Right ear, 0 to 90 = Left ear
                         if (inclinationValue != null && inclinationValue in -90..90
-                            && proximityValue != null && proximityValue >= -SENSOR_SENSITIVITY && proximityValue <= SENSOR_SENSITIVITY) {
+                            && proximityValue != null && proximityValue <= proximitySensorThreshold) {
                             mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                             answerBeepsDone += 1
 
