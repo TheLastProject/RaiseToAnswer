@@ -9,7 +9,6 @@
     <string name="privacy_policy">Personvern</string>
     <string name="could_not_bind_sensor">Klarte ikke detektere sensorer på enheten din. Raise To Answer kan ikke fortsette</string>
     <string name="feature_raise_to_answer">Svar ved å holde telefonen opp til ditt øre</string>
-    <string name="select_features">Vennligst velg de egenskapene du vil skru på</string>
     <string name="feature_flip_over_to_decline">Ikke svar ved snu mobilen med skjermen ned (krever Android 9 eller nyere og et magnetometer )</string>
     <string name="test_result">Testresultater</string>
     <string name="detected_raise_to_answer">Godta respons gjenkjent.</string>
@@ -21,7 +20,6 @@
     <string name="raise_enabled_key" translatable="false">raise_enabled_key</string>
     <string name="flip_over_enabled_key" translatable="false">flip_over_enabled_key</string>
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
-    <string name="could_not_bind_magnetometer">Din telefon ser ut til å mangle et magnetometer. Løft opp for å svare vil ikke kunne detektere nøyaktigt orientering av telefonen.</string>
     <string name="feature_answer_all_angles">Ta telefonen i alle vinkler </string>
     <string name="decline_holder">Avslå anrop</string>
     <string name="answer_holder">Besvar anrop</string>
