@@ -22,4 +22,5 @@
     <string name="incoming_call_service">Beérkező hívás</string>
     <string name="permissions_needed">Az alkalmazás nem tud működni az engedélyek megadása nélkül…</string>
     <string name="app_name">Raise To Answer</string>
+    <string name="behaviour_vibrate">Beérkező hívásnál rezegjen a telefon</string>
 </resources>
