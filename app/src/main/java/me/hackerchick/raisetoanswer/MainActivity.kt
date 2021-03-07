@@ -1,12 +1,9 @@
 package me.hackerchick.raisetoanswer
 
 import android.Manifest
-import android.R.attr.label
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -17,6 +14,7 @@ import android.widget.Button
 import android.widget.CheckedTextView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -24,6 +22,10 @@ import androidx.lifecycle.Observer
 
 class MainActivity : AppCompatActivity() {
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
+
+    private var mMenu : Menu? = null
+    private var mTestMode = false
+    private var mTestRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,50 +95,54 @@ class MainActivity : AppCompatActivity() {
         debugLog.setOnClickListener {
             val clipboard: ClipboardManager =
                 getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("RaiseToAnswer Debug Log", Util.getLog().value!!.joinToString(separator = "\n"))
+            val clip = ClipData.newPlainText(
+                "RaiseToAnswer Debug Log", Util.getLog().value!!.joinToString(
+                    separator = "\n"
+                )
+            )
             clipboard.setPrimaryClip(clip)
 
-            Toast.makeText(this, getString(R.string.debug_log_copied_to_clipboard), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                getString(R.string.debug_log_copied_to_clipboard),
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         val testButton: Button = findViewById(R.id.test_button)
         testButton.setOnClickListener {
-            if (!Util.startSensorListener(applicationContext, true)) {
+            if (!mTestRunning) {
+                if (!Util.startSensorListener(applicationContext, true)) {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.enable_at_least_one_feature),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+
                 Toast.makeText(
                     applicationContext,
-                    getString(R.string.enable_at_least_one_feature),
+                    getString(R.string.test_started),
                     Toast.LENGTH_SHORT
                 ).show()
-                return@setOnClickListener
+
+                Util.clearLog()
+                Util.log("TEST STARTED")
+
+                testButton.text = getString(R.string.end_test)
+
+                mTestRunning = true
+            } else {
+                endTest()
             }
-
-            Toast.makeText(applicationContext, getString(R.string.test_started), Toast.LENGTH_SHORT).show()
-            Util.clearLog()
-            Util.log("TEST STARTED")
         }
+    }
 
-        val header: TextView = findViewById(R.id.raise_to_answer_header)
-        var debugCounter = 0
-        header.setOnClickListener {
-            debugCounter += 1
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
 
-            if (debugCounter == 7) {
-                Toast.makeText(this, getString(R.string.debug_mode_activated), Toast.LENGTH_LONG)
-                    .show()
-                testButton.visibility = View.VISIBLE
-                debugLog.visibility = View.VISIBLE
-
-                Util.getLog().observe(this, Observer {
-                    try {
-                        debugLog.text = it.reversed().joinToString(separator = "\n")
-                    } catch (ConcurrentModificationException: Exception) {
-                        // We don't care, just skip this update then...
-                    }
-                })
-            }
-
-            return@setOnClickListener
-        }
+        showTestMode(mTestMode)
     }
 
     override fun onRequestPermissionsResult(
@@ -161,6 +167,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        mMenu = menu
+
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
         return true
@@ -177,8 +185,100 @@ class MainActivity : AppCompatActivity() {
                 startActivity(browserIntent)
                 true
             }
+            R.id.test_mode -> {
+                if (!mTestMode) {
+                    enableTestMode(true)
+                } else {
+                    enableTestMode(false)
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun endTest() {
+        Util.stopSensorListener(this)
+
+        Util.log("TEST ENDED")
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.test_ended)
+            .setMessage(R.string.test_succesful_question)
+            .setPositiveButton(R.string.close, null)
+            .setNegativeButton(R.string.report_issue) { _, _ ->
+                val emailDataBuilder = StringBuilder()
+                emailDataBuilder.append("Product: " + android.os.Build.PRODUCT + "\n")
+                emailDataBuilder.append("Model: " + android.os.Build.MODEL + "\n")
+                emailDataBuilder.append("Device: " + android.os.Build.DEVICE + "\n")
+                emailDataBuilder.append("SDK: " + android.os.Build.VERSION.SDK_INT + "\n")
+                emailDataBuilder.append("App version: " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")" + "\n")
+                emailDataBuilder.append("Debug log:" + "\n")
+                emailDataBuilder.append(
+                    Util.getLog().value!!.joinToString(
+                        separator = "\n"
+                    )
+                )
+
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:")
+                intent.putExtra(
+                    Intent.EXTRA_EMAIL,
+                    "raisetoanswer.steeplelike@hackerchick.me"
+                )
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Raise To Answer Debug Log")
+                intent.putExtra(Intent.EXTRA_TEXT, emailDataBuilder.toString())
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            }
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .show()
+
+        val testButton: Button = findViewById(R.id.test_button)
+        testButton.text = getString(R.string.start_test)
+
+        mTestRunning = false
+    }
+
+    private fun enableTestMode(enable: Boolean) {
+        val debugLog: TextView = findViewById(R.id.debug_log)
+        val testButton: Button = findViewById(R.id.test_button)
+        val menuItem: MenuItem = mMenu!!.findItem(R.id.test_mode)
+
+        if (enable) {
+            menuItem.title = getString(R.string.disable_test_mode)
+
+            showTestMode(true)
+            testButton.visibility = View.VISIBLE
+            debugLog.visibility = View.VISIBLE
+
+            Util.getLog().observe(this, Observer {
+                try {
+                    debugLog.text = it.reversed().joinToString(separator = "\n")
+                } catch (ConcurrentModificationException: Exception) {
+                    // We don't care, just skip this update then...
+                }
+            })
+
+            testButton.text = getString(R.string.start_test)
+        } else {
+            menuItem.title = getString(R.string.enable_test_mode)
+
+            showTestMode(false)
+
+            Util.getLog().removeObservers(this)
+        }
+
+        mTestMode = enable
+    }
+
+    private fun showTestMode(show: Boolean) {
+        val debugLog: TextView = findViewById(R.id.debug_log)
+        val testButton: Button = findViewById(R.id.test_button)
+
+        testButton.visibility = if (show) View.VISIBLE else View.GONE
+        debugLog.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun setAnswerFeature(value: Boolean, propagate: Boolean) {

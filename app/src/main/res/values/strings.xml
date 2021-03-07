@@ -29,4 +29,13 @@
     <string name="debug_mode_activated">You are now a developer</string>
     <string name="debug_log_copied_to_clipboard">Debug log copied to clipboard</string>
     <string name="behaviour_vibrate">Vibrate on incoming calls</string>
+    <string name="enable_test_mode">Enable test mode</string>
+    <string name="disable_test_mode">Disable test mode</string>
+    <string name="start_test">Start Test</string>
+    <string name="end_test">End test</string>
+    <string name="test_manually_ended">Test was manually ended</string>
+    <string name="test_ended">Test ended</string>
+    <string name="test_succesful_question">Was the test succesful?\n\nIf not, you could send the test logs to the developer so she can help figure out what went wrong.</string>
+    <string name="close">Close</string>
+    <string name="report_issue">Report issue</string>
 </resources>

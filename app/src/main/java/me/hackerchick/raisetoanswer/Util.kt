@@ -17,7 +17,8 @@ class Util {
         private val debugLogLiveData = MutableLiveData<List<String>>()
 
         fun log(message: String) {
-            debugLog.add(message)
+            val timeStampedMessage = System.currentTimeMillis().toString() + ": " + message
+            debugLog.add(timeStampedMessage)
             debugLogLiveData.postValue(debugLog)
         }
 
