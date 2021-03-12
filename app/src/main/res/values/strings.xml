@@ -35,7 +35,7 @@
     <string name="end_test">End test</string>
     <string name="test_manually_ended">Test was manually ended</string>
     <string name="test_ended">Test ended</string>
-    <string name="test_succesful_question">Was the test succesful?\n\nIf not, you could send the test logs to the developer so she can help figure out what went wrong.</string>
+    <string name="test_succesful_question">Was the test successful?\n\nIf not, you could send the test logs to the developer so she can help to figure out what went wrong.</string>
     <string name="close">Close</string>
     <string name="report_issue">Report issue</string>
 </resources>
