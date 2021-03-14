@@ -19,6 +19,7 @@
     <string name="flip_over_enabled_key" translatable="false">flip_over_enabled_key</string>
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
     <string name="vibrate_behaviour_enabled_key" translatable="false">vibrate_behaviour_enabled_key</string>
+    <string name="privacy_policy_shown_key" translatable="false">privacy_policy_shown_key</string>
     <string name="feature_answer_all_angles">Answer at any angle</string>
     <string name="decline_holder">Declining calls</string>
     <string name="answer_holder">Answering calls</string>
@@ -38,4 +39,6 @@
     <string name="test_succesful_question">Was the test successful?\n\nIf not, you could send the test logs to the developer so she can help to figure out what went wrong.</string>
     <string name="close">Close</string>
     <string name="report_issue">Report issue</string>
+    <string name="privacy_policy_popup_text">Many app stores require apps to show their privacy policy on first start. Here is ours:\n\nWe collect NO DATA AT ALL and our app is Open Source so anyone can confirm this to be true.</string>
+    <string name="thank_you">Thank you</string>
 </resources>

@@ -31,6 +31,21 @@ class Util {
             return debugLogLiveData
         }
 
+        private fun getPrivacyPolicyShownSharedPreference(context: Context): SharedPreferences {
+            return context.getSharedPreferences(context.getString(R.string.privacy_policy_shown_key), Context.MODE_PRIVATE)
+        }
+
+        fun privacyPolicyShown(context: Context): Boolean {
+            return getPrivacyPolicyShownSharedPreference(context).getInt(context.getString(R.string.privacy_policy_shown_key), 0) == 1
+        }
+
+        fun setPrivacyPolicyShown(context: Context, value: Boolean) {
+            with (getPrivacyPolicyShownSharedPreference(context).edit()) {
+                putInt(context.getString(R.string.privacy_policy_shown_key), if (value) 1 else 0)
+                commit()
+            }
+        }
+
         private fun getAnswerFeatureSharedPreference(context: Context): SharedPreferences {
             return context.getSharedPreferences(context.getString(R.string.raise_enabled_key), Context.MODE_PRIVATE)
         }
@@ -41,7 +56,7 @@ class Util {
 
         fun setAnswerFeatureEnabled(context: Context, enabled: Boolean) {
             with (getAnswerFeatureSharedPreference(context).edit()) {
-                putInt(context.getString(me.hackerchick.raisetoanswer.R.string.raise_enabled_key), if (enabled) 1 else 0)
+                putInt(context.getString(R.string.raise_enabled_key), if (enabled) 1 else 0)
                 commit()
             }
         }

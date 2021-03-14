@@ -50,6 +50,90 @@ class MainActivity : AppCompatActivity() {
             magnetometerWarning.visibility = View.GONE
         }
 
+        if (Util.privacyPolicyShown(applicationContext)) {
+            startApp()
+            return
+        }
+
+        Util.setPrivacyPolicyShown(applicationContext, true)
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.privacy_policy)
+            .setMessage(R.string.privacy_policy_popup_text)
+            .setPositiveButton(R.string.thank_you) { _, _ ->
+                startApp()
+            }
+            .setNegativeButton(R.string.privacy_policy) { _, _ ->
+                startApp()
+                openPrivacyPolicy()
+            }
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .show()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        showTestMode(mTestMode)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_REQUEST_READ_PHONE_STATE -> {
+                if (!grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.permissions_needed),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    finish()
+                }
+                return
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        mMenu = menu
+
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.privacy_policy -> {
+                openPrivacyPolicy()
+                true
+            }
+            R.id.test_mode -> {
+                if (!mTestMode) {
+                    enableTestMode(true)
+                } else {
+                    enableTestMode(false)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openPrivacyPolicy() {
+        val browserIntent =
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://thelastproject.github.io/RaiseToAnswer/PRIVACY_POLICY")
+            )
+        startActivity(browserIntent)
+    }
+
+    private fun startApp() {
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.READ_PHONE_STATE,
@@ -136,64 +220,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 endTest()
             }
-        }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-        showTestMode(mTestMode)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            PERMISSION_REQUEST_READ_PHONE_STATE -> {
-                if (!grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.permissions_needed),
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    finish()
-                }
-                return
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        mMenu = menu
-
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.privacy_policy -> {
-                val browserIntent =
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://thelastproject.github.io/RaiseToAnswer/PRIVACY_POLICY")
-                    )
-                startActivity(browserIntent)
-                true
-            }
-            R.id.test_mode -> {
-                if (!mTestMode) {
-                    enableTestMode(true)
-                } else {
-                    enableTestMode(false)
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
