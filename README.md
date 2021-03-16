@@ -31,11 +31,22 @@ Then, open Android Studio and hit build.
 ## Debugging
 Sensors are complicated. If the app isn't working as you expect it to, please help me by giving some debug logging.
 
-First, tap the "Raise To Answer" text at the top of the screen 7 times. A Test button will appear.
+![Debug screen 1](debug1.png)
+First, tap the menu in the top right.
 
-Press this and try to answer as normally.
+![Debug screen 2](debug2.png)
+Then, choose "Enable test mode".
 
-A lot of text will have appeared below the Test button. Tap it to have it copied to your clipboard and then post it in a GitHub issue.
+![Debug screen 3](debug3.png)
+Put the phone down in the resting position, and tap "Start Test". Then, answer or decline the phone as seems natural to you.
+
+![Debug screen 4](debug4.png)
+After having tried to answer or decline, press "End Test".
+
+![Debug screen 5](debug5.png)
+If the issue appeared, press "Report Issue". This will open your email application and allow you to send debug logging to me.
+
+Please add any information you can think of to the email but don't remove any of the existing text.
 
 ## License
 
