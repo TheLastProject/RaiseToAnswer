@@ -1,0 +1,1 @@
+Show privacy policy on first startup (required by Huawei)
