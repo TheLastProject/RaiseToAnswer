@@ -3,7 +3,6 @@
     <string name="test_started">Prova iniziata</string>
     <string name="behaviour_beep">Bip quando chiamata arriva</string>
     <string name="select_behaviour">Altre impostazioni</string>
-    <string name="test_result">Risultato della prova</string>
     <string name="privacy_policy">Informativa sulla riservatezza</string>
     <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer sta ascoltando i dati del sensore</string>
     <string name="incoming_call_service">Servizio chiamata in arrivo</string>

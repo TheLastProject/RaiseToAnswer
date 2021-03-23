@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="test">Test</string>
     <string name="permissions_needed">Applikasjonen vil ikke fungere skikkelig uten disse tilgangene.</string>
     <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="incoming_call_service">Innkommende anrop</string>
@@ -10,7 +9,6 @@
     <string name="could_not_bind_sensor">Klarte ikke detektere sensorer på enheten din. Raise To Answer kan ikke fortsette</string>
     <string name="feature_raise_to_answer">Svar ved å holde telefonen opp til ditt øre</string>
     <string name="feature_flip_over_to_decline">Ikke svar ved snu mobilen med skjermen ned (krever Android 9 eller nyere og et magnetometer )</string>
-    <string name="test_result">Testresultater</string>
     <string name="detected_raise_to_answer">Godta respons gjenkjent.</string>
     <string name="detected_flip_over">Leggpå-respons oppdaget</string>
     <string name="test_started">Test startet</string>

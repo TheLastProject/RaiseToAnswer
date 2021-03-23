@@ -2,10 +2,8 @@
 <resources>
     <string name="behaviour_vibrate">来电震动</string>
     <string name="debug_log_copied_to_clipboard">调试日志已复制到剪贴板</string>
-    <string name="debug_mode_activated">您已解锁开发者选项</string>
     <string name="missing_support_android_9">您的设备运行的是 Android 9 之前的版本，不支持拒绝来电。</string>
     <string name="missing_support_magnetometer">您的设备没有磁力计，不支持拒绝或限制应答到右上角度。</string>
-    <string name="test">测试</string>
     <string name="answer_holder">应答来电</string>
     <string name="decline_holder">拒绝来电</string>
     <string name="feature_answer_all_angles">以任何角度应答</string>
@@ -17,7 +15,6 @@
     <string name="feature_raise_to_answer">把手机举到耳边以应答来电</string>
     <string name="detected_flip_over">检测到呼叫拒绝</string>
     <string name="detected_raise_to_answer">检测到呼叫应答</string>
-    <string name="test_result">测试结果</string>
     <string name="could_not_bind_sensor">注册传感器失败，您的设备可能缺少距离传感器或加速度传感器。抬手应答无法继续。</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="raise_to_answer_is_listening_to_sensor_data">抬手应答正在监听传感器数据</string>

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(R.string.privacy_policy)
             .setMessage(R.string.privacy_policy_popup_text)
-            .setPositiveButton(R.string.thank_you) { _, _ ->
+            .setPositiveButton(R.string.accept) { _, _ ->
                 startApp()
             }
             .setNegativeButton(R.string.privacy_policy) { _, _ ->
