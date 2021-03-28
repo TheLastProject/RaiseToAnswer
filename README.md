@@ -14,6 +14,9 @@ No ads, no unnecessary permissions and no unnecessary battery drain. Easy to ena
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=me.hackerchick.raisetoanswer)
+[<img src="https://huaweimobileservices.com/wp-content/uploads/2020/05/Explore-it-on-AppGallery.png"
+     alt="Explore it on AppGallery"
+     height="80">](https://appgallery.huawei.com/#/app/C103806515)
     
 <a href="https://hosted.weblate.org/engage/raisetoanswer/">
 <img src="https://hosted.weblate.org/widgets/raisetoanswer/-/open-graph.png" alt="Translation status" />
