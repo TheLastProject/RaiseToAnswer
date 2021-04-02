@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accept">Принять</string>
+    <string name="privacy_policy_popup_text">Многие магазины приложений требуют, чтобы приложения показывали свою политику конфиденциальности при первом запуске. Вот наша:
+\n
+\nПриложение ВООБЩЕ НЕ собирает НИКАКИХ ДАННЫХ и выпускается с открытым исходным кодом, так что любой может убедиться, что это правда.</string>
+    <string name="report_issue">Отчёт о проблеме</string>
+    <string name="close">Закрыть</string>
+    <string name="test_succesful_question">Тест пройден успешно\?
+\n
+\nЕсли нет, вы можете отправить журналы отладки разработчику, чтобы он смог помочь выяснить, что пошло не так.</string>
+    <string name="test_ended">Тест завершён</string>
+    <string name="end_test">Завершить тест</string>
+    <string name="start_test">Начать тест</string>
+    <string name="disable_test_mode">Отключить режим тестирования</string>
+    <string name="enable_test_mode">Включить режим тестирования</string>
+    <string name="missing_support_android_9">На вашем устройстве установлена версия Android младше 9, отклонение вызовов не поддерживается.</string>
+    <string name="missing_support_magnetometer">В устройстве отсутствует магнитометр, отклонение вызовов и функция ответа только под прямым углом не поддерживаются.</string>
+    <string name="feature_flip_over_to_decline">Отклонение поворотом телефона экраном вниз</string>
+    <string name="feature_raise_to_answer">Ответ поднесением телефона к уху</string>
+    <string name="behaviour_vibrate">Вибрация при входящих вызовах</string>
+    <string name="debug_log_copied_to_clipboard">Журнал отладки скопирован в буфер обмена</string>
+    <string name="answer_holder">Ответ на вызовы</string>
+    <string name="decline_holder">Отклонение вызовов</string>
+    <string name="feature_answer_all_angles">Ответ при любом угле</string>
+    <string name="behaviour_beep">Звуковой сигнал при входящих вызовах</string>
+    <string name="select_behaviour">Другие настройки</string>
+    <string name="enable_at_least_one_feature">Пожалуйста, включите хотя бы одну функцию</string>
+    <string name="test_started">Началось тестирование</string>
+    <string name="detected_flip_over">Обнаружено отклонение вызова</string>
+    <string name="detected_raise_to_answer">Обнаружен приём вызова</string>
+    <string name="could_not_bind_sensor">Невозможно подключиться к датчикам. Возможно, на вашем устройстве отсутствует датчик приближения или акселерометр. Работа приложения «Ответ ухом» невозможна.</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="app_name">Ответ ухом</string>
+    <string name="raise_to_answer_header">Ответ ухом</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">«Ответ ухом» считывает данные датчиков</string>
+    <string name="incoming_call_service">Служба входящих вызовов</string>
+    <string name="permissions_needed">Приложение не может работать без этого разрешения…</string>
+</resources>
