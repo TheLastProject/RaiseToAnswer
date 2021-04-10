@@ -18,9 +18,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
-
+import me.hackerchick.raisetoanswer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
     private var mMenu : Menu? = null
@@ -29,7 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (!Util.hasRequiredSensors(applicationContext)) {
             Toast.makeText(
@@ -41,12 +44,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (android.os.Build.VERSION.SDK_INT >= 28) {
-            val android9Warning: TextView = findViewById(R.id.missing_support_android_9)
+            val android9Warning: TextView = binding.missingSupportAndroid9
             android9Warning.visibility = View.GONE
         }
 
         if (Util.hasMagnetometer(applicationContext)) {
-            val magnetometerWarning: TextView = findViewById(R.id.missing_support_magnetometer)
+            val magnetometerWarning: TextView = binding.missingSupportMagnetometer
             magnetometerWarning.visibility = View.GONE
         }
 
@@ -141,11 +144,11 @@ class MainActivity : AppCompatActivity() {
             ), PERMISSION_REQUEST_READ_PHONE_STATE
         )
 
-        val answerFeature: CheckedTextView = findViewById(R.id.feature_answer)
-        val answerAllAnglesFeature: CheckedTextView = findViewById(R.id.feature_answer_all_angles)
-        val declineFeature: CheckedTextView = findViewById(R.id.feature_decline)
-        val beepBehaviour: CheckedTextView = findViewById(R.id.behaviour_beep)
-        val vibrateBehaviour: CheckedTextView = findViewById(R.id.behaviour_vibrate)
+        val answerFeature: CheckedTextView = binding.featureAnswer
+        val answerAllAnglesFeature: CheckedTextView = binding.featureAnswerAllAngles
+        val declineFeature: CheckedTextView = binding.featureDecline
+        val beepBehaviour: CheckedTextView = binding.behaviourBeep
+        val vibrateBehaviour: CheckedTextView = binding.behaviourVibrate
 
         answerFeature.setOnClickListener { _->
             setAnswerFeature(!answerFeature.isChecked, true)
@@ -175,7 +178,7 @@ class MainActivity : AppCompatActivity() {
         setVibrateBehaviour(Util.vibrateBehaviourEnabled(applicationContext))
 
         // Debugging
-        val debugLog: TextView = findViewById(R.id.debug_log)
+        val debugLog: TextView = binding.debugLog
         debugLog.setOnClickListener {
             val clipboard: ClipboardManager =
                 getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -193,7 +196,7 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
 
-        val testButton: Button = findViewById(R.id.test_button)
+        val testButton: Button = binding.testButton
         testButton.setOnClickListener {
             if (!mTestRunning) {
                 if (!Util.startSensorListener(applicationContext, true)) {
@@ -261,15 +264,15 @@ class MainActivity : AppCompatActivity() {
             .setIcon(android.R.drawable.ic_dialog_info)
             .show()
 
-        val testButton: Button = findViewById(R.id.test_button)
+        val testButton: Button = binding.testButton
         testButton.text = getString(R.string.start_test)
 
         mTestRunning = false
     }
 
     private fun enableTestMode(enable: Boolean) {
-        val debugLog: TextView = findViewById(R.id.debug_log)
-        val testButton: Button = findViewById(R.id.test_button)
+        val debugLog: TextView = binding.debugLog
+        val testButton: Button = binding.testButton
         val menuItem: MenuItem = mMenu!!.findItem(R.id.test_mode)
 
         if (enable) {
@@ -300,15 +303,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showTestMode(show: Boolean) {
-        val debugLog: TextView = findViewById(R.id.debug_log)
-        val testButton: Button = findViewById(R.id.test_button)
+        val debugLog: TextView = binding.debugLog
+        val testButton: Button = binding.testButton
 
         testButton.visibility = if (show) View.VISIBLE else View.GONE
         debugLog.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun setAnswerFeature(value: Boolean, propagate: Boolean) {
-        val answerFeature: CheckedTextView = findViewById(R.id.feature_answer)
+        val answerFeature: CheckedTextView = binding.featureAnswer
         answerFeature.isChecked = value
 
         Util.setAnswerFeatureEnabled(applicationContext, value)
@@ -319,7 +322,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAnswerAllAnglesFeatureIfSupported(value: Boolean) {
-        val answerAllAnglesFeature: CheckedTextView = findViewById(R.id.feature_answer_all_angles)
+        val answerAllAnglesFeature: CheckedTextView = binding.featureAnswerAllAngles
 
         if (!Util.hasMagnetometer(applicationContext)) {
             answerAllAnglesFeature.isEnabled = false
@@ -346,7 +349,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDeclineFeatureIfSupported(value: Boolean) {
-        val declineFeature: CheckedTextView = findViewById(R.id.feature_decline)
+        val declineFeature: CheckedTextView = binding.featureDecline
 
         if (android.os.Build.VERSION.SDK_INT < 28 || !Util.hasMagnetometer(applicationContext)) {
             declineFeature.isEnabled = false
@@ -368,14 +371,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBeepBehaviour(value: Boolean) {
-        val beepBehaviour: CheckedTextView = findViewById(R.id.behaviour_beep)
+        val beepBehaviour: CheckedTextView = binding.behaviourBeep
         beepBehaviour.isChecked = value
 
         Util.setBeepBehaviourEnabled(applicationContext, value)
     }
 
     private fun setVibrateBehaviour(value: Boolean) {
-        val vibrateBehaviour: CheckedTextView = findViewById(R.id.behaviour_vibrate)
+        val vibrateBehaviour: CheckedTextView = binding.behaviourVibrate
         vibrateBehaviour.isChecked = value
 
         Util.setVibrateBehaviourEnabled(applicationContext, value)
