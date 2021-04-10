@@ -17,7 +17,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
 import me.hackerchick.raisetoanswer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= 28) {
+        if (Build.VERSION.SDK_INT >= 28) {
             val android9Warning: TextView = binding.missingSupportAndroid9
             android9Warning.visibility = View.GONE
         }
@@ -150,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         val beepBehaviour: CheckedTextView = binding.behaviourBeep
         val vibrateBehaviour: CheckedTextView = binding.behaviourVibrate
 
-        answerFeature.setOnClickListener { _->
+        answerFeature.setOnClickListener {
             setAnswerFeature(!answerFeature.isChecked, true)
         }
 
@@ -158,7 +157,7 @@ class MainActivity : AppCompatActivity() {
             setAnswerAllAnglesFeatureIfSupported(!answerAllAnglesFeature.isChecked)
         }
 
-        declineFeature.setOnClickListener { _->
+        declineFeature.setOnClickListener {
             setDeclineFeatureIfSupported(!declineFeature.isChecked)
         }
 
@@ -237,10 +236,10 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.close, null)
             .setNegativeButton(R.string.report_issue) { _, _ ->
                 val emailDataBuilder = StringBuilder()
-                emailDataBuilder.append("Product: " + android.os.Build.PRODUCT + "\n")
-                emailDataBuilder.append("Model: " + android.os.Build.MODEL + "\n")
-                emailDataBuilder.append("Device: " + android.os.Build.DEVICE + "\n")
-                emailDataBuilder.append("SDK: " + android.os.Build.VERSION.SDK_INT + "\n")
+                emailDataBuilder.append("Product: " + Build.PRODUCT + "\n")
+                emailDataBuilder.append("Model: " + Build.MODEL + "\n")
+                emailDataBuilder.append("Device: " + Build.DEVICE + "\n")
+                emailDataBuilder.append("SDK: " + Build.VERSION.SDK_INT + "\n")
                 emailDataBuilder.append("App version: " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")" + "\n")
                 emailDataBuilder.append("Debug log:" + "\n")
                 emailDataBuilder.append(
@@ -282,7 +281,7 @@ class MainActivity : AppCompatActivity() {
             testButton.visibility = View.VISIBLE
             debugLog.visibility = View.VISIBLE
 
-            Util.getLog().observe(this, Observer {
+            Util.getLog().observe(this, {
                 try {
                     debugLog.text = it.reversed().joinToString(separator = "\n")
                 } catch (ConcurrentModificationException: Exception) {
@@ -351,7 +350,7 @@ class MainActivity : AppCompatActivity() {
     private fun setDeclineFeatureIfSupported(value: Boolean) {
         val declineFeature: CheckedTextView = binding.featureDecline
 
-        if (android.os.Build.VERSION.SDK_INT < 28 || !Util.hasMagnetometer(applicationContext)) {
+        if (Build.VERSION.SDK_INT < 28 || !Util.hasMagnetometer(applicationContext)) {
             declineFeature.isEnabled = false
             declineFeature.isChecked = false
             Util.setDeclineFeatureEnabled(applicationContext, false)
