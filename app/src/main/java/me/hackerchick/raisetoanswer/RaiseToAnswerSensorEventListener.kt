@@ -270,6 +270,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     @SuppressLint("MissingPermission")
     private fun pickUpDetected(tm: TelecomManager) {
         if (!testMode) {
+            @Suppress("DEPRECATION")
             tm.acceptRingingCall()
         } else {
             val handler = Handler(Looper.getMainLooper())
@@ -286,9 +287,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         stopSelf()
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "MissingPermission")
     private fun declineDetected(tm: TelecomManager) {
         if (!testMode) {
+            @Suppress("DEPRECATION")
             tm.endCall()
         } else {
             val handler = Handler(Looper.getMainLooper())
