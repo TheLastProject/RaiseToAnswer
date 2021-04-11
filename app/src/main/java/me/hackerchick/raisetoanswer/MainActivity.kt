@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        /*
         Util.setPrivacyPolicyShown(applicationContext, true)
 
         AlertDialog.Builder(this)
@@ -71,6 +72,10 @@ class MainActivity : AppCompatActivity() {
             }
             .setIcon(android.R.drawable.ic_dialog_info)
             .show()
+         */
+
+        // Remove the following line if we ever re-enable the privacy policy check
+        startApp()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
