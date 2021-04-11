@@ -1,0 +1,2 @@
+Perbaikan switch on/off yang kadang-kadang tidak berfungsi
+Buka aplikasi saat mengetuk notifikasi

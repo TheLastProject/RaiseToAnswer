@@ -1,0 +1,1 @@
+Tampilkan Kebijakan Privasi pada Awal Pertama Masuk aplikasi/startup (diperlukan oleh Huawei)

@@ -1,0 +1,1 @@
+Perbaikan menjawab tidak berfungsi jika aplikasi tidak di latar depan

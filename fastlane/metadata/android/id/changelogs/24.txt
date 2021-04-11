@@ -1,0 +1,2 @@
+Peningkatan besar dalam kompatibilitas dengan banyak sensor jarak yang berbeda
+Penambahan sebuah opsi untuk bergetar pada panggilan masuk

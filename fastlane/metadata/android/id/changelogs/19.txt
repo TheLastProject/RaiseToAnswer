@@ -1,0 +1,1 @@
+Jangan buat jawaban dari semua sudut yang dapat diedit jika menjawab tidak diaktifkan (UI lebih logis)
