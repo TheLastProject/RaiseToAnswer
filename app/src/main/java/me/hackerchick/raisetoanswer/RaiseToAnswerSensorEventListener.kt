@@ -170,7 +170,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ANSWER, 100)
                             }
                             if (behaviourVibrateEnabled) {
-                                mVibrator!!.vibrate(200)
+                                mVibrator!!.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
                             }
                             resetBeepsDone += 1
                         } else {
@@ -202,7 +202,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                     mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
                                 }
                                 if (behaviourVibrateEnabled) {
-                                    mVibrator!!.vibrate(100)
+                                    mVibrator!!.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
                                 }
 
                                 hasRegistered = true
@@ -228,7 +228,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                     mToneGenerator!!.startTone(ToneGenerator.TONE_PROP_NACK, 100)
                                 }
                                 if (behaviourVibrateEnabled) {
-                                    mVibrator!!.vibrate(500)
+                                    mVibrator!!.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
                                 }
 
                                 declineBeepsDone += 1
@@ -270,6 +270,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     @SuppressLint("MissingPermission")
     private fun pickUpDetected(tm: TelecomManager) {
         if (!testMode) {
+            @Suppress("DEPRECATION")
             tm.acceptRingingCall()
         } else {
             val handler = Handler(Looper.getMainLooper())
@@ -286,9 +287,10 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         stopSelf()
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "MissingPermission")
     private fun declineDetected(tm: TelecomManager) {
         if (!testMode) {
+            @Suppress("DEPRECATION")
             tm.endCall()
         } else {
             val handler = Handler(Looper.getMainLooper())
