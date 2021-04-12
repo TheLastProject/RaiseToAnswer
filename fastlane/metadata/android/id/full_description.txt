@@ -1,0 +1,5 @@
+Cukup pegang telepon Anda ke telinga Anda untuk menjawab sebuah panggilan masuk. Ketika aplikasi mendeteksi telepon berada di dekat telinga Anda selama ada sebuah panggilan masuk, maka akan mengeluarkan suara bip sebanyak 5 kali dan kemudian menjawab panggilan tersebut.
+
+Tanpa iklan, tanpa izin yang tidak diperlukan dan tanpa penggunaan baterai berlebih yang tidak diperlukan. Mudah diaktifkan dan dinonaktifkan. Tidak menggantikan layar panggilan masuk Anda, jadi Anda tidak perlu mempelajari apa pun yang baru.
+
+Aplikasi ini adalah aplikasi Sumber Terbuka. Kode sumber tersedia di https://github.com/TheLastProject/RaiseToAnswer.

@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="accept">Terima</string>
+    <string name="privacy_policy_popup_text">Banyak toko aplikasi memerlukan aplikasi untuk menunjukkan kebijakan privasi mereka pada awal pertama kali memulai aplikasi. Ini kebijakan privasi milik kami:
+\n
+\nKami TIDAK mengumpulkan data SAMA SEKALI dan aplikasi kami adalah sumber terbuka sehingga siapa pun dapat mengkonfirmasi bahwa hal ini adalah benar.</string>
+    <string name="report_issue">Laporkan masalah</string>
+    <string name="close">Tutup</string>
+    <string name="test_succesful_question">Apakah tes berhasil\?
+\n
+\nJika tidak, Anda dapat mengirimkan catatan log tes ke pengembang supaya dapat membantu memecahkan masalah/kesalahan apa yang terjadi.</string>
+    <string name="test_ended">Tes berakhir</string>
+    <string name="end_test">Akhiri Tes</string>
+    <string name="start_test">Mulai Tes</string>
+    <string name="disable_test_mode">Nonaktifkan mode tes</string>
+    <string name="enable_test_mode">Aktifkan mode tes</string>
+    <string name="behaviour_vibrate">Bergetar pada panggilan masuk</string>
+    <string name="debug_log_copied_to_clipboard">Debug catatan log disalin ke papanklip</string>
+    <string name="missing_support_android_9">Perangkat Anda menjalankan versi Android sebelum 9, menolak panggilan tidak didukung.</string>
+    <string name="missing_support_magnetometer">Perangkat Anda tidak memiliki magnetometer, menolak atau membatasi jawaban pada sebuah sudut kanan-atas tidak didukung.</string>
+    <string name="answer_holder">Menjawab panggilan</string>
+    <string name="decline_holder">Menolak panggilan</string>
+    <string name="feature_answer_all_angles">Jawab pada sudut mana pun</string>
+    <string name="behaviour_beep">Bunyi bip pada panggilan masuk</string>
+    <string name="select_behaviour">Pengaturan lainnya</string>
+    <string name="enable_at_least_one_feature">Silahkan aktifkan setidaknya satu fitur</string>
+    <string name="test_started">Tes dimulai</string>
+    <string name="detected_flip_over">Tolak panggilan terdeteksi</string>
+    <string name="detected_raise_to_answer">Angkat panggilan terdeteksi</string>
+    <string name="feature_flip_over_to_decline">Tolak dengan meletakkan layar bawah ponsel Anda - terlebih dahulu</string>
+    <string name="feature_raise_to_answer">Jawab dengan memegang telepon Anda ke telinga Anda</string>
+    <string name="could_not_bind_sensor">Gagal mendaftarkan sensor, perangkat Anda mungkin tidak memiliki sensor jarak atau accelerometer. Angkat untuk Jawab tidak dapat melanjutkan.</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Angkat untuk Jawab sedang mendengarkan ke data sensor</string>
+    <string name="incoming_call_service">Layanan panggilan masuk</string>
+    <string name="raise_to_answer_header">Angkat untuk Jawab</string>
+    <string name="permissions_needed">Aplikasi tidak dapat bekerja tanpa perizinan ini, maaf ya kakak…</string>
+    <string name="app_name">Angkat untuk Jawab</string>
+</resources>

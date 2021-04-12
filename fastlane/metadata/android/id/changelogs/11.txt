@@ -1,0 +1,2 @@
+Penambahan terjemahan Perancis secara parsial (terima kasih, Larnicone!)
+Penambahan opsi untuk menolak panggilan masuk

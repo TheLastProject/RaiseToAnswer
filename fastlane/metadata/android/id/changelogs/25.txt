@@ -1,0 +1,2 @@
+Penigkatan alur pelaporan bug
+Perbaikan status tes yang hilang pada rotasi

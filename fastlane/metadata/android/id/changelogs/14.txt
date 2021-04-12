@@ -1,0 +1,3 @@
+Penambahan opsi untuk menonaktifkan bunyi bip
+Membuat aplikasi bertahan dari boot ulang/reboot dan pembaruan
+Hanya menampilkan pemberitahuan saat membaca sensor data (kebutuhan Android)
