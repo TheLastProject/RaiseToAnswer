@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="accept">Chấp nhận</string>
+    <string name="privacy_policy_popup_text">Nhiều cửa hàng ứng dụng yêu cầu các ứng dụng hiện chính sách riêng tư của chúng trong lần khởi động đầu tiên. Đây là chính sách riêng tư của chúng tôi:
+\n
+\nChúng tôi KHÔNG THU THẬP BẤT CỨ DỮ LIỆU NÀO và ứng dụng của chúng tôi là mã nguồn mở nên bất kỳ ai cũng có thể xác nhận điều này là đúng.</string>
+    <string name="report_issue">Báo cáo vấn đề</string>
+    <string name="close">Đóng</string>
+    <string name="test_succesful_question">Thử nghiệm có thành công không\?
+\n
+\nNếu không, bạn có thể gửi nhật ký thử nghiệm đến nhà phát triển để cô ấy có thể giúp tìm ra cái gì sai đã xảy ra.</string>
+    <string name="test_ended">Đã kết thúc thử nghiệm</string>
+    <string name="end_test">Kết thúc thử nghiệm</string>
+    <string name="start_test">Bắt đầu thử nghiệm</string>
+    <string name="disable_test_mode">Tắt chế độ thử nghiệm</string>
+    <string name="enable_test_mode">Bật chế độ thử nghiệm</string>
+    <string name="behaviour_vibrate">Rung khi có cuộc gọi đến</string>
+    <string name="debug_log_copied_to_clipboard">Đã sao chép nhật ký gỡ lỗi vào bộ nhớ tạm</string>
+    <string name="missing_support_android_9">Thiết bị của bạn đang chạy một phiên bản Android trước 9, việc từ chối cuộc gọi không được hỗ trợ.</string>
+    <string name="missing_support_magnetometer">Thiết bị của bạn thiếu từ kế, việc từ chối hoặc giới hạn việc trả lời cho góc thẳng đứng không được hỗ trợ.</string>
+    <string name="answer_holder">Trả lời cuộc gọi</string>
+    <string name="decline_holder">Từ chối cuộc gọi</string>
+    <string name="feature_answer_all_angles">Trả lời tại bất kỳ góc nào</string>
+    <string name="behaviour_beep">Phát ra tiếng bíp khi có cuộc gọi đến</string>
+    <string name="select_behaviour">Cài đặt khác</string>
+    <string name="enable_at_least_one_feature">Vui lòng bật ít nhất một tính năng</string>
+    <string name="test_started">Đã bắt đầu thử nghiệm</string>
+    <string name="detected_flip_over">Đã phát hiện từ chối cuộc gọi</string>
+    <string name="detected_raise_to_answer">Đã phát hiện nhặt lên trong cuộc gọi</string>
+    <string name="feature_flip_over_to_decline">Từ chối bằng cách úp điện thoại của bạn xuống</string>
+    <string name="feature_raise_to_answer">Trả lời bằng cách giữ điện thoại của bạn sát vào tai</string>
+    <string name="could_not_bind_sensor">Đăng ký cảm biến thất bại, thiết bị của bạn có thể đang thiếu cảm biến tiệm cận hoặc gia tốc kế. Nâng lên để Trả lời không thể tiếp tục.</string>
+    <string name="privacy_policy">Chính sách riêng tư</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Nâng lên để Trả lời đang lắng nghe dữ liệu cảm biến</string>
+    <string name="raise_to_answer_header">Nâng lên để Trả lời</string>
+    <string name="app_name">Nâng lên để Trả lời</string>
+    <string name="incoming_call_service">Dịch vụ gọi đến</string>
+    <string name="permissions_needed">Ứng dụng không thể hoạt động mà không có các quyền này, xin lỗi…</string>
+</resources>
