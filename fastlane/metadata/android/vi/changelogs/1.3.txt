@@ -1,0 +1,2 @@
+Sửa công tắc bật/tắt đôi khi không hoạt động
+Mở ứng dụng khi nhấn vào thông báo

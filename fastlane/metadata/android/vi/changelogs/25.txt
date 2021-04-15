@@ -1,0 +1,2 @@
+Cải thiện dòng chảy báo cáo lỗi
+Sửa trạng thái thử nghiệm bị mất khi xoay

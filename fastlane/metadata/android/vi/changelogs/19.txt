@@ -1,0 +1,1 @@
+Không làm cho việc trả lời từ mọi góc có thể chỉnh sửa được nếu việc trả lời không được bật (giao diện mang tính logic hơn)

@@ -1,0 +1,2 @@
+Cải thiện rất nhiều sự tương thích với nhiều cảm biến tiệm cận khác nhau
+Thêm tuỳ chọn rung khi có cuộc gọi đến

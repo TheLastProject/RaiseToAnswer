@@ -1,0 +1,1 @@
+Bỏ qua các cuộc gọi đến khi đã ở trong một cuộc gọi

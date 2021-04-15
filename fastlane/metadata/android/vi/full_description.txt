@@ -1,0 +1,5 @@
+Chỉ đơn giản là giữ điện thoại của bạn sát vào tai để trả lời một cuộc gọi đến. Khi ứng dụng phát hiện là điện thoại đang gần tai của bạn trong khi có cuộc gọi đến, nó sẽ phát ra tiếng bíp 5 lần và sau đó là trả lời cuộc gọi.
+
+Không có quảng cáo, không có các quyền không cần thiết và không hao pin không cần thiết. Dễ bật và tắt. Không thay thế màn hình gọi đến của bạn, nên bạn không cần học bất kỳ thứ gì mới.
+
+Ứng dụng này là mã nguồn mở. Mã nguồn có ở https://github.com/TheLastProject/RaiseToAnswer.
