@@ -1,0 +1,1 @@
+Dừng việc lắng nghe cảm biến tại bất kỳ trạng thái không đổ chuông nào

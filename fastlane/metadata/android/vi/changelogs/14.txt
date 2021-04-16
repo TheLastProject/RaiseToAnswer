@@ -1,0 +1,3 @@
+Thêm tuỳ chọn tắt tiếng bíp
+Làm cho ứng dụng sống sót qua những lần khởi động lại và những bản cập nhật
+Chỉ hiện thông báo khi đang đọc dữ liệu cảm biến (yêu cầu của Android)
