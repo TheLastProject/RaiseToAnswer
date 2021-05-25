@@ -12,8 +12,8 @@
     <string name="test_ended">Тест завершён</string>
     <string name="end_test">Завершить тест</string>
     <string name="start_test">Начать тест</string>
-    <string name="disable_test_mode">Отключить режим тестирования</string>
-    <string name="enable_test_mode">Включить режим тестирования</string>
+    <string name="disable_test_mode">Отключить тестирование</string>
+    <string name="enable_test_mode">Включить тестирование</string>
     <string name="missing_support_android_9">На вашем устройстве установлена версия Android младше 9, отклонение вызовов не поддерживается.</string>
     <string name="missing_support_magnetometer">В устройстве отсутствует магнитометр, отклонение вызовов и функция ответа только под прямым углом не поддерживаются.</string>
     <string name="feature_flip_over_to_decline">Отклонение поворотом телефона экраном вниз</string>
@@ -22,7 +22,7 @@
     <string name="debug_log_copied_to_clipboard">Журнал отладки скопирован в буфер обмена</string>
     <string name="answer_holder">Ответ на вызовы</string>
     <string name="decline_holder">Отклонение вызовов</string>
-    <string name="feature_answer_all_angles">Ответ при любом угле</string>
+    <string name="feature_answer_all_angles">Ответ под любым углом</string>
     <string name="behaviour_beep">Звуковой сигнал при входящих вызовах</string>
     <string name="select_behaviour">Другие настройки</string>
     <string name="enable_at_least_one_feature">Пожалуйста, включите хотя бы одну функцию</string>
