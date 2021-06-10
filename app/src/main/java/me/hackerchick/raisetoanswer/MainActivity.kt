@@ -185,10 +185,17 @@ class MainActivity : AppCompatActivity() {
         // Debugging
         val debugLog: TextView = binding.debugLog
         debugLog.setOnClickListener {
+            val logData = Util.getLog().value
+
+            if (logData == null) {
+                return@setOnClickListener
+            }
+
             val clipboard: ClipboardManager =
                 getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
             val clip = ClipData.newPlainText(
-                "RaiseToAnswer Debug Log", Util.getLog().value!!.joinToString(
+                "RaiseToAnswer Debug Log", logData.joinToString(
                     separator = "\n"
                 )
             )
