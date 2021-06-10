@@ -112,8 +112,14 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         proximitySensorRange = proximitySensor!!.maximumRange
         proximitySensorThreshold = proximitySensorRange / 2
         if (testMode) {
-            Util.log("PROXIMITY SENSOR RANGE DETECTED AS ${proximitySensorRange}")
-            Util.log("SETTING PROXIMITY SENSOR THRESHOLD TO ${proximitySensorThreshold}")
+            Util.log("featureAnswerEnabled $featureAnswerEnabled")
+            Util.log("featureAnswerAllAnglesEnabled $featureAnswerAllAnglesEnabled")
+            Util.log("featureDeclineEnabled $featureDeclineEnabled")
+            Util.log("behaviourBeepEnabled $behaviourBeepEnabled")
+            Util.log("behaviourVibrateEnabled $behaviourVibrateEnabled")
+
+            Util.log("PROXIMITY SENSOR RANGE DETECTED AS $proximitySensorRange")
+            Util.log("SETTING PROXIMITY SENSOR THRESHOLD TO $proximitySensorThreshold")
         }
 
         waitUntilDesiredState(magnetometer != null)
