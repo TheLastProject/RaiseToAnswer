@@ -1,0 +1,1 @@
+Perbaikan crash saat mengetuk area log dalam aplikasi sebelum mulai
