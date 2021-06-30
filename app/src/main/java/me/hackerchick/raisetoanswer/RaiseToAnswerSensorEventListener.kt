@@ -254,7 +254,12 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                         // -90 to 0 = Right ear, 0 to 90 = Left ear
                         if (inclinationValue != null && inclinationValue in -90..90
                             && proximityValue != null && proximityValue <= proximitySensorThreshold) {
-                            mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            if (behaviourBeepEnabled) {
+                                mToneGenerator!!.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
+                            }
+                            if (behaviourVibrateEnabled) {
+                                mVibrator!!.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+                            }
                             answerBeepsDone += 1
 
                             if (answerBeepsDone == 3) {
