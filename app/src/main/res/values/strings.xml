@@ -1,17 +1,15 @@
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="permissions_needed">App can\'t work without these permission, sorry…</string>
+    <string name="permissions_needed">Grant the permissions to use the app.</string>
     <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="incoming_call_service">Incoming call service</string>
-    <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer is listening to sensor data</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Listening to sensor data…</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="could_not_bind_sensor">Failed registering sensors, your device may lack a proximity sensor or accelerometer. Raise To Answer cannot continue.</string>
-    <string name="feature_raise_to_answer">Answer by holding your phone to your ear</string>
-    <string name="feature_flip_over_to_decline">Decline by putting your phone down screen-first</string>
-    <string name="detected_raise_to_answer">Call pickup detected</string>
-    <string name="detected_flip_over">Call decline detected</string>
+    <string name="could_not_bind_sensor">Could not find any proximity sensor or accelerometer on your device. Cannot continue.</string>
+    <string name="feature_raise_to_answer">Answer by holding your device up to your ear</string>
+    <string name="feature_flip_over_to_decline">Hang up without answering by putting your device down screen-first</string>
     <string name="test_started">Test started</string>
-    <string name="enable_at_least_one_feature">Please enable at least one feature</string>
+    <string name="enable_at_least_one_feature">Please turn on one or more features</string>
     <string name="select_behaviour">Other settings</string>
     <string name="behaviour_beep">Beep on incoming calls</string>
     <string name="raise_enabled_key" translatable="false">raise_enabled_key</string>
@@ -20,21 +18,25 @@
     <string name="vibrate_behaviour_enabled_key" translatable="false">vibrate_behaviour_enabled_key</string>
     <string name="privacy_policy_shown_key" translatable="false">privacy_policy_shown_key</string>
     <string name="feature_answer_all_angles">Answer at any angle</string>
-    <string name="decline_holder">Declining calls</string>
-    <string name="answer_holder">Answering calls</string>
+    <string name="decline_holder">Hanging up without answering</string>
+    <string name="answer_holder">Answering</string>
     <string name="answer_all_angles_enabled_key" translatable="false">answer_all_angles_enabled_key</string>
-    <string name="missing_support_magnetometer">Your device lacks a magnetometer, declining or limiting answering to an up-right angle is not supported.</string>
-    <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
+    <string name="missing_support_magnetometer">Can not take angle into account without a magnetometer.</string>
+    <string name="missing_support_android_9">Install Android 9 or later to be able to hang up without answering.</string>
     <string name="debug_log_copied_to_clipboard">Debug log copied to clipboard</string>
     <string name="behaviour_vibrate">Vibrate on incoming calls</string>
-    <string name="enable_test_mode">Enable test mode</string>
-    <string name="disable_test_mode">Disable test mode</string>
-    <string name="start_test">Start Test</string>
+    <string name="report_issue">Report issue</string>
+    <string name="privacy_policy_popup_text">(Some app stores require apps to show a first-start privacy policy):\n\nNO DATA IS COLLECTED. The app is libre software, so anyone can confirm this.</string>
+    <string name="accept">Accept</string>
+    
+    
+    <string name="enable_test_mode">Test mode</string>
+    <string name="disable_test_mode">Turn off test mode</string>
+    <string name="start_test">Start test</string>
     <string name="end_test">End test</string>
     <string name="test_ended">Test ended</string>
-    <string name="test_succesful_question">Was the test successful?\n\nIf not, you could send the test logs to the developer so she can help to figure out what went wrong.</string>
+    <string name="test_succesful_question">Was the test successful?\n\nSend the test logs to the developer to figure out what went wrong if not.</string>
     <string name="close">Close</string>
-    <string name="report_issue">Report issue</string>
-    <string name="privacy_policy_popup_text">Many app stores require apps to show their privacy policy on first start. Here is ours:\n\nWe collect NO DATA AT ALL and our app is Open Source so anyone can confirm this to be true.</string>
-    <string name="accept">Accept</string>
+    <string name="detected_raise_to_answer">Call pickup detected</string>
+    <string name="detected_flip_over">Call decline detected</string>
 </resources>
