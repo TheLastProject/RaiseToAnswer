@@ -1,6 +1,7 @@
 package me.hackerchick.raisetoanswer
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -19,6 +20,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import me.hackerchick.raisetoanswer.databinding.ActivityMainBinding
+import android.os.PowerManager
+
+import android.content.Intent
+import android.provider.Settings
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -85,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         showTestMode(mTestMode)
     }
 
+    @SuppressLint("BatteryLife")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -97,9 +104,18 @@ class MainActivity : AppCompatActivity() {
                         applicationContext,
                         getString(R.string.permissions_needed),
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                     finish()
+                }
+
+                // Ask to ignore battery optimizations for increased reliability
+                val intent = Intent()
+                val packageName = packageName
+                val pm = getSystemService(POWER_SERVICE) as PowerManager
+                if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                    intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                    intent.data = Uri.parse("package:$packageName")
+                    startActivity(intent)
                 }
                 return
             }
