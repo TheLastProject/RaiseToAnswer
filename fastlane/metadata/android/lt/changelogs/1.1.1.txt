@@ -1,0 +1,1 @@
+Ištaisytas atsakymo neveikimas, jei programa nėra pirmame plane
