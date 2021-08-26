@@ -1,0 +1,5 @@
+Norėdami atsiliepti į skambutį, tiesiog laikykite telefoną prie ausies. Kai programa aptinka, kad telefonas yra prie ausies įeinančio skambučio metu, ji supypsės 5 kartus ir tada atsilieps į skambutį.
+
+Jokių reklamų, jokių nereikalingų leidimų ir nereikalingo baterijos eikvojimo. Lengva įjungti ir išjungti. Nepakeičia gaunamo skambučio ekrano, todėl jums nereikia nieko iš naujo mokytis.
+
+Ši programa yra atvirojo kodo. Šaltinio kodą galite rasti https://github.com/TheLastProject/RaiseToAnswer.
