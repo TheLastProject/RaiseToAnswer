@@ -1,0 +1,3 @@
+Pridėta galimybė išjungti garsinius signalus
+Užtikrinta, kad programa išgyventų perkrovimus ir atnaujinimus
+Rodyti pranešimą tik tada, kai skaitomi jutiklio duomenys (Android reikalavimas)

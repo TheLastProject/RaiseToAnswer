@@ -1,0 +1,1 @@
+Neleisti redaguoti visų atsiliepimo kampų, jei atsiliepimai nėra įjungti (logiškesnė vartotojo sąsaja)
