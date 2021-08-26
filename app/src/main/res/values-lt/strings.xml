@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="accept">Priimti</string>
+    <string name="privacy_policy_popup_text">Daugelyje programėlių parduotuvių reikalaujama, kad pirmą kartą paleidus programėles būtų rodoma jų privatumo politika. Čia pateikiama mūsų politika:
+\n
+\nMes nerenkame JOKIŲ DUOMENŲ ir mūsų programėlė yra atviro kodo, todėl kiekvienas gali patvirtinti, kad tai tiesa.</string>
+    <string name="report_issue">Pranešti apie problemą</string>
+    <string name="close">Uždaryti</string>
+    <string name="test_succesful_question">Ar bandymas buvo sėkmingas\?
+\n
+\nJei ne, galite nusiųsti bandymo žurnalus kūrėjui, kad jis padėtų išsiaiškinti, kas nepavyko.</string>
+    <string name="test_ended">Bandymas baigtas</string>
+    <string name="end_test">Bandymo pabaiga</string>
+    <string name="start_test">Pradėti bandymą</string>
+    <string name="disable_test_mode">Išjungti bandymo režimą</string>
+    <string name="enable_test_mode">Įjungti bandymo režimą</string>
+    <string name="behaviour_vibrate">Vibruoti įeinančio skambučio metu</string>
+    <string name="debug_log_copied_to_clipboard">Derinimo žurnalas nukopijuotas į iškarpinę</string>
+    <string name="missing_support_android_9">Jūsų prietaise įdiegta ankstesnė nei 9 Android versija, skambučių atmetimas nepalaikomas.</string>
+    <string name="missing_support_magnetometer">Jūsų prietaise nėra magnetometro, todėl atsiliepimas arba atmetimas vertikaliu kampu yra nepalaikomas.</string>
+    <string name="answer_holder">Atsiliepimas į skambučius</string>
+    <string name="decline_holder">Skabučių atmetimas</string>
+    <string name="feature_answer_all_angles">Atsiliepti bet kokiu kampu</string>
+    <string name="behaviour_beep">Pyptelėti įeinantiems skambučiams</string>
+    <string name="select_behaviour">Kiti nustatymai</string>
+    <string name="enable_at_least_one_feature">Įjunkite bent vieną funkciją</string>
+    <string name="test_started">Bandymas pradėtas</string>
+    <string name="detected_flip_over">Aptiktas skambučio atmetimas</string>
+    <string name="detected_raise_to_answer">Aptiktas skambučio priėmimas</string>
+    <string name="feature_flip_over_to_decline">Atmeskite padedami telefoną ekranu žemyn</string>
+    <string name="feature_raise_to_answer">Atsiliepkite laikydami telefoną prie ausies</string>
+    <string name="could_not_bind_sensor">Nepavyksta užregistruoti jutiklių, jūsų prietaise gali nebūti artumo jutiklio arba akselerometro. Raise To Answer negali tęsti.</string>
+    <string name="privacy_policy">Privatumo politika</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer klausosi jutiklio duomenų</string>
+    <string name="incoming_call_service">Įeinančių skambučių paslauga</string>
+    <string name="raise_to_answer_header">Raise To Answer</string>
+    <string name="permissions_needed">Programėlė negali veikti be šių leidimų, atsiprašome…</string>
+    <string name="app_name">Raise To Answer</string>
+</resources>
