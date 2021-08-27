@@ -1,0 +1,2 @@
+Atnaujintas vertimas į prancūzų kalbą (ačiū Larnicone!)
+Padidintas funkcijų žymimųjų langelių dydis pagal Google Play prieinamumo gaires

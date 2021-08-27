@@ -1,0 +1,1 @@
+Ignoruoti įeinančius skambučius, kai jau skambinate

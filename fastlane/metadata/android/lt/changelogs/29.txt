@@ -1,0 +1,1 @@
+Ištaisytas vibracijos ir pypsėjimo nustatymas, kuris netaikomas ne magnetometro kodui

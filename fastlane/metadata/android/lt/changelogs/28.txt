@@ -1,0 +1,1 @@
+Nesukelkite avarijos, kai bakstelėjate prisijungimo sritį programoje prieš inicializaciją
