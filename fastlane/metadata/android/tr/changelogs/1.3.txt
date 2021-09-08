@@ -1,0 +1,2 @@
+Aç/kapat düğmesinin bazen çalışmaması düzeltildi
+Bildirime dokunulduğunda uygulamayı aç

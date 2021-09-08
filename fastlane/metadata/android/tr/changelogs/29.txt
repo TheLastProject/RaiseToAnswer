@@ -1,0 +1,1 @@
+Manyetometre olmayan koda uygulanmayan titreşim ve bipleme ayarı düzeltildi

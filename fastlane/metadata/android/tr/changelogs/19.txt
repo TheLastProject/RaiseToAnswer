@@ -1,0 +1,1 @@
+Yanıtlama etkin değilse, tüm açılarda yanıtlamayı düzenlenebilir hale getirme (daha mantıklı kullanıcı arayüzü)

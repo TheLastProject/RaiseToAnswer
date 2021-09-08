@@ -1,0 +1,1 @@
+Tüm açılarda yanıtlamanın ayarlanmamış olması düzeltildi
