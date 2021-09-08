@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="missing_support_android_9">Aygıtınızda 9\'dan önceki bir Android sürümü çalışıyor, aramaları reddetmek desteklenmiyor.</string>
+    <string name="missing_support_magnetometer">Aygıtınızda manyetometre yok, dik açıyla yanıtlamayı reddetmek veya sınırlamak desteklenmiyor.</string>
+    <string name="accept">Kabul et</string>
+    <string name="privacy_policy_popup_text">Birçok uygulama mağazası, uygulamaların ilk başlangıçta gizlilik politikalarını göstermesini gerektirir. İşte bizimki:
+\n
+\nHİÇBİR VERİ toplamıyoruz ve uygulamamız Açık Kaynaklı olduğundan herkes bunun doğru olduğunu denetleyebilir.</string>
+    <string name="report_issue">Sorun bildir</string>
+    <string name="close">Kapat</string>
+    <string name="test_succesful_question">Test başarılı oldu mu\?
+\n
+\nOlmadıysa, neyin yanlış gittiğini anlamasına yardımcı olabilmesi için test günlüklerini geliştiriciye gönderebilirsiniz.</string>
+    <string name="test_ended">Test sona erdi</string>
+    <string name="start_test">Testi başlat</string>
+    <string name="end_test">Testi sonlandır</string>
+    <string name="disable_test_mode">Test modunu devre dışı bırak</string>
+    <string name="enable_test_mode">Test modunu etkinleştir</string>
+    <string name="behaviour_vibrate">Gelen aramalarda titre</string>
+    <string name="debug_log_copied_to_clipboard">Hata ayıklama günlüğü panoya kopyalandı</string>
+    <string name="answer_holder">Aramaları yanıtla</string>
+    <string name="decline_holder">Aramaları reddet</string>
+    <string name="feature_answer_all_angles">Herhangi bir açıda yanıtla</string>
+    <string name="behaviour_beep">Gelen aramalarda bip sesi çıkar</string>
+    <string name="select_behaviour">Diğer ayarlar</string>
+    <string name="enable_at_least_one_feature">Lütfen en az bir özelliği etkinleştirin</string>
+    <string name="test_started">Test başladı</string>
+    <string name="detected_flip_over">Arama reddetme algılandı</string>
+    <string name="detected_raise_to_answer">Arama yanıtlama algılandı</string>
+    <string name="feature_flip_over_to_decline">Telefonunuzu ekranı aşağıda olacak şekilde koyarak aramaları reddedin</string>
+    <string name="feature_raise_to_answer">Telefonunuzu kulağınıza tutarak yanıtlayın</string>
+    <string name="could_not_bind_sensor">Sensörler kaydedilemedi, aygıtınızda bir yakınlık sensörü veya ivmeölçer olmayabilir. Yanıtlamak için Kaldır devam edemiyor.</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Yanıtlamak için Kaldır, sensör verilerini dinliyor</string>
+    <string name="incoming_call_service">Gelen arama hizmeti</string>
+    <string name="raise_to_answer_header">Yanıtlamak için Kaldır</string>
+    <string name="permissions_needed">Uygulama bu izinler olmadan çalışamaz, üzgünüm…</string>
+    <string name="app_name">Yanıtlamak için Kaldır</string>
+</resources>
