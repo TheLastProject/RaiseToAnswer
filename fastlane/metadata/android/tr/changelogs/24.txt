@@ -1,0 +1,2 @@
+Birçok farklı yakınlık sensörüyle uyumluluk büyük ölçüde iyileştirildi
+Gelen aramalarda titreşim seçeneği eklendi

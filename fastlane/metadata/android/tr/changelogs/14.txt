@@ -1,0 +1,3 @@
+Bip seslerini devre dışı bırakmak için bir seçenek eklendi
+Uygulamanın yeniden başlatmalardan ve güncellemelerden sonra çalışmaya devam etmesi sağlandı
+Yalnızca sensör verilerini okurken bildirim göster (Android gereksinimi)

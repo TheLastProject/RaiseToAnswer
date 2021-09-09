@@ -1,0 +1,1 @@
+Hiçbir özellik etkin değilse dinleyiciyi başlatma

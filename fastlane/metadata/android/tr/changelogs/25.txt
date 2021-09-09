@@ -1,0 +1,2 @@
+Hata bildirme akışı iyileştirildi
+Döndürme sırasında test durumunun kaybolması düzeltildi

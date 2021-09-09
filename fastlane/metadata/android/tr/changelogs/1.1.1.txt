@@ -1,0 +1,1 @@
+Uygulama ön planda değilse yanıtlamanın çalışmaması düzeltildi

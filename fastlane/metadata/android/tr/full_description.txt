@@ -1,4 +1,4 @@
-Gelen bir aramayı cevaplamak için telefonunuzu kulağınıza tutmanız yeterlidir. Uygulama, gelen bir arama sırasında telefonun kulağınıza yakın olduğunu algıladığında, 5 kez bip sesi çıkarır ve ardından aramayı yanıtlar.
+Gelen bir aramayı yanıtlamak için telefonunuzu kulağınıza tutmanız yeterlidir. Uygulama, gelen bir arama sırasında telefonun kulağınıza yakın olduğunu algıladığında, 5 kez bip sesi çıkarır ve ardından aramayı yanıtlar.
 
 Reklam yok, gereksiz izinler ve pil tüketimi yok. Etkinleştirmek ve devre dışı bırakmak kolaydır. Gelen arama ekranınızın yerini almaz, bu nedenle yeni bir şey öğrenmenize gerek yoktur.
 

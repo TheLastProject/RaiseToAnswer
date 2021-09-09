@@ -1,0 +1,1 @@
+Manyetometresi olmayan aygıtlar için yanlışlıkla kaldırılan desteği yeniden etkinleştir
