@@ -9,8 +9,8 @@ android {
         applicationId "me.hackerchick.raisetoanswer"
         minSdkVersion 26
         targetSdkVersion 30
-        versionCode 29
-        versionName "3.6.2"
+        versionCode 30
+        versionName "3.6.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
