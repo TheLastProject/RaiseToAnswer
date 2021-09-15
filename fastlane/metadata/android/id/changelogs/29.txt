@@ -1,0 +1,1 @@
+Perbaiki pengaturan getaran dan bip yang tidak berlaku untuk kode non-magnetometer
