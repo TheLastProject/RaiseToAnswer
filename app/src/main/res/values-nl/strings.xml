@@ -20,4 +20,10 @@
     <string name="answer_holder">Oproepen beantwoorden</string>
     <string name="missing_support_magnetometer">Je apparaat heeft geen magnetometer. Oproepen weigeren of enkel recht-op opnemen is niet ondersteund.</string>
     <string name="missing_support_android_9">Je apparaat draait een oudere versie van Android dan 9, oproepen weigeren is niet ondersteund.</string>
+    <string name="close">Sluiten</string>
+    <string name="report_issue">Meld probleem</string>
+    <string name="privacy_policy_popup_text">Veel app stores vereisen dat apps hun privacybeleid tonen bij de eerste start. Hier is de onze:
+\n
+\nWij verzamelen GEEN GEGEVENS en onze app is Open Source, zodat iedereen kan bevestigen dat dit waar is.</string>
+    <string name="accept">Accepteren</string>
 </resources>
