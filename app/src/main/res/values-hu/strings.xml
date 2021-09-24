@@ -21,4 +21,19 @@
     <string name="permissions_needed">Az alkalmazás nem tud működni az engedélyek megadása nélkül…</string>
     <string name="app_name">Raise To Answer</string>
     <string name="behaviour_vibrate">Beérkező hívásnál rezegjen a telefon</string>
+    <string name="debug_log_copied_to_clipboard">Hibajavítási napló másolása a vágólapra</string>
+    <string name="enable_test_mode">Tesztmód engedélyezése</string>
+    <string name="disable_test_mode">Tesztmód letiltása</string>
+    <string name="start_test">Teszt indítása</string>
+    <string name="end_test">Vizsgálat vége</string>
+    <string name="test_ended">A teszt befejeződött</string>
+    <string name="test_succesful_question">Sikeres volt a teszt\?
+\n
+\nHa nem, akkor elküldheti a tesztnaplókat a fejlesztőnek, hogy segítsen kideríteni, mi volt a hiba.</string>
+    <string name="close">Bezár</string>
+    <string name="report_issue">Jelentési probléma</string>
+    <string name="privacy_policy_popup_text">Számos alkalmazásbolt megköveteli, hogy az alkalmazások első indításkor megjelenítsék az adatvédelmi irányelveket. Itt van a miénk:
+\n
+\nAz alkalmazásunk nyílt forráskódú, így bárki megerősítheti, hogy ez igaz.</string>
+    <string name="accept">Elfogadom</string>
 </resources>
