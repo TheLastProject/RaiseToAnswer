@@ -1,0 +1,3 @@
+Added an option to disable beeps
+Make app survive reboots and updates
+Only show the notification while reading sensor data (Android requirement)

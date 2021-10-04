@@ -1,1 +1,1 @@
-Het beantwoorden van gesprekken terwijl de app niet in de voorgrond staat werkt nu
+[OPGELOST] Het beantwoorden van gesprekken terwijl de app niet op de voorgrond is werkt voortaan

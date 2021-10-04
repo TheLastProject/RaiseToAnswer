@@ -1,5 +1,5 @@
-Hou je telefoon tegen je oor om een telefoongesprek op te nemen. Zodra de app detecteert dat je de telefoon tegen je oor houd tijdens een inkomend telefoongesprek zal deze 5 keer piepen en het telefoongesprek beantwoorden.
+Houd je telefoon tegen je oor om de telefoon op te nemen. Zodra de app detecteert dat je de telefoon tegen je oor houdt tijdens een inkomende oproep, wordt er 5 keer gepiept waarna het telefoongesprek wordt beantwoord.
 
-Geen reclame, geen onnodige rechten en geen onnodig batterijgebruik. Makkelijk aan en uit te zetten. Veranderd niets aan het belscherm dus je hoeft niets nieuws te leren.
+Geen reclame, geen onnodige rechten en geen onnodig accugebruik, makkelijk aan en uit te zetten en verandert niets aan het belscherm zodat je niets nieuws hoeft te leren.
 
-Deze app is Open Source. De broncode is beschikbaar op https://github.com/TheLastProject/RaiseToAnswer.
+Deze app is open source. De broncode is beschikbaar op https://github.com/TheLastProject/RaiseToAnswer.
