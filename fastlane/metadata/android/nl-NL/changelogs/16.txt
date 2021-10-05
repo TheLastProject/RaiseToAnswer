@@ -1,0 +1,1 @@
+Reinstate accidentally removed support for devices without magnetometer

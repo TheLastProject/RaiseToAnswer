@@ -1,2 +1,2 @@
-Lost een probleem op waarin de aan/uit knop soms niet werkt
-Opent de app bij het aanraken van de notificatie
+Lost een probleem op waarbij de aan-/uitknop soms niet werkte
+Opent de app bij het aanraken van de melding
