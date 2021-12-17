@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Raise To Answer</string>
     <string name="permissions_needed">L\'application ne peut pas fonctionner sans ces autorisations, désolé…</string>
@@ -19,5 +20,20 @@
     <string name="answer_holder">Réception des appels</string>
     <string name="missing_support_magnetometer">Votre appareil ne dispose pas de magnétomètre, la restriction du rejet d\'appel à un angle droit n\'est pas prise en charge.</string>
     <string name="missing_support_android_9">Votre appareil fonctionne avec une version antérieure à Android 9, le rejet d\'appel n\'est pas pris en charge.</string>
+    <string name="debug_log_copied_to_clipboard">Journal de débogage copié dans le presse-papiers</string>
+    <string name="behaviour_vibrate">Vibrer lors des appels entrants</string>
+    <string name="enable_test_mode">Activer le mode de test</string>
+    <string name="end_test">Terminer le test</string>
+    <string name="test_succesful_question">Le test a-t-il était un succès \?
+\n
+\nSi non, vous pouvez envoyer le journal du test à la développeuse pour qu\'elle trouve d\'où vient le problème.</string>
+    <string name="close">Fermer</string>
+    <string name="report_issue">Signaler</string>
+    <string name="accept">Accepter</string>
+    <string name="disable_test_mode">Désactiver le mode de test</string>
+    <string name="start_test">Lancer le test</string>
+    <string name="test_ended">Test terminé</string>
+    <string name="privacy_policy_popup_text">Souvent, les app stores imposent d\'afficher les politiques de confidentialité au premier lancement. Voilà le nôtre :
+\n
+\nNe ne collectons AUCUNE DONNÉE et notre application est Open Source donc vous pouvez vérifier que cela est vrai.</string>
 </resources>
-

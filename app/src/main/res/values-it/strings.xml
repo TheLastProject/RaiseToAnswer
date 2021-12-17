@@ -35,4 +35,5 @@
 \n
 \nNon raccogliamo NESSUNA informazione e la nostra app è Open Source quindi chiunque può confermare che questo è vero.</string>
     <string name="accept">Accetta</string>
+    <string name="raise_to_answer_header">Solleva per rispondere</string>
 </resources>
