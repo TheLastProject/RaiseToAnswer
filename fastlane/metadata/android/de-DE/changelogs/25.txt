@@ -1,0 +1,2 @@
+Verbesserter Ablauf der Fehlerberichterstattung
+Teststatus geht bei Rotation nicht mehr verloren

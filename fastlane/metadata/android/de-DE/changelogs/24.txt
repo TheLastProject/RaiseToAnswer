@@ -1,0 +1,2 @@
+Deutlich verbesserte Kompatibilität mit vielen verschiedenen Näherungssensoren
+Hinzufügen einer Option zum Vibrieren bei eingehenden Anrufen
