@@ -30,4 +30,8 @@
     <string name="test_succesful_question">War der Test erfolgreich?\n\nWenn nicht, dann kannst du die Aufzeichnungen des Tests an die Entwicklerin senden, damit sie herausfinden kann, was schief gelaufen ist.</string>
     <string name="close">Schließen</string>
     <string name="report_issue">Problembericht senden</string>
+    <string name="privacy_policy_popup_text">Viele App-Stores verlangen, dass Apps beim ersten Start ihre Datenschutzbestimmungen anzeigen. Hier ist unsere:
+\n
+\nWir sammeln KEINE DATEN und unsere App ist Open Source, so dass jeder bestätigen kann, dass dies wahr ist.</string>
+    <string name="accept">Akzeptieren</string>
 </resources>

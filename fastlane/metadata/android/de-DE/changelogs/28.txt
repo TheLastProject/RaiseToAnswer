@@ -1,0 +1,1 @@
+Kein Absturz beim Tippen auf den Log-Bereich in der App vor dem Start

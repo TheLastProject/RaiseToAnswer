@@ -1,0 +1,1 @@
+Behebung der Einstellung "Vibration und Piepton", die nicht für Nicht-Magnetometer-Code gilt
