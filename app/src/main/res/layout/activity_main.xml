@@ -53,22 +53,20 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
-            <CheckedTextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/feature_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkMark="@drawable/checkbox"
                 android:gravity="center_vertical"
                 android:text="@string/feature_raise_to_answer"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:minHeight="48dp"/>
 
-            <CheckedTextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/feature_answer_all_angles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkMark="@drawable/checkbox"
                 android:layout_gravity="center_vertical"
                 android:text="@string/feature_answer_all_angles"
                 android:paddingLeft="10dp"
@@ -93,11 +91,10 @@
                 android:paddingRight="10dp"
                 android:minHeight="48dp"/>
 
-            <CheckedTextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/feature_decline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkMark="@drawable/checkbox"
                 android:text="@string/feature_flip_over_to_decline"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -120,22 +117,20 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
 
-            <CheckedTextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/behaviour_beep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkMark="@drawable/checkbox"
                 android:gravity="center_vertical"
                 android:text="@string/behaviour_beep"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:minHeight="48dp"/>
 
-            <CheckedTextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/behaviour_vibrate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkMark="@drawable/checkbox"
                 android:gravity="center_vertical"
                 android:text="@string/behaviour_vibrate"
                 android:paddingLeft="10dp"

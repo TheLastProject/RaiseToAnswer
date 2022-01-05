@@ -12,11 +12,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.CheckedTextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import me.hackerchick.raisetoanswer.databinding.ActivityMainBinding
 
@@ -149,30 +149,30 @@ class MainActivity : AppCompatActivity() {
             ), PERMISSION_REQUEST_READ_PHONE_STATE
         )
 
-        val answerFeature: CheckedTextView = binding.featureAnswer
-        val answerAllAnglesFeature: CheckedTextView = binding.featureAnswerAllAngles
-        val declineFeature: CheckedTextView = binding.featureDecline
-        val beepBehaviour: CheckedTextView = binding.behaviourBeep
-        val vibrateBehaviour: CheckedTextView = binding.behaviourVibrate
+        val answerFeature: SwitchCompat = binding.featureAnswer
+        val answerAllAnglesFeature: SwitchCompat = binding.featureAnswerAllAngles
+        val declineFeature: SwitchCompat = binding.featureDecline
+        val beepBehaviour: SwitchCompat = binding.behaviourBeep
+        val vibrateBehaviour: SwitchCompat = binding.behaviourVibrate
 
-        answerFeature.setOnClickListener {
-            setAnswerFeature(!answerFeature.isChecked, true)
+        answerFeature.setOnCheckedChangeListener { _, isChecked ->
+            setAnswerFeature(isChecked, true)
         }
 
-        answerAllAnglesFeature.setOnClickListener {
-            setAnswerAllAnglesFeatureIfSupported(!answerAllAnglesFeature.isChecked)
+        answerAllAnglesFeature.setOnCheckedChangeListener { _, isChecked ->
+            setAnswerAllAnglesFeatureIfSupported(isChecked)
         }
 
-        declineFeature.setOnClickListener {
-            setDeclineFeatureIfSupported(!declineFeature.isChecked)
+        declineFeature.setOnCheckedChangeListener { _, isChecked ->
+            setDeclineFeatureIfSupported(isChecked)
         }
 
-        beepBehaviour.setOnClickListener {
-            setBeepBehaviour(!beepBehaviour.isChecked)
+        beepBehaviour.setOnCheckedChangeListener { _, isChecked ->
+            setBeepBehaviour(isChecked)
         }
 
-        vibrateBehaviour.setOnClickListener {
-            setVibrateBehaviour(!vibrateBehaviour.isChecked)
+        vibrateBehaviour.setOnCheckedChangeListener { _, isChecked ->
+            setVibrateBehaviour(isChecked)
         }
 
         setAnswerFeature(Util.answerFeatureEnabled(applicationContext), false)
@@ -323,7 +323,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAnswerFeature(value: Boolean, propagate: Boolean) {
-        val answerFeature: CheckedTextView = binding.featureAnswer
+        val answerFeature: SwitchCompat = binding.featureAnswer
         answerFeature.isChecked = value
 
         Util.setAnswerFeatureEnabled(applicationContext, value)
@@ -334,7 +334,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAnswerAllAnglesFeatureIfSupported(value: Boolean) {
-        val answerAllAnglesFeature: CheckedTextView = binding.featureAnswerAllAngles
+        val answerAllAnglesFeature: SwitchCompat = binding.featureAnswerAllAngles
 
         if (!Util.hasMagnetometer(applicationContext)) {
             answerAllAnglesFeature.isEnabled = false
@@ -361,7 +361,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDeclineFeatureIfSupported(value: Boolean) {
-        val declineFeature: CheckedTextView = binding.featureDecline
+        val declineFeature: SwitchCompat = binding.featureDecline
 
         if (Build.VERSION.SDK_INT < 28 || !Util.hasMagnetometer(applicationContext)) {
             declineFeature.isEnabled = false
@@ -383,14 +383,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBeepBehaviour(value: Boolean) {
-        val beepBehaviour: CheckedTextView = binding.behaviourBeep
+        val beepBehaviour: SwitchCompat = binding.behaviourBeep
         beepBehaviour.isChecked = value
 
         Util.setBeepBehaviourEnabled(applicationContext, value)
     }
 
     private fun setVibrateBehaviour(value: Boolean) {
-        val vibrateBehaviour: CheckedTextView = binding.behaviourVibrate
+        val vibrateBehaviour: SwitchCompat = binding.behaviourVibrate
         vibrateBehaviour.isChecked = value
 
         Util.setVibrateBehaviourEnabled(applicationContext, value)
