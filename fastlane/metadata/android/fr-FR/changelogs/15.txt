@@ -1,0 +1,1 @@
+Ne pas commencer à écouter si aucun fonctionnalité n'est active

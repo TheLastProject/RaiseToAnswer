@@ -1,0 +1,1 @@
+Ne lit plus les capteurs en dehors des moments d'appels

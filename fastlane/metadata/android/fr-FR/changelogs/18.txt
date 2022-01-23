@@ -1,0 +1,1 @@
+Supporte le décrochage depuis différentes positions (comme en étant allongé)

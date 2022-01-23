@@ -1,0 +1,2 @@
+Amélioration du support des lecteurs d'écran
+Mise à jour des traductions

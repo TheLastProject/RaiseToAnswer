@@ -1,0 +1,2 @@
+Corrige le commutateur actif/inactif
+Pouvoir ouvrir l'appli à partir d'une notification

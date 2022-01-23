@@ -1,0 +1,3 @@
+Ajout d'une option pour désactiver les bips
+Rend l'appli invincible aux redémarrages et aux mises à jour
+N'affiche les notifications qu'en lisant les capteurs (Android requis)
