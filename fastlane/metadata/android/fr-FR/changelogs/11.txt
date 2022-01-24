@@ -1,0 +1,2 @@
+Ajout de la traduction française partielle (merci Larnicone !)
+Ajout d'une option pour refuser les appels entrants

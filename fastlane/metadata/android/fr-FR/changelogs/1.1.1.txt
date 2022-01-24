@@ -1,0 +1,1 @@
+Corrige le décrochage qui ne fonctionne pas si l'appli est en arrière-plan

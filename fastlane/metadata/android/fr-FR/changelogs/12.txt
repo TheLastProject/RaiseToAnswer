@@ -1,0 +1,2 @@
+Mise à jour de la traduction française (Merci Larnicone !)
+Augmentation de la taille des commutateurs pour améliorer l'accessibilité suivant les recommandations du Google Play

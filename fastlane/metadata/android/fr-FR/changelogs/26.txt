@@ -1,0 +1,1 @@
+Affiche la politique de confidentialité au premier lancement (imposé par Huawei)

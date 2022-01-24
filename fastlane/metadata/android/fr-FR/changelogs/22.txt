@@ -1,0 +1,1 @@
+Ignore les appels entrants quand déjà au téléphone
