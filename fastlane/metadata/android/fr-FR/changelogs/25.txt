@@ -1,0 +1,2 @@
+Amélioration du processus de signalement des bugs
+Correction du changement d'état de test lors de la rotation

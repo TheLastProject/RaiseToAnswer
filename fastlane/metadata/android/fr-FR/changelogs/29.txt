@@ -1,0 +1,1 @@
+Corriger les préférences des vibrations et bips qui ne s'appliquaient qu'au magnétomètre
