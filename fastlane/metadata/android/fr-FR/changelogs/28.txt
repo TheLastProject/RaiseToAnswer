@@ -1,0 +1,1 @@
+Ne plante plus lors des tapes sur la partie de connexion avant le démarrage de l'appli

@@ -1,0 +1,1 @@
+Ne permet plus de modifier les angles pour le décrochage si la fonction n'est pas activée (comportement plus logique)

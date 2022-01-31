@@ -1,0 +1,2 @@
+Améliorer considérablement la compatibilité avec différents capteurs de proximité.
+Ajoute une option pour vibre lors des appels entrants
