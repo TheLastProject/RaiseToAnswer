@@ -1,6 +1,4 @@
-Portez simplement votre téléphone à l'oreille pour répondre à un appel entrant ou retournez-le pour refuser un appel. Les deux fonctions peuvent être activées ou désactivées individuellement.
-
-L'application émettra deux bips lors d'un appel entrant après avoir sorti le téléphone de votre poche, puis trois bips aigus pour répondre ou trois bips graves pour refuser l'appel.
+Portez simplement votre téléphone à l'oreille pour répondre. Quand l'application détectera que votre téléphone est proche de votre oreille pendant un appel entrant, elle émettra cinq bips et ensuite décrochera.
 
 Pas de publicité, pas d'autorisations inutiles et pas de consommation excessive de la batterie. Facile à activer et à désactiver. Ne remplace pas votre écran d'appel, vous n'avez donc pas besoin d'apprendre quoi que ce soit de nouveau.
 
