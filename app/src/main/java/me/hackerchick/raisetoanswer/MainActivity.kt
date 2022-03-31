@@ -155,6 +155,13 @@ class MainActivity : AppCompatActivity() {
         val beepBehaviour: SwitchCompat = binding.behaviourBeep
         val vibrateBehaviour: SwitchCompat = binding.behaviourVibrate
 
+        setAnswerFeature(Util.answerFeatureEnabled(applicationContext), false)
+        setAnswerAllAnglesFeatureIfSupported(Util.answerAllAnglesFeatureEnabled(applicationContext))
+        setDeclineFeatureIfSupported(Util.declineFeatureEnabled(applicationContext))
+
+        setBeepBehaviour(Util.beepBehaviourEnabled(applicationContext))
+        setVibrateBehaviour(Util.vibrateBehaviourEnabled(applicationContext))
+
         answerFeature.setOnCheckedChangeListener { _, isChecked ->
             setAnswerFeature(isChecked, true)
         }
@@ -174,13 +181,6 @@ class MainActivity : AppCompatActivity() {
         vibrateBehaviour.setOnCheckedChangeListener { _, isChecked ->
             setVibrateBehaviour(isChecked)
         }
-
-        setAnswerFeature(Util.answerFeatureEnabled(applicationContext), false)
-        setAnswerAllAnglesFeatureIfSupported(Util.answerAllAnglesFeatureEnabled(applicationContext))
-        setDeclineFeatureIfSupported(Util.declineFeatureEnabled(applicationContext))
-
-        setBeepBehaviour(Util.beepBehaviourEnabled(applicationContext))
-        setVibrateBehaviour(Util.vibrateBehaviourEnabled(applicationContext))
 
         // Debugging
         val debugLog: TextView = binding.debugLog
