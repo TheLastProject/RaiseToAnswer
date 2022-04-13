@@ -1,0 +1,1 @@
+Uygulamayı yeniden açtıktan sonra herhangi bir açıda yanıtlamanın devre dışı olması düzeltildi
