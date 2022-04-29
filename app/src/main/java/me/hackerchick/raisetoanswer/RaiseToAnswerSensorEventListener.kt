@@ -18,7 +18,6 @@ import kotlin.math.atan2
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-
 class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
     private var testMode = false
 
@@ -111,16 +110,14 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
         proximitySensorRange = proximitySensor!!.maximumRange
         proximitySensorThreshold = proximitySensorRange / 2
-        if (testMode) {
-            Util.log("featureAnswerEnabled $featureAnswerEnabled")
-            Util.log("featureAnswerAllAnglesEnabled $featureAnswerAllAnglesEnabled")
-            Util.log("featureDeclineEnabled $featureDeclineEnabled")
-            Util.log("behaviourBeepEnabled $behaviourBeepEnabled")
-            Util.log("behaviourVibrateEnabled $behaviourVibrateEnabled")
+        Util.log("featureAnswerEnabled $featureAnswerEnabled", testMode)
+        Util.log("featureAnswerAllAnglesEnabled $featureAnswerAllAnglesEnabled", testMode)
+        Util.log("featureDeclineEnabled $featureDeclineEnabled", testMode)
+        Util.log("behaviourBeepEnabled $behaviourBeepEnabled", testMode)
+        Util.log("behaviourVibrateEnabled $behaviourVibrateEnabled", testMode)
 
-            Util.log("PROXIMITY SENSOR RANGE DETECTED AS $proximitySensorRange")
-            Util.log("SETTING PROXIMITY SENSOR THRESHOLD TO $proximitySensorThreshold")
-        }
+        Util.log("PROXIMITY SENSOR RANGE DETECTED AS $proximitySensorRange", testMode)
+        Util.log("SETTING PROXIMITY SENSOR THRESHOLD TO $proximitySensorThreshold", testMode)
 
         waitUntilDesiredState(magnetometer != null)
 
@@ -141,9 +138,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
             object : TimerTask() {
                 @SuppressLint("MissingPermission", "NewApi")
                 override fun run() {
-                    if (testMode) {
-                        Util.log("TIMER RUN START")
-                    }
+                    Util.log("TIMER RUN START", testMode)
 
                     var proximityValue = mProximityValue
                     var inclinationValue = mInclinationValue
@@ -183,9 +178,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             resetBeepsDone = 0
                         }
 
-                        if (testMode) {
-                            Util.log("RESET BEEP $resetBeepsDone")
-                        }
+                        Util.log("RESET BEEP $resetBeepsDone", testMode)
 
                         return
                     }
@@ -220,9 +213,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 answerBeepsDone = 0
                             }
 
-                            if (testMode) {
-                                Util.log("ANSWER BEEP $answerBeepsDone")
-                            }
+                            Util.log("ANSWER BEEP $answerBeepsDone", testMode)
                         }
 
                         if (featureDeclineEnabled && !hasRegistered) {
@@ -245,9 +236,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                                 declineBeepsDone = 0
                             }
 
-                            if (testMode) {
-                                Util.log("DECLINE BEEP $declineBeepsDone")
-                            }
+                            Util.log("DECLINE BEEP $declineBeepsDone", testMode)
                         }
                     } else {
                         // Use a simpler algorithm if we have no magnetometer
@@ -269,9 +258,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                             answerBeepsDone = 0
                         }
 
-                        if (testMode) {
-                            Util.log("ANSWER BEEP $answerBeepsDone")
-                        }
+                        Util.log("ANSWER BEEP $answerBeepsDone", testMode)
                     }
                 }
             }, 400, 400
@@ -280,6 +267,8 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
     @SuppressLint("MissingPermission")
     private fun pickUpDetected(tm: TelecomManager) {
+        Util.log("PICKUP DETECTED", testMode)
+
         if (!testMode) {
             @Suppress("DEPRECATION")
             tm.acceptRingingCall()
@@ -293,13 +282,15 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                 ).show()
             })
 
-            Util.log("PICKUP DETECTED")
         }
+
         stopSelf()
     }
 
     @SuppressLint("NewApi", "MissingPermission")
     private fun declineDetected(tm: TelecomManager) {
+        Util.log("DECLINE DETECTED", testMode)
+
         if (!testMode) {
             @Suppress("DEPRECATION")
             tm.endCall()
@@ -312,8 +303,6 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                     Toast.LENGTH_SHORT
                 ).show()
             })
-
-            Util.log("DECLINE DETECTED")
         }
         stopSelf()
     }
@@ -324,9 +313,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
         if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
             mProximityValue = event.values[0]
 
-            if (testMode) {
-                Util.log("PROXIMITY $mProximityValue")
-            }
+            Util.log("PROXIMITY $mProximityValue", testMode)
         } else if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
             mAccelerometerValues = event.values
 
@@ -345,15 +332,11 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                 ).toDouble()
             ).roundToInt()
 
-            if (testMode) {
-                Util.log("INCLINATION $mInclinationValue")
-            }
+            Util.log("INCLINATION $mInclinationValue", testMode)
         } else if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
             mMagnetometerValues = event.values
 
-            if (testMode) {
-                Util.log("MAGNETOMETER ${mMagnetometerValues[0]} ${mMagnetometerValues[1]} ${mMagnetometerValues[2]}")
-            }
+            Util.log("MAGNETOMETER ${mMagnetometerValues[0]} ${mMagnetometerValues[1]} ${mMagnetometerValues[2]}", testMode)
         }
     }
 }

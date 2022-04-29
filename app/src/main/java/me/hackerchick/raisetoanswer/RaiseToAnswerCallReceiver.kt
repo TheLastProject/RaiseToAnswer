@@ -7,7 +7,6 @@ import android.content.Intent
 import android.media.AudioManager
 import android.telephony.TelephonyManager
 
-
 class RaiseToAnswerCallReceiver : BroadcastReceiver() {
     @SuppressLint("MissingPermission", "NewApi")
     override fun onReceive(context: Context, intent: Intent?) {

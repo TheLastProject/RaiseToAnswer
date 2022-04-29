@@ -5,9 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorManager
-import android.widget.TextView
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-
 
 class Util {
     companion object {
@@ -16,10 +15,14 @@ class Util {
         private val debugLog = ArrayList<String>()
         private val debugLogLiveData = MutableLiveData<List<String>>()
 
-        fun log(message: String) {
-            val timeStampedMessage = System.currentTimeMillis().toString() + ": " + message
-            debugLog.add(timeStampedMessage)
-            debugLogLiveData.postValue(debugLog)
+        fun log(message: String, testMode: Boolean) {
+            Log.d("RaiseToAnswer", message);
+
+            if (testMode) {
+                val timeStampedMessage = System.currentTimeMillis().toString() + ": " + message
+                debugLog.add(timeStampedMessage)
+                debugLogLiveData.postValue(debugLog)
+            }
         }
 
         fun clearLog() {

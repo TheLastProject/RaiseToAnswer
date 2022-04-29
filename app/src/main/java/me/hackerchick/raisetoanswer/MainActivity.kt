@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
 
                 Util.clearLog()
-                Util.log("TEST STARTED")
+                Util.log("TEST STARTED", true)
 
                 testButton.text = getString(R.string.end_test)
 
@@ -241,7 +241,7 @@ class MainActivity : AppCompatActivity() {
     private fun endTest() {
         Util.stopSensorListener(this)
 
-        Util.log("TEST ENDED")
+        Util.log("TEST ENDED", true)
 
         AlertDialog.Builder(this)
             .setTitle(R.string.test_ended)
