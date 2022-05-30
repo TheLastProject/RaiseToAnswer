@@ -1,0 +1,1 @@
+Correction du décrochage peu importe l'angle qui se désactivait quand l'application été ré-ouverte
