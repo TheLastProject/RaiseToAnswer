@@ -1,12 +1,17 @@
 package me.hackerchick.raisetoanswer
 
 import android.Manifest
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -25,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private var PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
-    private var mMenu : Menu? = null
+    private var mMenu: Menu? = null
     private var mTestMode = false
     private var mTestRunning = false
 
@@ -79,6 +84,20 @@ class MainActivity : AppCompatActivity() {
         startApp()
     }
 
+
+    private fun checkPowerSettings() {
+        val intent = Intent()
+        val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (pm.isIgnoringBatteryOptimizations(applicationContext.packageName)) {
+            /** Already battery optimization is ignored for this app so nothing to do here,
+             * the foreground service can we invoked even if the app is in the background**/
+        } else {
+            intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+            intent.data = Uri.parse("package:${applicationContext.packageName}")
+            this.startActivity(intent)
+        }
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
@@ -90,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_READ_PHONE_STATE -> {
                 if (!grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
@@ -156,7 +176,11 @@ class MainActivity : AppCompatActivity() {
         val vibrateBehaviour: SwitchCompat = binding.behaviourVibrate
 
         setAnswerFeature(Util.answerFeatureEnabled(applicationContext), false)
-        setAnswerAllAnglesFeatureIfSupported(Util.answerAllAnglesFeatureEnabled(applicationContext))
+        setAnswerAllAnglesFeatureIfSupported(
+            Util.answerAllAnglesFeatureEnabled(
+                applicationContext
+            )
+        )
         setDeclineFeatureIfSupported(Util.declineFeatureEnabled(applicationContext))
 
         setBeepBehaviour(Util.beepBehaviourEnabled(applicationContext))
@@ -182,14 +206,12 @@ class MainActivity : AppCompatActivity() {
             setVibrateBehaviour(isChecked)
         }
 
+        checkPowerSettings()
+
         // Debugging
         val debugLog: TextView = binding.debugLog
         debugLog.setOnClickListener {
-            val logData = Util.getLog().value
-
-            if (logData == null) {
-                return@setOnClickListener
-            }
+            val logData = Util.getLog().value ?: return@setOnClickListener
 
             val clipboard: ClipboardManager =
                 getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -294,13 +316,13 @@ class MainActivity : AppCompatActivity() {
             testButton.visibility = View.VISIBLE
             debugLog.visibility = View.VISIBLE
 
-            Util.getLog().observe(this, {
+            Util.getLog().observe(this) {
                 try {
                     debugLog.text = it.reversed().joinToString(separator = "\n")
                 } catch (ConcurrentModificationException: Exception) {
                     // We don't care, just skip this update then...
                 }
-            })
+            }
 
             testButton.text = getString(R.string.start_test)
         } else {

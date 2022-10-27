@@ -2,6 +2,7 @@ package me.hackerchick.raisetoanswer
 
 import android.annotation.SuppressLint
 import android.app.*
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -83,7 +84,7 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
-                PendingIntent.getActivity(this, 0, notificationIntent, 0)
+                PendingIntent.getActivity(this, 0, notificationIntent, FLAG_IMMUTABLE)
             }
 
         val channel = NotificationChannel("incoming_call", getString(R.string.incoming_call_service), NotificationManager.IMPORTANCE_LOW)
