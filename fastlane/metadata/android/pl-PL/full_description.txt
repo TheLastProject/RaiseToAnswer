@@ -1,0 +1,5 @@
+Aby odebrać połączenie przychodzące, wystarczy przyłożyć telefon do ucha. Gdy aplikacja wykryje, że telefon znajduje się blisko ucha, wyda 5 sygnałów dźwiękowych, a następnie odbierze połączenie.
+
+Żadnych reklam, żadnych niepotrzebnych uprawnień i nadmiernego zużycia baterii. Łatwe włączanie i wyłączanie. Nie zastępuje ekranu połączeń przychodzących, więc nie musisz uczyć się niczego nowego.
+
+Ta aplikacja jest aplikacją o otwartym kodzie źródłowym. Kod źródłowy jest dostępny na stronie https://github.com/TheLastProject/RaiseToAnswer.
