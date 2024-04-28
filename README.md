@@ -21,12 +21,17 @@ No ads, no unnecessary permissions and no unnecessary battery drain. Easy to ena
 
 ## How to build
 
-First, clone the repository:
+Building can either be done through Android Studio (not reproducible!) or the build.sh script in this repository (reproducible with OpenJDK 17). This script can also sign the build.
+
+Build without signing:
 ```
-git clone https://github.com/TheLastProject/RaiseToAnswer
+./build.sh
 ```
 
-Then, open Android Studio and hit build.
+Build with signing:
+```
+KEYSTORE=/path/to/keystore KEYSTORE_ALIAS=raisetoanswer ./build.sh
+```
 
 ## Debugging
 Sensors are complicated. If the app isn't working as you expect it to, please help me by giving some debug logging.
