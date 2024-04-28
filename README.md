@@ -14,10 +14,8 @@ No ads, no unnecessary permissions and no unnecessary battery drain. Easy to ena
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=me.hackerchick.raisetoanswer)
-    
-<a href="https://hosted.weblate.org/engage/raisetoanswer/">
-<img src="https://hosted.weblate.org/widgets/raisetoanswer/-/open-graph.png" alt="Translation status" />
-</a>
+
+![Screenshot](fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png)
 
 ## How to build
 
@@ -33,25 +31,11 @@ Build with signing:
 KEYSTORE=/path/to/keystore KEYSTORE_ALIAS=raisetoanswer ./build.sh
 ```
 
-## Debugging
-Sensors are complicated. If the app isn't working as you expect it to, please help me by giving some debug logging.
+### Translations
 
-First, tap the menu in the top right.  
-![Debug screen 1](debug1.png)
-
-Then, choose "Enable test mode".  
-![Debug screen 2](debug2.png)
-
-Put the phone down in the resting position, and tap "Start Test". Then, answer or decline the phone as seems natural to you.  
-![Debug screen 3](debug3.png)
-
-After having tried to answer or decline, press "End Test".  
-![Debug screen 4](debug4.png)
-
-If the issue appeared, press "Report Issue". This will open your email application and allow you to send debug logging to me.  
-![Debug screen 5](debug5.png)
-
-Please add any information you can think of to the email but don't remove any of the existing text.
+<a href="https://hosted.weblate.org/engage/raisetoanswer/">
+<img src="https://hosted.weblate.org/widgets/raisetoanswer/-/open-graph.png" alt="Translation status" />
+</a>
 
 ## License
 
