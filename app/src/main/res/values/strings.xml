@@ -13,7 +13,7 @@
     <string name="test_started">Test started</string>
     <string name="enable_at_least_one_feature">Please enable at least one feature</string>
     <string name="select_behaviour">Other settings</string>
-    <string name="behaviour_beep">Beep on incoming calls</string>
+    <string name="behaviour_beep">Beep when about to answer incoming call</string>
     <string name="raise_enabled_key" translatable="false">raise_enabled_key</string>
     <string name="flip_over_enabled_key" translatable="false">flip_over_enabled_key</string>
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
@@ -26,7 +26,7 @@
     <string name="missing_support_magnetometer">Your device lacks a magnetometer, declining or limiting answering to an up-right angle is not supported.</string>
     <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
     <string name="debug_log_copied_to_clipboard">Debug log copied to clipboard</string>
-    <string name="behaviour_vibrate">Vibrate on incoming calls</string>
+    <string name="behaviour_vibrate">Vibrate when about to answer incoming call</string>
     <string name="enable_test_mode">Enable test mode</string>
     <string name="disable_test_mode">Disable test mode</string>
     <string name="start_test">Start Test</string>
