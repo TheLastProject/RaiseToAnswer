@@ -86,11 +86,9 @@ class RaiseToAnswerSensorEventListener : Service(), SensorEventListener {
                 PendingIntent.getActivity(this, 0, notificationIntent, 0)
             }
 
-        val channel = NotificationChannel("incoming_call", getString(R.string.incoming_call_service), NotificationManager.IMPORTANCE_LOW)
-        val service = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        service.createNotificationChannel(channel)
+        val channel = Util.createIncomingCallForegroundServiceNotificationChannel(this)
 
-        val notification: Notification = Notification.Builder(this, "incoming_call")
+        val notification: Notification = Notification.Builder(this, channel.id)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentText(getText(R.string.raise_to_answer_is_listening_to_sensor_data))
             .setContentIntent(pendingIntent)

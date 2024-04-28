@@ -1,5 +1,7 @@
 package me.hackerchick.raisetoanswer
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -183,6 +185,14 @@ class Util {
                 context.stopService(serviceIntent)
                 serviceIntent = null
             }
+        }
+
+        fun createIncomingCallForegroundServiceNotificationChannel(context: Context): NotificationChannel {
+            val channel = NotificationChannel("incoming_call", context.getString(R.string.incoming_call_service), NotificationManager.IMPORTANCE_LOW)
+            val service = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            service.createNotificationChannel(channel)
+
+            return channel
         }
     }
 }

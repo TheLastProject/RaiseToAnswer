@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_READ_PHONE_STATE -> {
                 if (!grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
@@ -142,6 +143,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startApp() {
+        // Create notification channel
+        // We don't want to use it yet, but Android will ask the user for permission to show
+        // notifications the moment the channel gets created. This way we prevent Android from
+        // randomly asking about notification permission during the first incoming call
+        //
+        // Note: if it gets denied, that's fine, we only use this to tell users we're listening
+        // to Android sensors during incoming calls, as required by Android itself. We'd rather
+        // not bother users with such trivialities but alas.
+        Util.createIncomingCallForegroundServiceNotificationChannel(this)
+
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.READ_PHONE_STATE,
