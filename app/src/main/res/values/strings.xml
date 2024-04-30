@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="permissions_needed">App can\'t work without these permission, sorry…</string>
+    <string name="permissions_needed">App can\'t work without this permission, sorry…</string>
     <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="incoming_call_service">Incoming call service</string>
     <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer is listening to sensor data</string>
