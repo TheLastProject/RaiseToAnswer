@@ -1,0 +1,2 @@
+Atualização da tradução para o francês (obrigado, Larnicone!)
+Aumento do tamanho das caixas de seleção de recursos de acordo com as diretrizes de acessibilidade do Google Play
