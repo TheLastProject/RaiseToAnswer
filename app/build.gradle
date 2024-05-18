@@ -8,8 +8,8 @@ android {
         compileSdk 34
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 30
-        versionCode 32
-        versionName "3.6.5"
+        versionCode 33
+        versionName "3.6.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
