@@ -1,0 +1,1 @@
+Correção da resposta não funcionar se o aplicativo não estiver em primeiro plano

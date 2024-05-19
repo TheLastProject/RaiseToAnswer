@@ -1,0 +1,2 @@
+Adicionada tradução parcial para o francês (obrigado, Larnicone!)
+Adicionada a opção de recusar chamadas recebidas

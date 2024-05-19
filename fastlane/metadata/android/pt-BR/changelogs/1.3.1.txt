@@ -1,0 +1,1 @@
+Parar de ouvir os sensores em qualquer estado que não esteja tocando
