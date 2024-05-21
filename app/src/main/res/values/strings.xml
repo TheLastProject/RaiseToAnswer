@@ -6,7 +6,7 @@
     <string name="incoming_call_service">Incoming call service</string>
     <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer is listening to sensor data</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="could_not_bind_sensor">Failed registering sensors, your device may lack a proximity sensor or accelerometer. Raise To Answer cannot continue.</string>
+    <string name="could_not_bind_sensor">注册传感器失败，你的设备可能缺少接近传感器或加速度计。Raise To Answer 无法继续。</string>
     <string name="feature_raise_to_answer">Answer by holding your phone to your ear</string>
     <string name="feature_flip_over_to_decline">Decline by putting your phone down screen-first</string>
     <string name="detected_raise_to_answer">Call pickup detected</string>
@@ -14,7 +14,7 @@
     <string name="test_started">Test started</string>
     <string name="enable_at_least_one_feature">Please enable at least one feature</string>
     <string name="select_behaviour">Other settings</string>
-    <string name="behaviour_beep">Beep when about to answer incoming call</string>
+    <string name="behaviour_beep">打算接听来电时发出哔哔声</string>
     <string name="raise_enabled_key" translatable="false">raise_enabled_key</string>
     <string name="flip_over_enabled_key" translatable="false">flip_over_enabled_key</string>
     <string name="beep_behaviour_enabled_key" translatable="false">beep_behaviour_enabled_key</string>
@@ -27,7 +27,7 @@
     <string name="missing_support_magnetometer">Your device lacks a magnetometer, declining or limiting answering to an up-right angle is not supported.</string>
     <string name="missing_support_android_9">Your device is running a version of Android before 9, declining calls is not supported.</string>
     <string name="debug_log_copied_to_clipboard">Debug log copied to clipboard</string>
-    <string name="behaviour_vibrate">Vibrate when about to answer incoming call</string>
+    <string name="behaviour_vibrate">打算接听来电时振动手机</string>
     <string name="enable_test_mode">Enable test mode</string>
     <string name="disable_test_mode">Disable test mode</string>
     <string name="start_test">Start Test</string>
