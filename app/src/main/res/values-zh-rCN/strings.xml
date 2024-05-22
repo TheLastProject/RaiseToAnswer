@@ -20,7 +20,7 @@
     <string name="raise_to_answer_is_listening_to_sensor_data">抬手应答正在监听传感器数据</string>
     <string name="incoming_call_service">来电服务</string>
     <string name="raise_to_answer_header">抬手应答</string>
-    <string name="permissions_needed">没有这些权限应用无法工作，抱歉…</string>
+    <string name="permissions_needed">无此权限应用无法工作，抱歉…</string>
     <string name="app_name">抬手应答</string>
     <string name="accept">接受</string>
     <string name="privacy_policy_popup_text">许多应用程序商店要求应用程序在首次启动时显示其隐私权条款。我们的隐私权条款如下：

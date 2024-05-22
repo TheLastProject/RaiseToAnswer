@@ -6,7 +6,7 @@
     <string name="incoming_call_service">Dienst voor inkomende gesprekken</string>
     <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer is aan het luisteren naar sensordata…</string>
     <string name="privacy_policy">Privacybeleid</string>
-    <string name="could_not_bind_sensor">De sensors kunnen niet worden geregistreerd. Heeft je apparaat een afstandssensor of versnellingsmeter\?</string>
+    <string name="could_not_bind_sensor">De sensors kunnen niet worden geregistreerd. Heeft je apparaat een afstandssensor of versnellingsmeter?</string>
     <string name="feature_raise_to_answer">Neem op door de telefoon tegen je oor te houden</string>
     <string name="feature_flip_over_to_decline">Weiger een oproep door de telefoon ondersteboven te leggen</string>
     <string name="detected_raise_to_answer">De oproep is aanvaard</string>
