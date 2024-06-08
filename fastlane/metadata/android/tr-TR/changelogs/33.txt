@@ -1,0 +1,3 @@
+Başlatma sırasında bildirim izni iste (ilk arama sırasında izin talebini önlemek için)
+Çeviri güncellemeleri
+Bağımlılık güncellemeleri
