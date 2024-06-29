@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="permissions_needed">De app kan niet werken zonder deze rechten.</string>
+    <string name="permissions_needed">De app kan niet werken zonder deze rechten, sorry…</string>
     <string name="raise_to_answer_header">Raise To Answer</string>
     <string name="incoming_call_service">Dienst voor inkomende gesprekken</string>
     <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer is aan het luisteren naar sensordata…</string>
