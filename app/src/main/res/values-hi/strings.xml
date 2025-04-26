@@ -1,2 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="test_succesful_question">क्या परीक्षण सफल रहा?\n\nयदि नहीं, तो आप डेवलपर को परीक्षण लॉग भेज सकते हैं ताकि वह यह पता लगाने में मदद कर सके कि क्या गलत हुआ।</string>
+    <string name="missing_support_magnetometer">आपके डिवाइस में मैग्नेटोमीटर नहीं है, उत्तर देने को ऊपर-दाएं कोण तक सीमित करना या अस्वीकार करना समर्थित नहीं है।</string>
+    <string name="incoming_call_service">इनकमिंग कॉल सेवा</string>
+    <string name="feature_flip_over_to_decline">अपना फ़ोन स्क्रीन नीचे रखकर अस्वीकार करें</string>
+    <string name="raise_to_answer_is_listening_to_sensor_data">Raise To Answer सेंसर डेटा सुन रहा है</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="feature_raise_to_answer">अपना फ़ोन कान पर लगाकर उत्तर दें</string>
+    <string name="decline_holder">कॉल्स अस्वीकार करें</string>
+    <string name="answer_holder">कॉल्स स्वीकार करें</string>
+    <string name="debug_log_copied_to_clipboard">डीबग लॉग क्लिपबोर्ड पर कॉपी किया गया</string>
+    <string name="behaviour_vibrate">आने वाली कॉल का उत्तर देने से पहले कंपन करें</string>
+    <string name="enable_test_mode">परीक्षण मोड चालू करें</string>
+    <string name="disable_test_mode">परीक्षण मोड बंद करें</string>
+    <string name="start_test">परीक्षण चालू करें</string>
+    <string name="end_test">परीक्षण बंद करें</string>
+    <string name="test_ended">परीक्षण समाप्त</string>
+    <string name="close">बंद करें</string>
+    <string name="accept">स्वीकार करें</string>
+    <string name="detected_raise_to_answer">कॉल स्वीकृत होने का पता चला</string>
+    <string name="permissions_needed">इस अनुमति के बिना ऐप काम नहीं कर सकता, क्षमा करें…</string>
+    <string name="raise_to_answer_header">Raise To Answer</string>
+    <string name="could_not_bind_sensor">सेंसर पंजीकृत करने में विफल, आपके डिवाइस में निकटता सेंसर या एक्सेलेरोमीटर की कमी हो सकती है Raise To Answer जारी नहीं रखा जा सकता।</string>
+    <string name="enable_at_least_one_feature">कृपया कम से कम एक सुविधा/फीचर चालू करें</string>
+    <string name="select_behaviour">अन्य सेटिंग्स</string>
+    <string name="behaviour_beep">आने वाली कॉल का उत्तर देने से पहले बीप करें</string>
+    <string name="feature_answer_all_angles">किसी भी कोण से उत्तर दें</string>
+    <string name="missing_support_android_9">आपका डिवाइस Android 9 से पहले के संस्करण पर चल रहा है, कॉल अस्वीकार करना समर्थित नहीं है।</string>
+    <string name="test_started">परीक्षण चालू</string>
+    <string name="app_name">Raise To Answer</string>
+    <string name="detected_flip_over">कॉल अस्वीकृत होने का पता चला</string>
+    <string name="report_issue">समस्या की रिपोर्ट करें</string>
+    <string name="privacy_policy_popup_text">कई ऐप स्टोर्स को पहली बार शुरू होने पर ऐप को अपनी गोपनीयता नीति दिखाने की आवश्यकता होती है। यहाँ हमारा है:\n\nहम बिल्कुल भी डेटा एकत्र नहीं करते हैं और हमारा ऐप ओपन सोर्स है, इसलिए कोई भी इसकी पुष्टि कर सकता है कि यह सच है।</string>
+</resources>
