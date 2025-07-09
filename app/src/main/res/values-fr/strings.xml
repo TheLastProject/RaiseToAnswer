@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Raise To Answer</string>
-    <string name="permissions_needed">没有此权限应用无法工作，抱歉…</string>
+    <string name="permissions_needed">L\'application ne peut pas fonctionner sans ces autorisations, désolé…</string>
     <string name="raise_to_answer_header">Soulever pour répondre</string>
     <string name="incoming_call_service">Service d\'appel entrant</string>
     <string name="privacy_policy">Politique de confidentialité</string>
