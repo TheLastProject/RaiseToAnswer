@@ -1,0 +1,5 @@
+Basta manter o telefone próximo ao ouvido para atender a uma chamada recebida. Quando a app detetar que o telefone está próximo ao ouvido durante uma chamada recebida, ele emitirá 5 bipes e atenderá a chamada.
+
+Sem anúncios, sem permissões desnecessárias e sem consumo desnecessário de pilha. Fácil de ativar e desativar. Não substitui o ecrã de chamadas recebidas, portanto, não precisa aprender nada de novo.
+
+Esta app é de código aberto. O código-fonte está disponível em https://github.com/TheLastProject/RaiseToAnswer.

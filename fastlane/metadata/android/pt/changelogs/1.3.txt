@@ -1,0 +1,2 @@
+Corrigir o botão liga/desliga que às vezes não funciona
+Abrir app ao tocar na notificação
