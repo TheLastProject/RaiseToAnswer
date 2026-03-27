@@ -1,0 +1,1 @@
+Don't crash when tapping log area in app before init

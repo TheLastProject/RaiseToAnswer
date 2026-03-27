@@ -1,0 +1,1 @@
+Fix vibration and beeping setting not applying to non-magnetometer code

@@ -1,0 +1,2 @@
+Improved bug reporting flow
+Fix test state lost on rotation
